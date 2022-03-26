@@ -1,9 +1,10 @@
 use serde::{Serialize, Deserialize};
-use super::commondatatypes;
+use super::{commondatatypes, electricalconnection, measurement, deviceclassification, deviceconfiguration, devicediagnosis, identification, incentivetable, loadcontrol, timeseries, nodemanagement, result};
 
 pub type MsgCounterType = u64;
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "lowercase")]
 pub enum CmdClassifierType {
     Read,
     Reply,
@@ -22,10 +23,10 @@ pub struct FilterType {
 	pub cmd_control: Option<CmdControlType>,
 
 	// DataSelectorsChoiceGroup
-	// ElectricalConnectionDescriptionListDataSelectors          *ElectricalConnectionDescriptionListDataSelectorsType          `json:"electricalConnectionDescriptionListDataSelectors,omitempty"`
-	// ElectricalConnectionParameterDescriptionListDataSelectors *ElectricalConnectionParameterDescriptionListDataSelectorsType `json:"electricalConnectionParameterDescriptionListDataSelectors,omitempty"`
-	// MeasurementDescriptionListDataSelectors                   *MeasurementDescriptionListDataSelectorsType                   `json:"measurementDescriptionListDataSelectors,omitempty"`
-	// MeasurementListDataSelectors                              *MeasurementListDataSelectorsType                              `json:"measurementListDataSelectors,omitempty"`
+	pub electrical_connection_description_list_data_selectors: Option<electricalconnection::ElectricalConnectionDescriptionListDataSelectorsType>,
+	pub electrical_connection_parameter_description_list_data_selectors: Option<electricalconnection::ElectricalConnectionParameterDescriptionListDataSelectorsType>,
+	pub measurement_description_list_data_selectors: Option<measurement::MeasurementDescriptionListDataSelectorsType>,
+	pub measurement_list_data_selectors: Option<measurement::MeasurementListDataSelectorsType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -51,38 +52,38 @@ pub struct CmdControl {
 #[serde(rename_all = "camelCase")]
 pub struct CmdType {
 	// CmdOptionGroup
-	// pub function: Option<FunctionType>,
-	// pub filter:   Option<Vec<FilterType>>,
+	pub function: Option<commondatatypes::FunctionType>,
+	pub filter:   Option<Vec<FilterType>>,
 
 	// DataChoiceGroup
-	// DeviceClassificationManufacturerData             *DeviceClassificationManufacturerDataType             `json:"deviceClassificationManufacturerData,omitempty"`
-	// DeviceConfigurationKeyValueDescriptionListData   *DeviceConfigurationKeyValueDescriptionListDataType   `json:"deviceConfigurationKeyValueDescriptionListData,omitempty"`
-	// DeviceConfigurationKeyValueListData              *DeviceConfigurationKeyValueListDataType              `json:"deviceConfigurationKeyValueListData,omitempty"`
-	// DeviceDiagnosisHeartbeatData                     *DeviceDiagnosisHeartbeatDataType                     `json:"deviceDiagnosisHeartbeatData,omitempty"`
-	// DeviceDiagnosisStateData                         *DeviceDiagnosisStateDataType                         `json:"deviceDiagnosisStateData,omitempty"`
-	// ElectricalConnectionDescriptionListData          *ElectricalConnectionDescriptionListDataType          `json:"electricalConnectionDescriptionListData,omitempty"`
-	// ElectricalConnectionParameterDescriptionListData *ElectricalConnectionParameterDescriptionListDataType `json:"electricalConnectionParameterDescriptionListData,omitempty"`
-	// ElectricalConnectionPermittedValueSetListData    *ElectricalConnectionPermittedValueSetListDataType    `json:"electricalConnectionPermittedValueSetListData,omitempty"`
-	// IdentificationListData                           *IdentificationListDataType                           `json:"identificationListData,omitempty"`
-	// IncentiveTableDescriptionData                    *IncentiveTableDescriptionDataType                    `json:"incentiveTableDescriptionData,omitempty"`
-	// IncentiveTableConstraintsData                    *IncentiveTableConstraintsDataType                    `json:"incentiveTableConstraintsData,omitempty"`
-	// IncentiveTableData                               *IncentiveTableDataType                               `json:"incentiveTableData,omitempty"`
-	// LoadControlLimitDescriptionListData              *LoadControlLimitDescriptionListDataType              `json:"loadControlLimitDescriptionListData,omitempty"`
-	// LoadControlLimitListData                         *LoadControlLimitListDataType                         `json:"loadControlLimitListData,omitempty"`
-	// NodeManagementBindingRequestCall                 *NodeManagementBindingRequestCallType                 `json:"nodeManagementBindingRequestCall,omitempty"`
-	// NodeManagementDetailedDiscoveryData              *NodeManagementDetailedDiscoveryDataType              `json:"nodeManagementDetailedDiscoveryData,omitempty"`
-	// NodeManagementSubscriptionData                   *NodeManagementSubscriptionDataType                   `json:"nodeManagementSubscriptionData,omitempty"`
-	// NodeManagementSubscriptionRequestCall            *NodeManagementSubscriptionRequestCallType            `json:"nodeManagementSubscriptionRequestCall,omitempty"`
-	// NodeManagementSubscriptionDeleteCall             *NodeManagementSubscriptionDeleteCallType             `json:"nodeManagementSubscriptionDeleteCall,omitempty"`
-	// NodeManagementUseCaseData                        *NodeManagementUseCaseDataType                        `json:"nodeManagementUseCaseData,omitempty"`
-	// MeasurementConstraintsListData                   *MeasurementConstraintsListDataType                   `json:"measurementConstraintsListData,omitempty"`
-	// MeasurementDescriptionListData                   *MeasurementDescriptionListDataType                   `json:"measurementDescriptionListData,omitempty"`
-	// MeasurementListData                              *MeasurementListDataType                              `json:"measurementListData,omitempty"`
-	// ResultData                                       *ResultDataType                                       `json:"resultData,omitempty"`
-	// TimeSeriesConstraintsData                        *TimeSeriesConstraintsDataType                        `json:"timeSeriesConstraintsData,omitempty"`
-	// TimeSeriesConstraintsListData                    *TimeSeriesConstraintsListDataType                    `json:"timeSeriesConstraintsListData,omitempty"`
-	// TimeSeriesDescriptionListData                    *TimeSeriesDescriptionListDataType                    `json:"timeSeriesDescriptionListData,omitempty"`
-	// TimeSeriesListData                               *TimeSeriesListDataType                               `json:"timeSeriesListData,omitempty"`
+	pub device_classification_manufacturer_data: Option<deviceclassification::DeviceClassificationManufacturerDataType>,
+	pub device_configuration_key_value_description_list_data: Option<deviceconfiguration::DeviceConfigurationKeyValueDescriptionListDataType>,
+	pub device_configuration_key_value_list_data: Option<deviceconfiguration::DeviceConfigurationKeyValueListDataType>,
+	pub device_diagnosis_heartbeat_data: Option<devicediagnosis::DeviceDiagnosisHeartbeatDataType>,
+	pub device_diagnosis_state_data: Option<devicediagnosis::DeviceDiagnosisStateDataType>,
+	pub electrical_connection_description_list_data: Option<electricalconnection::ElectricalConnectionDescriptionListDataType>,
+	pub electrical_connection_parameter_description_list_data: Option<electricalconnection::ElectricalConnectionParameterDescriptionListDataType>,
+	pub electrical_connection_permitted_value_set_list_data: Option<electricalconnection::ElectricalConnectionPermittedValueSetListDataType>,
+	pub identification_list_data: Option<identification::IdentificationListDataType>,
+	pub incentive_table_description_data: Option<incentivetable::IncentiveTableDescriptionDataType>,
+	pub incentive_table_constraints_data: Option<incentivetable::IncentiveTableConstraintsDataType>,
+	pub incentive_table_data: Option<incentivetable::IncentiveTableDataType>,
+	pub load_control_limit_description_list_data: Option<loadcontrol::LoadControlLimitDescriptionListDataType>,
+	pub load_control_limit_list_data: Option<loadcontrol::LoadControlLimitListDataType>,
+	pub node_management_binding_request_call: Option<nodemanagement::NodeManagementBindingRequestCallType>,
+	pub node_management_detailed_discovery_data: Option<nodemanagement::NodeManagementDetailedDiscoveryDataType>,
+	pub node_management_subscription_data: Option<nodemanagement::NodeManagementSubscriptionDataType>,
+	pub node_management_subscription_request_call: Option<nodemanagement::NodeManagementSubscriptionRequestCallType>,
+	pub node_management_subscription_delete_call: Option<nodemanagement::NodeManagementSubscriptionDeleteCallType>,
+	pub node_management_use_case_data: Option<nodemanagement::NodeManagementUseCaseDataType>,
+	pub measurement_constraints_list_data: Option<measurement::MeasurementConstraintsListDataType>,
+	pub measurement_description_list_data: Option<measurement::MeasurementDescriptionListDataType>,
+	pub measurement_list_data: Option<measurement::MeasurementListDataType>,
+	pub reulst_data: Option<result::ResultDataType>,
+	pub time_series_constraints_data: Option<timeseries::TimeSeriesConstraintsDataType>,
+	pub time_series_constraints_list_data: Option<timeseries::TimeSeriesConstraintsListDataType>,
+	pub time_series_description_list_data: Option<timeseries::TimeSeriesDescriptionListDataType>,
+	pub time_series_list_data: Option<timeseries::TimeSeriesListDataType>,
 
 	// DataExtendGroup
 }

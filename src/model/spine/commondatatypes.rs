@@ -29,6 +29,7 @@ pub type AbsoluteOrRelativeTimeType = String;
 pub type RecurringIntervalType = RecurringIntervalEnumType;
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "lowercase")]
 pub enum RecurringIntervalEnumType {
     Yearly,
     Monthly,
@@ -40,6 +41,7 @@ pub enum RecurringIntervalEnumType {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "lowercase")]
 pub enum MonthType {
     January,
     February,
@@ -60,6 +62,7 @@ pub type DayOfMonthType = u8;
 pub type CalendarWeekType = u8;
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "lowercase")]
 pub enum DayOfWeekType {
     Monday,
     Tuesday,
