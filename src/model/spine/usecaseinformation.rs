@@ -35,7 +35,7 @@ pub type UseCaseScenarioSupportType = u8;
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-type UseCaseSupportType struct {
+pub struct UseCaseSupportType {
   pub use_case_name: Option<UseCaseNameType>,
   pub use_case_version: Option<commondatatypes::SpecificationVersionType>,
   pub use_case_available: Option<bool>,
@@ -44,7 +44,7 @@ type UseCaseSupportType struct {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-type UseCaseSupportSelectorsType struct {
+pub struct UseCaseSupportSelectorsType {
   pub use_case_name: Option<UseCaseNameType>,
   pub use_case_version: Option<commondatatypes::SpecificationVersionType>,
   pub scenario_support: Option<UseCaseScenarioSupportType>,
@@ -52,7 +52,7 @@ type UseCaseSupportSelectorsType struct {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-type UseCaseInformationDataType struct {
+pub struct UseCaseInformationDataType {
   pub address: Option<commondatatypes::FeatureAddressType>,
   pub actor: Option<UseCaseActorType>,
   pub use_case_support: Option<Vec<UseCaseSupportType>>,
@@ -60,13 +60,13 @@ type UseCaseInformationDataType struct {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-type UseCaseInformationListDataType struct {
+pub struct UseCaseInformationListDataType {
   pub use_case_information_data: Option<Vec<UseCaseInformationDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-type UseCaseInformationListDataSelectorsType struct {
+pub struct UseCaseInformationListDataSelectorsType {
   pub address: Option<commondatatypes::FeatureAddressType>,
   pub actor: Option<UseCaseActorType>,
   pub use_case_support: Option<UseCaseSupportType>,

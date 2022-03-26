@@ -45,7 +45,7 @@ pub type LoadControlLimitIdType = u8;
 pub type LoadControlLimitTypeType = LoadControlLimitTypeEnumType;
 
 #[derive(Serialize, Deserialize, Debug)]
-pub enum LoadControlEventStateEnumType {
+pub enum LoadControlLimitTypeEnumType {
 	#[serde(rename = "minValueLimit")]
 	MinValueLimit,
 	#[serde(rename = "maxValueLimit")]
@@ -55,7 +55,7 @@ pub enum LoadControlEventStateEnumType {
 pub type LoadControlCategoryType = LoadControlCategoryEnumType;
 
 #[derive(Serialize, Deserialize, Debug)]
-pub enum LoadControlEventStateEnumType {
+pub enum LoadControlCategoryEnumType {
 	#[serde(rename = "obligation")]
 	Obligation,
 	#[serde(rename = "recommendation")]
@@ -66,13 +66,13 @@ pub enum LoadControlEventStateEnumType {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlNodeDataType struct {
+pub struct LoadControlNodeDataType {
   pub is_node_remote_controllable: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlEventDataType struct {
+pub struct LoadControlEventDataType {
   pub timestamp: Option<String>,
   pub event_id: Option<LoadControlEventIdType>,
   pub event_action_consume: Option<LoadControlEventActionType>,
@@ -82,20 +82,20 @@ pub struct LoadControlEventDataType struct {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlEventListDataType struct {
+pub struct LoadControlEventListDataType {
   pub load_control_event_data: Option<Vec<LoadControlEventDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlEventListDataSelectorsType struct {
+pub struct LoadControlEventListDataSelectorsType {
   pub timestamp_inverval: Option<commondatatypes::TimestampIntervalType>,
   pub event_id: Option<LoadControlEventIdType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlStateDataType struct {
+pub struct LoadControlStateDataType {
   pub timestamp: Option<String>,
   pub event_id: Option<LoadControlEventIdType>,
   pub event_state_consume: Option<LoadControlEventStateType>,
@@ -106,20 +106,20 @@ pub struct LoadControlStateDataType struct {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlStateListDataType struct {
+pub struct LoadControlStateListDataType {
   pub load_control_state_data: Option<Vec<LoadControlStateDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlStateListDataSelectorsType struct {
+pub struct LoadControlStateListDataSelectorsType {
   pub timestamp_inverval: Option<commondatatypes::TimestampIntervalType>,
   pub event_id: Option<LoadControlEventIdType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlLimitDataType struct {
+pub struct LoadControlLimitDataType {
   pub limit_id: Option<LoadControlLimitIdType>,
   pub is_limit_changeable: Option<bool>,
   pub is_limit_active: Option<bool>,
@@ -129,19 +129,19 @@ pub struct LoadControlLimitDataType struct {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlLimitListDataType struct {
+pub struct LoadControlLimitListDataType {
   pub load_control_limit_data: Option<Vec<LoadControlLimitDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlLimitListDataSelectorsType struct {
+pub struct LoadControlLimitListDataSelectorsType {
   pub limit_id: Option<LoadControlLimitIdType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlLimitConstraintsDataType struct {
+pub struct LoadControlLimitConstraintsDataType {
   pub limit_id: Option<LoadControlLimitIdType>,
   pub value_range_min: Option<commondatatypes::ScaledNumberType>,
   pub value_range_max: Option<commondatatypes::ScaledNumberType>,
@@ -150,42 +150,42 @@ pub struct LoadControlLimitConstraintsDataType struct {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlLimitConstraintsListDataType struct {
+pub struct LoadControlLimitConstraintsListDataType {
   pub load_control_limit_constraints_data: Option<Vec<LoadControlLimitConstraintsDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlLimitConstraintsListDataSelectorsType struct {
+pub struct LoadControlLimitConstraintsListDataSelectorsType {
   pub limit_id: Option<LoadControlLimitIdType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlLimitDescriptionDataType struct {
+pub struct LoadControlLimitDescriptionDataType {
   pub limit_id: Option<LoadControlLimitIdType>,
   pub limit_type: Option<LoadControlLimitTypeType>,
   pub limit_category: Option<LoadControlCategoryType>,
   pub limit_direction: Option<commondatatypes::EnergyDirectionType>,
   pub measurement_id: Option<measurement::MeasurementIdType>,
   pub unit: Option<commondatatypes::UnitOfMeasurementType>,
-  pub scope_type: Option<commondatatypes::ScopeType>,
+  pub scope_type: Option<commondatatypes::ScopeTypeType>,
   pub label: Option<commondatatypes::LabelType>,
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlLimitDescriptionListDataType struct {
+pub struct LoadControlLimitDescriptionListDataType {
   pub load_control_limit_description_data: Option<Vec<LoadControlLimitDescriptionDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct LoadControlLimitDescriptionListDataSelectorsType struct {
+pub struct LoadControlLimitDescriptionListDataSelectorsType {
   pub limit_id: Option<LoadControlLimitIdType>,
   pub limit_type: Option<LoadControlLimitTypeType>,
   pub limit_direction: Option<commondatatypes::EnergyDirectionType>,
   pub measurement_id: Option<measurement::MeasurementIdType>,
-  pub scope_type: Option<commondatatypes::ScopeType>,
+  pub scope_type: Option<commondatatypes::ScopeTypeType>,
 }

@@ -5,7 +5,7 @@ pub type ErrorNumberType = u8;
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-type ResultDataType struct {
+pub struct ResultDataType {
   pub error_number: Option<ErrorNumberType>,
   pub description: Option<commondatatypes::DescriptionType>,
 }

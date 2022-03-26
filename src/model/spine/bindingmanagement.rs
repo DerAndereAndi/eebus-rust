@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 
-pub type BindingIdType = u8
+pub type BindingIdType = u8;
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]

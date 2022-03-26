@@ -2,6 +2,8 @@ use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 use super::networkmanagement;
 use super::usecaseinformation;
+use super::bindingmanagement;
+use super::subscriptionmanagement;
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -39,51 +41,51 @@ pub struct NodeManagementDetailedDiscoveryDataType {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeManagementDetailedDiscoveryDataSelectorsType {
-  pub device_information: Option<NetworkManagementDeviceDescriptionListDataSelectorsType>,
-  pub entity_information: Option<NetworkManagementEntityDescriptionListDataSelectorsType>,
-  pub feature_information: Option<NetworkManagementFeatureDescriptionListDataSelectorsType>,
+  pub device_information: Option<networkmanagement::NetworkManagementDeviceDescriptionListDataSelectorsType>,
+  pub entity_information: Option<networkmanagement::NetworkManagementEntityDescriptionListDataSelectorsType>,
+  pub feature_information: Option<networkmanagement::NetworkManagementFeatureDescriptionListDataSelectorsType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeManagementBindingDataType {
-  pub binding_entry: Option<Vec<BindingManagementEntryDataType>>,
+  pub binding_entry: Option<Vec<bindingmanagement::BindingManagementEntryDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeManagementBindingDataSelectorsType {
-  pub binding_entry: Option<BindingManagementEntryListDataSelectorsType>,
+  pub binding_entry: Option<bindingmanagement::BindingManagementEntryListDataSelectorsType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeManagementBindingRequestCallType {
-  pub binding_request: Option<BindingManagementRequestCallType>,
+  pub binding_request: Option<bindingmanagement::BindingManagementRequestCallType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeManagementSubscriptionDataType {
-  pub subscription_entry: Option<Vec<SubscriptionManagementEntryDataType>>,
+  pub subscription_entry: Option<Vec<subscriptionmanagement::SubscriptionManagementEntryDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeManagementSubscriptionDataSelectorsType {
-  pub subscription_entry: Option<SubscriptionManagementEntryListDataSelectorsType>,
+  pub subscription_entry: Option<subscriptionmanagement::SubscriptionManagementEntryListDataSelectorsType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeManagementSubscriptionRequestCallType {
-  pub subscription_request: Option<SubscriptionManagementRequestCallType>,
+  pub subscription_request: Option<subscriptionmanagement::SubscriptionManagementRequestCallType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NodeManagementSubscriptionDeleteCallType {
-  pub subscription_delete: Option<SubscriptionManagementDeleteCallType>,
+  pub subscription_delete: Option<subscriptionmanagement::SubscriptionManagementDeleteCallType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

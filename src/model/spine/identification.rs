@@ -28,13 +28,13 @@ pub struct IdentificationDataType {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-type IdentificationListDataType struct {
+pub struct IdentificationListDataType {
   pub identification_data: Option<Vec<IdentificationDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-type IdentificationListDataSelectorsType struct {
+pub struct IdentificationListDataSelectorsType {
   pub identification_id: Option<IdentificationIdType>,
   pub identification_type: Option<IdentificationTypeType>,
 }

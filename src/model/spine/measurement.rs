@@ -1,5 +1,6 @@
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
+use super::threshold;
 
 pub type MeasurementIdType = u8;
 
@@ -225,7 +226,7 @@ pub struct MeasurementDescriptionListDataSelectorsType {
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementThresholdRelationDataType {
   pub measurement_id: Option<MeasurementIdType>,
-  pub threshold_id: Option<Vec<ThresholdIdType>>,
+  pub threshold_id: Option<Vec<threshold::ThresholdIdType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -238,5 +239,5 @@ pub struct MeasurementThresholdRelationListDataType {
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementThresholdRelationListDataSelectorsType {
   pub measurement_id: Option<MeasurementIdType>,
-  pub threshold_id: Option<Vec<ThresholdIdType>>,
+  pub threshold_id: Option<Vec<threshold::ThresholdIdType>>,
 }

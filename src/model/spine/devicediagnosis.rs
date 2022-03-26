@@ -1,5 +1,4 @@
 use serde::{Serialize, Deserialize};
-use super::commondatatypes;
 
 pub type VendorStateCodeType = String;
 
@@ -57,7 +56,7 @@ pub struct DeviceDiagnosisStateDataType {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-type DeviceDiagnosisHeartbeatDataType struct {
+pub struct DeviceDiagnosisHeartbeatDataType {
   timestamp: Option<String>,
   heartbeat_counter: Option<u64>,
   heartbeat_timeout: Option<String>,
@@ -65,7 +64,7 @@ type DeviceDiagnosisHeartbeatDataType struct {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-type DeviceDiagnosisServiceDataType struct {
+pub struct DeviceDiagnosisServiceDataType {
   timestamp: Option<String>,
   installation_time: Option<String>,
   boot_counter: Option<u64>,

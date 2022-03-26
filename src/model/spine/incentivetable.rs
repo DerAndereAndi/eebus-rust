@@ -1,12 +1,11 @@
 use serde::{Serialize, Deserialize};
-use super::commondatatypes;
 use super::timetable;
 use super::tarifinformation;
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableType {
-  pub tariff: Option<TariffType>,
+  pub tariff: Option<tarifinformation::TariffDataType>,
   pub incentive_slot: Option<Vec<IncentiveTableIncentiveSlotType>>,
 }
 
@@ -22,7 +21,7 @@ pub struct IncentiveTableIncentiveSlotType {
 pub struct IncentiveTableTierType {
   pub tier: Option<tarifinformation::TierDataType>,
   pub boundary: Option<Vec<tarifinformation::TierBoundaryDataType>>,
-  pub incentive: Option<Vec<IncentiveDataType>>,
+  pub incentive: Option<Vec<tarifinformation::IncentiveDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -49,7 +48,7 @@ pub struct IncentiveTableDescriptionType {
 pub struct IncentiveTableDescriptionTierType {
   pub tier_description: Option<tarifinformation::TierDescriptionDataType>,
   pub boundary_description: Option<Vec<tarifinformation::TierBoundaryDescriptionDataType>>,
-  pub incentive_description: Option<Vec<IncentiveDescriptionDataType>>,
+  pub incentive_description: Option<Vec<tarifinformation::IncentiveDescriptionDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

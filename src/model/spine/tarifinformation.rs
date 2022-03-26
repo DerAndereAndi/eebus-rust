@@ -179,7 +179,7 @@ pub struct TariffDescriptionListDataSelectorsType {
 #[serde(rename_all = "camelCase")]
 pub struct TierBoundaryDataType {
   pub boundary_id: Option<TierBoundaryIdType>,
-  pub time_period: Option<commondatatypes::TimePeriodType>
+  pub time_period: Option<commondatatypes::TimePeriodType>,
   pub time_table_id: Option<timetable::TimeTableIdType>,
   pub lower_boundary_value: Option<commondatatypes::ScaledNumberType>,
   pub upper_boundary_value: Option<commondatatypes::ScaledNumberType>,
@@ -227,7 +227,7 @@ pub struct TierBoundaryDescriptionListDataSelectorsType {
 #[serde(rename_all = "camelCase")]
 pub struct CommodityDataType {
   pub commodity_id: Option<CommodityIdType>,
-  pub commodity_type: Option<CommodityTypeType>,
+  pub commodity_type: Option<commondatatypes::CommodityTypeType>,
   pub positive_energy_direction: Option<commondatatypes::EnergyDirectionType>,
   pub label: Option<commondatatypes::LabelType>,
   pub description: Option<commondatatypes::DescriptionType>,
@@ -243,7 +243,7 @@ pub struct CommodityListDataType {
 #[serde(rename_all = "camelCase")]
 pub struct CommodityListDataSelectorsType {
   pub commodity_id: Option<CommodityIdType>,
-  pub commodity_type: Option<CommodityTypeType>,
+  pub commodity_type: Option<commondatatypes::CommodityTypeType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

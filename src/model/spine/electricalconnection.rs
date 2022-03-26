@@ -32,7 +32,7 @@ pub enum ElectricalConnectionVoltageTypeEnumType {
 	Dc,
 }
 
-pub type ElectricalConnectionAcMeasurementTypeType = ElectricalConnectionAcMeasurementTypeEnumType∞
+pub type ElectricalConnectionAcMeasurementTypeType = ElectricalConnectionAcMeasurementTypeEnumType;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum ElectricalConnectionAcMeasurementTypeEnumType {
@@ -153,7 +153,7 @@ pub struct ElectricalConnectionStateDataType {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ElectricalConnectionStateListDataType {
-	ElectricalConnectionStateData []ElectricalConnectionStateDataType `json:"electricalConnectionStateData,omitempty"`
+	pub electrical_connection_state_data: Option<Vec<ElectricalConnectionStateDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -166,9 +166,9 @@ pub struct ElectricalConnectionStateListDataSelectorsType {
 #[serde(rename_all = "camelCase")]
 pub struct ElectricalConnectionDescriptionDataType {
 	pub electrical_connection_id: Option<ElectricalConnectionIdType>,
-	pub power_supply_type: Option<ElectricalConnectionPowerSupplyTypeType>,
+	pub power_supply_type: Option<ElectricalConnectionVoltageTypeType>,
 	pub ac_connected_phases: Option<u8>,
-	pub positive_energy_direction: Option<ElectricalConnectionEnergyDirectionType>,
+	pub positive_energy_direction: Option<commondatatypes::EnergyDirectionType>,
 	pub scope_type: Option<commondatatypes::ScopeTypeType>,
 	pub label: Option<commondatatypes::LabelType>,
 	pub description: Option<commondatatypes::DescriptionType>,

@@ -21,7 +21,7 @@ pub enum PowerSourceEnumType {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct DeviceClassificationManufacturerDataType,
+pub struct DeviceClassificationManufacturerDataType {
 	pub device_name: Option<DeviceClassificationStringType>,
 	pub device_code: Option<DeviceClassificationStringType>,
 	pub serial_number: Option<DeviceClassificationStringType>,
