@@ -149,95 +149,131 @@ pub enum MeasurementValueStateEnumType {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
 	pub measurement_id: Option<MeasurementIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_type: Option<MeasurementValueTypeType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub timestamp: Option<String>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value: Option<commondatatypes::ScaledNumberType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub evaluation_period: Option<commondatatypes::TimePeriodType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_source: Option<MeasurementValueSourceType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_tendency: Option<MeasurementValueTendencyType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_state: Option<MeasurementValueStateType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementListDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_data: Option<Vec<MeasurementDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementListDataSelectorsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_id: Option<MeasurementIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_type: Option<MeasurementValueTypeType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub timestamp_interval: Option<commondatatypes::TimestampIntervalType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementConstraintsDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_id: Option<MeasurementIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_range_min: Option<commondatatypes::ScaledNumberType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_range_max: Option<commondatatypes::ScaledNumberType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_step_size: Option<commondatatypes::ScaledNumberType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementConstraintsListDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_constraints_data: Option<Vec<MeasurementConstraintsDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementConstraintsListDataSelectorsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_id: Option<MeasurementIdType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementDescriptionDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_id: Option<MeasurementIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_type: Option<MeasurementTypeType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub commodity_type: Option<commondatatypes::CommodityTypeType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub unit: Option<commondatatypes::UnitOfMeasurementType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub calibration_value: Option<commondatatypes::ScaledNumberType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub scope_type: Option<commondatatypes::ScopeTypeType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub label: Option<commondatatypes::LabelType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementDescriptionListDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_description_data: Option<Vec<MeasurementDescriptionDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementDescriptionListDataSelectorsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_id: Option<MeasurementIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_type: Option<MeasurementTypeType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub commodity_type: Option<commondatatypes::CommodityTypeType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub scope_type: Option<commondatatypes::ScopeTypeType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementThresholdRelationDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_id: Option<MeasurementIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub threshold_id: Option<Vec<threshold::ThresholdIdType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementThresholdRelationListDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_threshold_relation_data: Option<Vec<MeasurementThresholdRelationDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct MeasurementThresholdRelationListDataSelectorsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_id: Option<MeasurementIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub threshold_id: Option<Vec<threshold::ThresholdIdType>>,
 }

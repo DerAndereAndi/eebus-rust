@@ -36,38 +36,52 @@ pub type UseCaseScenarioSupportType = u8;
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct UseCaseSupportType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub use_case_name: Option<UseCaseNameType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub use_case_version: Option<commondatatypes::SpecificationVersionType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub use_case_available: Option<bool>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub scenario_support: Option<Vec<UseCaseScenarioSupportType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct UseCaseSupportSelectorsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub use_case_name: Option<UseCaseNameType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub use_case_version: Option<commondatatypes::SpecificationVersionType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub scenario_support: Option<UseCaseScenarioSupportType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct UseCaseInformationDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub address: Option<commondatatypes::FeatureAddressType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub actor: Option<UseCaseActorType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub use_case_support: Option<Vec<UseCaseSupportType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct UseCaseInformationListDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub use_case_information_data: Option<Vec<UseCaseInformationDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct UseCaseInformationListDataSelectorsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub address: Option<commondatatypes::FeatureAddressType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub actor: Option<UseCaseActorType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub use_case_support: Option<UseCaseSupportType>,
 }

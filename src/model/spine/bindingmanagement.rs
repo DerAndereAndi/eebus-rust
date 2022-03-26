@@ -6,39 +6,54 @@ pub type BindingIdType = u8;
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct BindingManagementEntryDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub binding_id: Option<BindingIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub client_address: Option<commondatatypes::FeatureAddressType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub server_address: Option<commondatatypes::FeatureAddressType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub label: Option<commondatatypes::LabelType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct BindingManagementEntryListDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub binding_management_entry_data: Option<Vec<BindingManagementEntryDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct BindingManagementEntryListDataSelectorsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub binding_id: Option<BindingIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub client_address: Option<commondatatypes::FeatureAddressType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub server_address: Option<commondatatypes::FeatureAddressType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct BindingManagementRequestCallType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub client_address: Option<commondatatypes::FeatureAddressType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub server_address: Option<commondatatypes::FeatureAddressType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub server_feature_type: Option<commondatatypes::FeatureTypeType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct BindingManagementDeleteCallType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub binding_id: Option<BindingIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub client_address: Option<commondatatypes::FeatureAddressType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub server_address: Option<commondatatypes::FeatureAddressType>,
 }

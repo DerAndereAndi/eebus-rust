@@ -40,71 +40,97 @@ pub enum DeviceConfigurationKeyValueTypeType {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceConfigurationKeyValueValueType {
+	#[serde(skip_serializing_if = "Option::is_none")]
 	pub boolean: Option<bool>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub date: Option<String>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub date_time: Option<String>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub duration: Option<String>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub string: Option<DeviceConfigurationKeyValueStringType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub time: Option<String>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub scaled_number: Option<commondatatypes::ScaledNumberType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceConfigurationKeyValueDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub key_id: Option<DeviceConfigurationKeyIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value: Option<DeviceConfigurationKeyValueValueType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub is_value_changeable: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceConfigurationKeyValueListDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub device_configuration_key_value_data: Option<Vec<DeviceConfigurationKeyValueDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceConfigurationKeyValueListDataSelectorsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub key_id: Option<DeviceConfigurationKeyIdType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceConfigurationKeyValueDescriptionDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub key_id: Option<DeviceConfigurationKeyIdType>,
-  pub key_name: Option<String>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+  pub key_name: Option<DeviceConfigurationKeyNameType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_type: Option<DeviceConfigurationKeyValueTypeType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub unit: Option<String>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub label: Option<commondatatypes::LabelType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub description: Option<commondatatypes::DescriptionType>
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceConfigurationKeyValueDescriptionListDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub device_configuration_key_value_description_data: Option<Vec<DeviceConfigurationKeyValueDescriptionDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceConfigurationKeyValueDescriptionListDataSelectorsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub key_id: Option<DeviceConfigurationKeyIdType>,
-  pub key_name: Option<String>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+  pub key_name: Option<DeviceConfigurationKeyNameType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceConfigurationKeyValueConstraintsDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub key_id: Option<DeviceConfigurationKeyIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_range_min: Option<DeviceConfigurationKeyValueValueType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_range_max: Option<DeviceConfigurationKeyValueValueType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_step_size: Option<DeviceConfigurationKeyValueValueType>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceConfigurationKeyValueConstraintsListDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub device_configuration_key_value_constraints_data: Option<Vec<DeviceConfigurationKeyValueConstraintsDataType>>,
 }
 
