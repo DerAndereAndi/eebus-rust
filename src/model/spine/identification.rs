@@ -1,5 +1,4 @@
 use serde::{Serialize, Deserialize};
-use super::commondatatypes;
 
 pub type IdentificationIdType = u8;
 

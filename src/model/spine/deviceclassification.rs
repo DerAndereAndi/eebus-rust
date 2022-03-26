@@ -30,7 +30,7 @@ pub struct DeviceClassificationManufacturerDataType {
 	pub vendor_name: Option<DeviceClassificationStringType>,
 	pub vendor_code: Option<DeviceClassificationStringType>,
 	pub brand_name: Option<DeviceClassificationStringType>,
-  pub power_source: String,
+  pub power_source: Option<PowerSourceType>,
   pub manufcaturer_node_identification: Option<DeviceClassificationStringType>,
   pub manufacturer_label: Option<commondatatypes::LabelType>,
   pub manufacturer_description: Option<commondatatypes::DescriptionType>,

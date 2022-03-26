@@ -24,8 +24,6 @@ pub struct TimestampIntervalType {
 	end_time:   Option<String>,
 }
 
-pub type EnumExtendType = String;
-
 pub type AbsoluteOrRelativeTimeType = String;
 
 pub type RecurringIntervalType = RecurringIntervalEnumType;
@@ -106,7 +104,7 @@ pub struct AbsoluteOrRecurringTimeType {
 	pub month:                  Option<MonthType>,
 	pub day_of_month:           Option<DayOfMonthType>,
 	pub calendar_week:          Option<CalendarWeekType>,
-	pub day_of_week_occurrence: Option<String>,
+	pub day_of_week_occurrence: Option<OccurrenceType>,
 	pub days_of_week:           Option<DaysOfWeekType>,
 	pub time:                   Option<String>,
 	pub relative:            		Option<String>,
@@ -115,7 +113,7 @@ pub struct AbsoluteOrRecurringTimeType {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct RecurrenceInformationType {
-	pub recurring_interval:      Option<String>,
+	pub recurring_interval:      Option<RecurringIntervalType>,
 	pub recurring_interval_step: Option<u8>,
 	pub first_execution:         Option<String>,
 	pub execution_count:         Option<u8>,
@@ -142,6 +140,12 @@ pub type ScaleType = i8;
 pub struct ScaledNumberType {
 	pub number: Option<NumberType>,
 	pub scale:  Option<ScaleType>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct ScaledNumberElementsType {
+	pub number: Option<ElementTagType>,
+	pub scale:  Option<ElementTagType>,
 }
 
 pub type MaxResponseDelayType = String;
@@ -1105,7 +1109,7 @@ pub enum FeatureMeasurementSpecificUsageEnumType {
 	Temperature,
 }
 
-pub type FeatureSetpointSpecificUsageEnumType = FeatureMeasurementSpecificUsageEnumType;
+// pub type FeatureSetpointSpecificUsageEnumType = FeatureMeasurementSpecificUsageEnumType;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum FeatureSmartEnergyManagementPsSpecificUsageEnumType {

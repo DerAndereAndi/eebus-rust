@@ -175,6 +175,7 @@ pub struct NetworkManagementFeatureDescriptionDataType {
   pub feuture_address: Option<commondatatypes::FeatureAddressType>,
   pub feature_type: Option<commondatatypes::FeatureTypeType>,
   pub specific_usage: Option<Vec<commondatatypes::FeatureSpecificUsageType>>,
+  pub feature_group: Option<commondatatypes::FeatureGroupType>,
   pub role: Option<commondatatypes::RoleType>,
   pub supported_function: Option<Vec<commondatatypes::FunctionPropertyType>>,
   pub last_state_change: Option<NetworkManagementStateChangeType>,
