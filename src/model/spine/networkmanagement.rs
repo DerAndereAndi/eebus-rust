@@ -218,7 +218,7 @@ pub struct NetworkManagementEntityDescriptionListDataSelectorsType {
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementFeatureDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub feuture_address: Option<commondatatypes::FeatureAddressType>,
+  pub feature_address: Option<commondatatypes::FeatureAddressType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub feature_type: Option<commondatatypes::FeatureTypeType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -252,7 +252,7 @@ pub struct NetworkManagementFeatureDescriptionListDataType {
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementFeatureDescriptionListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub feuture_address: Option<commondatatypes::FeatureAddressType>,
+  pub feature_address: Option<commondatatypes::FeatureAddressType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub feature_type: Option<commondatatypes::FeatureTypeType>,
 }
