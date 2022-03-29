@@ -19,7 +19,7 @@ pub enum TimeSlotTimeModeEnumType {
 	Both,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeTableDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -34,14 +34,14 @@ pub struct TimeTableDataType {
   pub end_time: Option<commondatatypes::AbsoluteOrRecurringTimeType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeTableListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub time_table_data: Option<Vec<TimeTableDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeTableListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -50,7 +50,7 @@ pub struct TimeTableListDataSelectorsType {
   pub time_slot_id: Option<TimeSlotIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeTableConstraintsDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -71,21 +71,21 @@ pub struct TimeTableConstraintsDataType {
   pub first_slot_begins_at: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeTableConstraintsListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub time_table_constraints_data: Option<Vec<TimeTableConstraintsDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeTableConstraintsListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub time_table_id: Option<TimeTableIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeTableDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -102,14 +102,14 @@ pub struct TimeTableDescriptionDataType {
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeTableDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub time_table_description_data: Option<Vec<TimeTableDescriptionDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeTableDescriptionListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]

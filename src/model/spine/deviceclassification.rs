@@ -19,7 +19,7 @@ pub enum PowerSourceEnumType {
 	Dverrun,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceClassificationManufacturerDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -48,7 +48,7 @@ pub struct DeviceClassificationManufacturerDataType {
   pub manufacturer_description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceClassificationUserDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]

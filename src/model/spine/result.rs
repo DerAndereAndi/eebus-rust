@@ -3,7 +3,7 @@ use super::commondatatypes;
 
 pub type ErrorNumberType = u8;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ResultDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]

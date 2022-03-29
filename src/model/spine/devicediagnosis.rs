@@ -42,7 +42,7 @@ pub enum PowerSupplyConditionEnumType {
 	Error,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceDiagnosisStateDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -61,7 +61,7 @@ pub struct DeviceDiagnosisStateDataType {
   power_supply_condition: Option<PowerSupplyConditionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceDiagnosisHeartbeatDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -72,7 +72,7 @@ pub struct DeviceDiagnosisHeartbeatDataType {
   heartbeat_timeout: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceDiagnosisServiceDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]

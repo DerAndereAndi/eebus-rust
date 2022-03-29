@@ -2,13 +2,13 @@ use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 use super::commandframe;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 pub struct SpineType {
 	#[serde(skip_serializing_if = "Option::is_none")]
     pub datagram: Option<DatagramType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 pub struct DatagramType {
 	#[serde(skip_serializing_if = "Option::is_none")]
     pub header: Option<HeaderType>,
@@ -16,7 +16,7 @@ pub struct DatagramType {
     pub payload: Option<PayloadType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct HeaderType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -33,7 +33,7 @@ pub struct HeaderType {
     pub cmd_classifier: Option<commandframe::CmdClassifierType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 pub struct PayloadType {
 	#[serde(skip_serializing_if = "Option::is_none")]
     pub cmd: Option<Vec<commandframe::CmdType>>,

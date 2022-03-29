@@ -73,7 +73,7 @@ pub enum IncentiveValueTypeEnumType {
 	MaxValue,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffOverallConstraintsDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -94,7 +94,7 @@ pub struct TariffOverallConstraintsDataType {
   pub max_incentives_per_tier: Option<IncentiveCountType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -103,14 +103,14 @@ pub struct TariffDataType {
   pub active_tier_id: Option<Vec<TierIdType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tariff_data: Option<Vec<TariffDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -119,7 +119,7 @@ pub struct TariffListDataSelectorsType {
   pub active_tier_id: Option<TierIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffTierRelationDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -128,14 +128,14 @@ pub struct TariffTierRelationDataType {
   pub tier_id: Option<Vec<TierIdType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffTierRelationListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tariff_tier_relation_data: Option<Vec<TariffTierRelationDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffTierRelationListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -144,7 +144,7 @@ pub struct TariffTierRelationListDataSelectorsType {
   pub tier_id: Option<TierIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffBoundaryRelationDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -153,14 +153,14 @@ pub struct TariffBoundaryRelationDataType {
   pub boundary_id: Option<Vec<TierBoundaryIdType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffBoundaryRelationListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tariff_boundary_relation_data: Option<Vec<TariffBoundaryRelationDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffBoundaryRelationListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -169,7 +169,7 @@ pub struct TariffBoundaryRelationListDataSelectorsType {
   pub boundary_id: Option<TierBoundaryIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -192,14 +192,14 @@ pub struct TariffDescriptionDataType {
   pub slot_id_support: Option<bool>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tariff_description_data: Option<Vec<TariffDescriptionDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TariffDescriptionListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -212,7 +212,7 @@ pub struct TariffDescriptionListDataSelectorsType {
   pub scope_type: Option<commondatatypes::ScopeTypeType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierBoundaryDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -227,21 +227,21 @@ pub struct TierBoundaryDataType {
   pub upper_boundary_value: Option<commondatatypes::ScaledNumberType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierBoundaryListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tier_boundary_data: Option<Vec<TierBoundaryDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierBoundaryListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub boundary_id: Option<TierBoundaryIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierBoundaryDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -262,14 +262,14 @@ pub struct TierBoundaryDescriptionDataType {
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierBoundaryDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tier_boundary_description_data: Option<Vec<TierBoundaryDescriptionDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierBoundaryDescriptionListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -278,7 +278,7 @@ pub struct TierBoundaryDescriptionListDataSelectorsType {
   pub boundary_type: Option<TierBoundaryTypeType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct CommodityDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -293,14 +293,14 @@ pub struct CommodityDataType {
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct CommodityListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub commodity_data: Option<Vec<CommodityDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct CommodityListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -309,7 +309,7 @@ pub struct CommodityListDataSelectorsType {
   pub commodity_type: Option<commondatatypes::CommodityTypeType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -322,14 +322,14 @@ pub struct TierDataType {
   pub active_incentive_id: Option<Vec<IncentiveIdType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tier_data: Option<Vec<TierDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -338,7 +338,7 @@ pub struct TierListDataSelectorsType {
   pub active_incentive_id: Option<IncentiveIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierIncentiveRelationDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -347,14 +347,14 @@ pub struct TierIncentiveRelationDataType {
   pub incentive_id: Option<Vec<IncentiveIdType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierIncentiveRelationListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tier_incentive_relation_data: Option<Vec<TierIncentiveRelationDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierIncentiveRelationListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -363,7 +363,7 @@ pub struct TierIncentiveRelationListDataSelectorsType {
   pub incentive_id: Option<IncentiveIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -376,14 +376,14 @@ pub struct TierDescriptionDataType {
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tier_description_data: Option<Vec<TierDescriptionDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TierDescriptionListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -392,7 +392,7 @@ pub struct TierDescriptionListDataSelectorsType {
   pub tier_type: Option<TierTypeType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -409,14 +409,14 @@ pub struct IncentiveDataType {
   pub value: Option<commondatatypes::ScaledNumberType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub incentive_data: Option<Vec<IncentiveDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -427,7 +427,7 @@ pub struct IncentiveListDataSelectorsType {
   pub timestamp: Option<commondatatypes::TimestampIntervalType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -446,14 +446,14 @@ pub struct IncentiveDescriptionDataType {
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub incentive_description_data: Option<Vec<IncentiveDescriptionDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveDescriptionListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]

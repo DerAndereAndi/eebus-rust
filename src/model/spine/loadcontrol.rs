@@ -64,13 +64,13 @@ pub enum LoadControlCategoryEnumType {
 	Optimization,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlNodeDataType {
   pub is_node_remote_controllable: Option<bool>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlEventDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -85,14 +85,14 @@ pub struct LoadControlEventDataType {
   pub time_period: Option<commondatatypes::TimePeriodType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlEventListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub load_control_event_data: Option<Vec<LoadControlEventDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlEventListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -101,7 +101,7 @@ pub struct LoadControlEventListDataSelectorsType {
   pub event_id: Option<LoadControlEventIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlStateDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -118,14 +118,14 @@ pub struct LoadControlStateDataType {
   pub applied_event_action_produce: Option<LoadControlEventActionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlStateListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub load_control_state_data: Option<Vec<LoadControlStateDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlStateListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -134,7 +134,7 @@ pub struct LoadControlStateListDataSelectorsType {
   pub event_id: Option<LoadControlEventIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlLimitDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -149,21 +149,21 @@ pub struct LoadControlLimitDataType {
   pub value: Option<commondatatypes::ScaledNumberType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlLimitListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub load_control_limit_data: Option<Vec<LoadControlLimitDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlLimitListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub limit_id: Option<LoadControlLimitIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlLimitConstraintsDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -176,21 +176,21 @@ pub struct LoadControlLimitConstraintsDataType {
   pub value_step_size: Option<commondatatypes::ScaledNumberType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlLimitConstraintsListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub load_control_limit_constraints_data: Option<Vec<LoadControlLimitConstraintsDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlLimitConstraintsListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub limit_id: Option<LoadControlLimitIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlLimitDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -213,14 +213,14 @@ pub struct LoadControlLimitDescriptionDataType {
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlLimitDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub load_control_limit_description_data: Option<Vec<LoadControlLimitDescriptionDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlLimitDescriptionListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]

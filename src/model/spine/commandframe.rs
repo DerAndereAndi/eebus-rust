@@ -16,7 +16,7 @@ pub enum CmdClassifierType {
 
 pub type FilterIdType = u8;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct FilterType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -35,7 +35,7 @@ pub struct FilterType {
 	pub measurement_list_data_selectors: Option<measurement::MeasurementListDataSelectorsType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 pub struct CmdControlType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	delete:  Option<commondatatypes::ElementTagType>,
@@ -43,7 +43,7 @@ pub struct CmdControlType {
 	partial: Option<commondatatypes::ElementTagType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Filter {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -52,7 +52,7 @@ pub struct Filter {
 	cmd_control: Option<CmdControlType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 pub struct CmdControl {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	delete:  Option<commondatatypes::ElementTagType>,
@@ -60,7 +60,7 @@ pub struct CmdControl {
 	partial: Option<commondatatypes::ElementTagType>
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct CmdType {
 	// CmdOptionGroup

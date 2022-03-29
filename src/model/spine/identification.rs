@@ -16,7 +16,7 @@ pub enum IdentificationTypeEnumType {
 
 pub type IdentificationValueType = String;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IdentificationDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -29,14 +29,14 @@ pub struct IdentificationDataType {
   pub authorized: Option<bool>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IdentificationListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub identification_data: Option<Vec<IdentificationDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IdentificationListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]

@@ -49,7 +49,7 @@ pub enum NetworkManagementStateChangeType {
 	Modified,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementAddNodeCallType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -64,7 +64,7 @@ pub struct NetworkManagementAddNodeCallType {
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementRemoveNodeCallType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -73,7 +73,7 @@ pub struct NetworkManagementRemoveNodeCallType {
   pub timeout: Option<NetworkManagementProcessTimeoutType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementModifyNodeCallType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -88,7 +88,7 @@ pub struct NetworkManagementModifyNodeCallType {
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementScanNetworkCallType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -97,19 +97,19 @@ pub struct NetworkManagementScanNetworkCallType {
   pub timeout: Option<NetworkManagementProcessTimeoutType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementDiscoverCallType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub discover_address: Option<commondatatypes::FeatureAddressType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementAbortCallType {
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementProcessStateDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -118,14 +118,14 @@ pub struct NetworkManagementProcessStateDataType {
   description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementJoiningModeDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub setup: Option<NetworkManagementSetupType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementReportCandidateDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -138,7 +138,7 @@ pub struct NetworkManagementReportCandidateDataType {
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementDeviceDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -165,14 +165,14 @@ pub struct NetworkManagementDeviceDescriptionDataType {
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementDeviceDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub network_management_device_description_data: Option<Vec<NetworkManagementDeviceDescriptionDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementDeviceDescriptionListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -181,7 +181,7 @@ pub struct NetworkManagementDeviceDescriptionListDataSelectorsType {
   pub device_type: Option<commondatatypes::DeviceTypeType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementEntityDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -198,14 +198,14 @@ pub struct NetworkManagementEntityDescriptionDataType {
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementEntityDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub network_management_entity_description_data: Option<Vec<NetworkManagementEntityDescriptionDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementEntityDescriptionListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -214,7 +214,7 @@ pub struct NetworkManagementEntityDescriptionListDataSelectorsType {
   pub entity_type: Option<commondatatypes::EntityTypeType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementFeatureDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -241,14 +241,14 @@ pub struct NetworkManagementFeatureDescriptionDataType {
   pub max_response_delay: Option<commondatatypes::MaxResponseDelayType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementFeatureDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub network_management_feature_description_data: Option<Vec<NetworkManagementFeatureDescriptionDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementFeatureDescriptionListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]

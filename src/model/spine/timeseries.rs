@@ -19,7 +19,7 @@ pub enum TimeSeriesTypeEnumType {
 	Constraints,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeSeriesSlotType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -38,7 +38,7 @@ pub struct TimeSeriesSlotType {
   pub max_value: Option<commondatatypes::ScaledNumberType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeSeriesDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -49,14 +49,14 @@ pub struct TimeSeriesDataType {
   pub time_series_slot: Option<Vec<TimeSeriesSlotType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeSeriesListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub time_series_data: Option<Vec<TimeSeriesDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeSeriesListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -65,7 +65,7 @@ pub struct TimeSeriesListDataSelectorsType {
   pub time_series_slot_id: Option<TimeSeriesSlotIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeSeriesDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -90,14 +90,14 @@ pub struct TimeSeriesDescriptionDataType {
   pub scope_type: Option<commondatatypes::ScopeTypeType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeSeriesDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub time_series_description_data: Option<Vec<TimeSeriesDescriptionDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeSeriesDescriptionListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -110,7 +110,7 @@ pub struct TimeSeriesDescriptionListDataSelectorsType {
   pub scope_type: Option<commondatatypes::ScopeTypeType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeSeriesConstraintsDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -137,14 +137,14 @@ pub struct TimeSeriesConstraintsDataType {
   pub slot_value_step_size: Option<commondatatypes::ScaledNumberType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeSeriesConstraintsListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub time_series_constraints_data: Option<Vec<TimeSeriesConstraintsDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeSeriesConstraintsListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]

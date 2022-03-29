@@ -33,7 +33,7 @@ pub enum UseCaseNameEnumType {
 
 pub type UseCaseScenarioSupportType = u8;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct UseCaseSupportType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -46,7 +46,7 @@ pub struct UseCaseSupportType {
   pub scenario_support: Option<Vec<UseCaseScenarioSupportType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct UseCaseSupportSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -57,7 +57,7 @@ pub struct UseCaseSupportSelectorsType {
   pub scenario_support: Option<UseCaseScenarioSupportType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct UseCaseInformationDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -68,14 +68,14 @@ pub struct UseCaseInformationDataType {
   pub use_case_support: Option<Vec<UseCaseSupportType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct UseCaseInformationListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub use_case_information_data: Option<Vec<UseCaseInformationDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct UseCaseInformationListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]

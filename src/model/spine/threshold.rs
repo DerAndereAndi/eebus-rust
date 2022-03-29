@@ -29,7 +29,7 @@ pub enum ThresholdTypeEnumType {
 	SwellThreshold,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ThresholdDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -38,21 +38,21 @@ pub struct ThresholdDataType {
   pub threshold_value: Option<commondatatypes::ScaledNumberType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ThresholdListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub threshold_data: Option<Vec<ThresholdDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ThresholdListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub threshold_id: Option<ThresholdIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ThresholdConstraintsDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -65,7 +65,7 @@ pub struct ThresholdConstraintsDataType {
   pub threshold_step_size: Option<commondatatypes::ScaledNumberType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ThresholdConstraintsDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -78,21 +78,21 @@ pub struct ThresholdConstraintsDataElementsType {
   pub threshold_step_size: Option<commondatatypes::ScaledNumberElementsType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ThresholdConstraintsListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub threshold_constraints_data: Option<Vec<ThresholdConstraintsDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ThresholdConstraintsListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub threshold_id: Option<ThresholdIdType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ThresholdDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -109,7 +109,7 @@ pub struct ThresholdDescriptionDataType {
   pub description: Option<commondatatypes::DescriptionType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ThresholdDescriptionDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -126,14 +126,14 @@ pub struct ThresholdDescriptionDataElementsType {
   pub description: Option<commondatatypes::ElementTagType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ThresholdDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub threshold_description_data: Option<Vec<ThresholdDescriptionDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ThresholdDescriptionListDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]

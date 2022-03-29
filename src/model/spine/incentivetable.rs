@@ -2,7 +2,7 @@ use serde::{Serialize, Deserialize};
 use super::timetable;
 use super::tarifinformation;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -11,7 +11,7 @@ pub struct IncentiveTableType {
   pub incentive_slot: Option<Vec<IncentiveTableIncentiveSlotType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableIncentiveSlotType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -20,7 +20,7 @@ pub struct IncentiveTableIncentiveSlotType {
   pub tier: Option<Vec<IncentiveTableTierType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableTierType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -31,21 +31,21 @@ pub struct IncentiveTableTierType {
   pub incentive: Option<Vec<tarifinformation::IncentiveDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub incentive_table: Option<Vec<IncentiveTableType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tariff: Option<tarifinformation::TariffListDataSelectorsType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableDescriptionType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -54,7 +54,7 @@ pub struct IncentiveTableDescriptionType {
   pub tier: Option<Vec<IncentiveTableDescriptionTierType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableDescriptionTierType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -65,21 +65,21 @@ pub struct IncentiveTableDescriptionTierType {
   pub incentive_description: Option<Vec<tarifinformation::IncentiveDescriptionDataType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub incentive_table_description: Option<Vec<IncentiveTableDescriptionType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableDescriptionDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tariff_description: Option<tarifinformation::TariffDescriptionListDataSelectorsType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableConstraintsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -90,14 +90,14 @@ pub struct IncentiveTableConstraintsType {
   pub incentive_slot_constraints: Option<timetable::TimeTableConstraintsDataType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableConstraintsDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub incentive_table_constraints: Option<Vec<IncentiveTableConstraintsType>>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IncentiveTableConstraintsDataSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
