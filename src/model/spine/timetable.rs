@@ -9,7 +9,7 @@ pub type TimeSlotCountType = TimeSlotIdType;
 
 pub type TimeSlotTimeModeType = TimeSlotTimeModeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum TimeSlotTimeModeEnumType {
 	#[serde(rename = "absolute")]
 	Absolute,

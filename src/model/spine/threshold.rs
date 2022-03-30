@@ -5,7 +5,7 @@ pub type ThresholdIdType = u8;
 
 pub type ThresholdTypeType = ThresholdTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum ThresholdTypeEnumType {
 	#[serde(rename = "goodAbove")]
 	GoodAbove,

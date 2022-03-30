@@ -8,7 +8,7 @@ pub type ElectricalConnectionParameterIdType = u8;
 
 pub type ElectricalConnectionMeasurandVariantType = ElectricalConnectionMeasurandVariantEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum ElectricalConnectionMeasurandVariantEnumType {
 	#[serde(rename = "amplitude")]
 	Amplitude,
@@ -24,7 +24,7 @@ pub enum ElectricalConnectionMeasurandVariantEnumType {
 
 pub type ElectricalConnectionVoltageTypeType = ElectricalConnectionVoltageTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum ElectricalConnectionVoltageTypeEnumType {
 	#[serde(rename = "ac")]
 	Ac,
@@ -34,7 +34,7 @@ pub enum ElectricalConnectionVoltageTypeEnumType {
 
 pub type ElectricalConnectionAcMeasurementTypeType = ElectricalConnectionAcMeasurementTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum ElectricalConnectionAcMeasurementTypeEnumType {
 	#[serde(rename = "real")]
 	Real,
@@ -48,7 +48,7 @@ pub enum ElectricalConnectionAcMeasurementTypeEnumType {
 
 pub type ElectricalConnectionPhaseNameType = ElectricalConnectionPhaseNameEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum ElectricalConnectionPhaseNameEnumType {
 	#[serde(rename = "a")]
 	A,
@@ -72,7 +72,7 @@ pub enum ElectricalConnectionPhaseNameEnumType {
 	None,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum ElectricalConnectionConnectionPointType {
 	#[serde(rename = "grid")]
 	Grid,

@@ -5,7 +5,7 @@ pub type DeviceClassificationStringType = String;
 
 pub type PowerSourceType = PowerSourceEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum PowerSourceEnumType {
 	#[serde(rename = "unknown")]
 	Unknown,

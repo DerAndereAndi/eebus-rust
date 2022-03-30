@@ -6,7 +6,7 @@ pub type LoadControlEventIdType = String;
 
 pub type LoadControlEventActionType = LoadControlEventActionEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum LoadControlEventActionEnumType {
 	#[serde(rename = "pause")]
 	Pause,
@@ -24,7 +24,7 @@ pub enum LoadControlEventActionEnumType {
 
 pub type LoadControlEventStateType = LoadControlEventStateEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum LoadControlEventStateEnumType {
 	#[serde(rename = "eventAccepted")]
 	EventAccepted,
@@ -44,7 +44,7 @@ pub type LoadControlLimitIdType = u8;
 
 pub type LoadControlLimitTypeType = LoadControlLimitTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum LoadControlLimitTypeEnumType {
 	#[serde(rename = "minValueLimit")]
 	MinValueLimit,
@@ -54,7 +54,7 @@ pub enum LoadControlLimitTypeEnumType {
 
 pub type LoadControlCategoryType = LoadControlCategoryEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum LoadControlCategoryEnumType {
 	#[serde(rename = "obligation")]
 	Obligation,

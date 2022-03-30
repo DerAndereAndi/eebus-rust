@@ -7,7 +7,7 @@ pub type DeviceConfigurationKeyValueStringType = String;
 
 pub type DeviceConfigurationKeyNameType = DeviceConfigurationKeyNameEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum DeviceConfigurationKeyNameEnumType {
 	#[serde(rename = "peakPowerOfPvSystem")]
 	PeakPowerOfPvSystem,
@@ -19,7 +19,7 @@ pub enum DeviceConfigurationKeyNameEnumType {
 	CommunicationsStandard,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum DeviceConfigurationKeyValueTypeType {
 	#[serde(rename = "boolean")]
 	Boolean,

@@ -13,7 +13,7 @@ pub type TierBoundaryCountType = TierBoundaryIdType;
 
 pub type TierBoundaryTypeType = TierBoundaryTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum TierBoundaryTypeEnumType {
 	#[serde(rename = "powerBoundary")]
 	PowerBoundary,
@@ -31,7 +31,7 @@ pub type TierCountType = TierIdType;
 
 pub type TierTypeType = TierTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum TierTypeEnumType {
 	#[serde(rename = "fixedCost")]
 	FixedCost,
@@ -45,7 +45,7 @@ pub type IncentiveCountType = IncentiveIdType;
 
 pub type IncentiveTypeType = IncentiveTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum IncentiveTypeEnumType {
 	#[serde(rename = "absoluteCost")]
 	AbsoluteCost,
@@ -61,7 +61,7 @@ pub type IncentivePriorityType = u8;
 
 pub type IncentiveValueTypeType = IncentiveValueTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum IncentiveValueTypeEnumType {
 	#[serde(rename = "value")]
 	Value,

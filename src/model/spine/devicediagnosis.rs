@@ -6,7 +6,7 @@ pub type LastErrorCodeType = String;
 
 pub type DeviceDiagnosisOperatingStateType = DeviceDiagnosisOperatingStateEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum DeviceDiagnosisOperatingStateEnumType {
 	#[serde(rename = "normalOperation")]
 	NormalOperation,
@@ -28,7 +28,7 @@ pub enum DeviceDiagnosisOperatingStateEnumType {
 
 pub type PowerSupplyConditionType = PowerSupplyConditionEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum PowerSupplyConditionEnumType {
 	#[serde(rename = "good")]
 	Good,

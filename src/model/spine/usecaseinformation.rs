@@ -3,7 +3,7 @@ use super::commondatatypes;
 
 pub type UseCaseActorType = UseCaseActorEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum UseCaseActorEnumType {
 	#[serde(rename = "EV")]
 	Ev,
@@ -11,7 +11,7 @@ pub enum UseCaseActorEnumType {
 
 pub type UseCaseNameType = UseCaseNameEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum UseCaseNameEnumType {
 	#[serde(rename = "measurementOfElectricityDuringEvCharging")]
 	MeasurementOfElectricityDuringEvCharging,

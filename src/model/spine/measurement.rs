@@ -6,7 +6,7 @@ pub type MeasurementIdType = u8;
 
 pub type MeasurementTypeType = MeasurementTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum MeasurementTypeEnumType {
 	#[serde(rename = "acceleration")]
 	Acceleration,
@@ -96,7 +96,7 @@ pub enum MeasurementTypeEnumType {
 
 pub type MeasurementValueTypeType = MeasurementValueTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum MeasurementValueTypeEnumType {
 	#[serde(rename = "value")]
 	Value,
@@ -112,7 +112,7 @@ pub enum MeasurementValueTypeEnumType {
 
 pub type MeasurementValueSourceType = MeasurementValueSourceEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum MeasurementValueSourceEnumType {
 	#[serde(rename = "measuredValue")]
 	MeasuredValue,
@@ -124,7 +124,7 @@ pub enum MeasurementValueSourceEnumType {
 
 pub type MeasurementValueTendencyType = MeasurementValueTendencyEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum MeasurementValueTendencyEnumType {
 	#[serde(rename = "rising")]
 	Rising,
@@ -136,7 +136,7 @@ pub enum MeasurementValueTendencyEnumType {
 
 pub type MeasurementValueStateType = MeasurementValueStateEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum MeasurementValueStateEnumType {
 	#[serde(rename = "normal")]
 	Normal,

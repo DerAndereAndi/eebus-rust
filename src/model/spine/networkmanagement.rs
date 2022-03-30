@@ -17,7 +17,7 @@ pub type NetworkManagementMinimumTrustLevelType = String;
 
 pub type NetworkManagementProcessTimeoutType = String;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum NetworkManagementFeatureSetType {
 	#[serde(rename = "gateway")]
 	Gateway,
@@ -29,7 +29,7 @@ pub enum NetworkManagementFeatureSetType {
 	Simple,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum NetworkManagementProcessStateStateType {
 	#[serde(rename = "succeeded")]
 	Succeeded,
@@ -39,7 +39,7 @@ pub enum NetworkManagementProcessStateStateType {
 	Aborted,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum NetworkManagementStateChangeType {
 	#[serde(rename = "added")]
 	Added,

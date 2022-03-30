@@ -4,7 +4,7 @@ pub type IdentificationIdType = u8;
 
 pub type IdentificationTypeType = IdentificationTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum IdentificationTypeEnumType {
 	#[serde(rename = "eui48")]
 	Eui48,

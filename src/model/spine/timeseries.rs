@@ -9,7 +9,7 @@ pub type TimeSeriesSlotCountType = TimeSeriesSlotIdType;
 
 pub type TimeSeriesTypeType = TimeSeriesTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum TimeSeriesTypeEnumType {
 	#[serde(rename = "plan")]
 	Plan,

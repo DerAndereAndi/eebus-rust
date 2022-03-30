@@ -28,7 +28,7 @@ pub type AbsoluteOrRelativeTimeType = String;
 
 pub type RecurringIntervalType = RecurringIntervalEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum RecurringIntervalEnumType {
     Yearly,
@@ -40,7 +40,7 @@ pub enum RecurringIntervalEnumType {
 		EverySecond,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum MonthType {
     January,
@@ -61,7 +61,7 @@ pub type DayOfMonthType = u8;
 
 pub type CalendarWeekType = u8;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum DayOfWeekType {
     Monday,
@@ -86,7 +86,7 @@ pub struct DaysOfWeekType {
 
 pub type OccurrenceType = String;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum OccurrenceEnumType {
 	#[serde(rename = "first")]
 	First,
@@ -176,7 +176,7 @@ pub type MaxResponseDelayType = String;
 
 pub type CommodityTypeType = CommodityTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum CommodityTypeEnumType {
 	#[serde(rename = "electricity")]
 	Electricity,
@@ -204,7 +204,7 @@ pub enum CommodityTypeEnumType {
 
 pub type EnergyDirectionType = EnergyDirectionEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum EnergyDirectionEnumType {
 	#[serde(rename = "consume")]
 	Consume,
@@ -215,7 +215,7 @@ pub enum EnergyDirectionEnumType {
 pub type EnergyModeType = EnergyModeEnumType;
 
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum EnergyModeEnumType {
 	#[serde(rename = "consume")]
 	Consume,
@@ -229,7 +229,7 @@ pub enum EnergyModeEnumType {
 
 pub type UnitOfMeasurementType = UnitOfMeasurementEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum UnitOfMeasurementEnumType {
 	#[serde(rename = "unknown")]
 	Unknown,
@@ -421,7 +421,7 @@ pub enum UnitOfMeasurementEnumType {
 
 pub type CurrencyType = CurrencyEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum CurrencyEnumType {
 	#[serde(rename = "AED")]
 	Aed,
@@ -813,7 +813,7 @@ pub struct FeatureAddressType {
 
 pub type ScopeTypeType = ScopeTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum ScopeTypeEnumType {
 	#[serde(rename = "ac")]
 	Ac,
@@ -905,7 +905,7 @@ pub enum ScopeTypeEnumType {
 	SimpleIncentiveTable,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum RoleType {
 	Client,
@@ -917,7 +917,7 @@ pub type FeatureGroupType = String;
 
 pub type DeviceTypeType = DeviceTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum DeviceTypeEnumType {
 	#[serde(rename = "Dishwasher")]
 	Dishwasher,
@@ -951,7 +951,7 @@ pub enum DeviceTypeEnumType {
 
 pub type EntityTypeType = EntityTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum EntityTypeEnumType {
 	#[serde(rename = "Battery")]
 	Battery,
@@ -1037,7 +1037,7 @@ pub enum EntityTypeEnumType {
 
 pub type FeatureTypeType = FeatureTypeEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum FeatureTypeEnumType {
 	#[serde(rename = "ActuratorLevel")]
 	ActuratorLevel,
@@ -1107,7 +1107,7 @@ pub type FeatureSpecificUsageType = FeatureSpecificUsageEnumType;
 
 pub type FeatureSpecificUsageEnumType = String;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum FeatureDirectControlSpecificUsageEnumType {
 	#[serde(rename = "History")]
 	History,
@@ -1115,7 +1115,7 @@ pub enum FeatureDirectControlSpecificUsageEnumType {
 	RealTime,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum FeatureHvacSpecificUsageEnumType {
 	#[serde(rename = "OperationMode")]
 	OperationMode,
@@ -1123,7 +1123,7 @@ pub enum FeatureHvacSpecificUsageEnumType {
 	Overrun,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum FeatureMeasurementSpecificUsageEnumType {
 	#[serde(rename = "Contact")]
 	Contact,
@@ -1141,7 +1141,7 @@ pub enum FeatureMeasurementSpecificUsageEnumType {
 
 // pub type FeatureSetpointSpecificUsageEnumType = FeatureMeasurementSpecificUsageEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum FeatureSmartEnergyManagementPsSpecificUsageEnumType {
 	#[serde(rename = "FixedForecast")]
 	FixedForecast,
@@ -1155,7 +1155,7 @@ pub enum FeatureSmartEnergyManagementPsSpecificUsageEnumType {
 
 pub type FunctionType = FunctionEnumType;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum FunctionEnumType {
 	#[serde(rename = "actuatorLevelData")]
 	ActuatorLevelData,

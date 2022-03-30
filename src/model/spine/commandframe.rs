@@ -3,7 +3,7 @@ use super::{commondatatypes, electricalconnection, measurement, deviceclassifica
 
 pub type MsgCounterType = u64;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum CmdClassifierType {
     Read,
