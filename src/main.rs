@@ -3,6 +3,12 @@ mod model;
 use serde_json::{Value, json};
 use model::spine;
 
+use std::any::Any;
+use std::sync::{Arc, Mutex};
+use std::time::Duration;
+use zeroconf::prelude::*;
+use zeroconf::{MdnsBrowser, MdnsService, ServiceDiscovery, ServiceRegistration, ServiceType, TxtRecord};
+
 // process incoming json strings and transform it to match the model structure
 fn transform_received_json(data: &str) -> String {
     let mut result: String = str::replace(data, "[{", "{");
@@ -82,6 +88,71 @@ fn test_de_serializing() {
     println!("result identical to original json? {:?}", result.eq(json));
 }
 
+#[derive(Default, Debug)]
+pub struct Context {
+    service_name: String,
+}
+
 fn main() {
-    test_de_serializing();
+    // test_de_serializing();
+
+    let mut browser = MdnsBrowser::new(ServiceType::new("ship", "tcp").unwrap());
+
+    browser.set_service_discovered_callback(Box::new(on_service_discovered));
+
+    let mut service = MdnsService::new(ServiceType::new("ship", "tcp").unwrap(), 4712);
+    let mut txt_record = TxtRecord::new();
+    let context: Arc<Mutex<Context>> = Arc::default();
+
+    txt_record.insert("txtvers", "1").unwrap();
+    txt_record.insert("path", "/ship/").unwrap();
+    txt_record.insert("id", "0").unwrap();
+    txt_record.insert("ski", "0").unwrap();
+    txt_record.insert("brand", "WIP").unwrap();
+    txt_record.insert("model", "WIP").unwrap();
+    txt_record.insert("type", &spine::commondatatypes::DeviceTypeEnumType::EnergyManagementSystem.to_string()).unwrap();
+
+    service.set_registered_callback(Box::new(on_service_registered));
+    service.set_context(Box::new(context));
+    service.set_txt_record(txt_record);
+
+    let event_service_loop = service.register().unwrap();
+    let event_browse_loop = browser.browse_services().unwrap();
+
+    loop {
+        // calling `poll()` will keep this browser alive
+        event_browse_loop.poll(Duration::from_secs(0)).unwrap();
+        event_service_loop.poll(Duration::from_secs(0)).unwrap();
+    }
+}
+
+fn on_service_discovered(
+    result: zeroconf::Result<ServiceDiscovery>,
+    _context: Option<Arc<dyn Any>>,
+) {
+    println!("Service discovered: {:?}", result.unwrap());
+
+    // ...
+}
+
+fn on_service_registered(
+    result: zeroconf::Result<ServiceRegistration>,
+    context: Option<Arc<dyn Any>>,
+) {
+    let service = result.unwrap();
+
+    println!("Service registered: {:?}", service);
+
+    let context = context
+        .as_ref()
+        .unwrap()
+        .downcast_ref::<Arc<Mutex<Context>>>()
+        .unwrap()
+        .clone();
+
+    context.lock().unwrap().service_name = service.name().clone();
+
+    println!("Context: {:?}", context);
+
+    // ...
 }

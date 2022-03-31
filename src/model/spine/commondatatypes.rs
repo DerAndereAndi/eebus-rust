@@ -1,3 +1,4 @@
+use std::fmt::Display;
 use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Default, Debug)]
