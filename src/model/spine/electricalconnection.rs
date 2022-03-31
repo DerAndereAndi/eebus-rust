@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 use super::measurement;
@@ -22,6 +26,12 @@ pub enum ElectricalConnectionMeasurandVariantEnumType {
 	CosPhi,
 }
 
+impl fmt::Display for ElectricalConnectionMeasurandVariantEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type ElectricalConnectionVoltageTypeType = ElectricalConnectionVoltageTypeEnumType;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
@@ -30,6 +40,12 @@ pub enum ElectricalConnectionVoltageTypeEnumType {
 	Ac,
 	#[serde(rename = "dc")]
 	Dc,
+}
+
+impl fmt::Display for ElectricalConnectionVoltageTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type ElectricalConnectionAcMeasurementTypeType = ElectricalConnectionAcMeasurementTypeEnumType;
@@ -44,6 +60,12 @@ pub enum ElectricalConnectionAcMeasurementTypeEnumType {
 	Apparent,
 	#[serde(rename = "phase")]
 	Phase,
+}
+
+impl fmt::Display for ElectricalConnectionAcMeasurementTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type ElectricalConnectionPhaseNameType = ElectricalConnectionPhaseNameEnumType;
@@ -72,6 +94,12 @@ pub enum ElectricalConnectionPhaseNameEnumType {
 	None,
 }
 
+impl fmt::Display for ElectricalConnectionPhaseNameEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum ElectricalConnectionConnectionPointType {
 	#[serde(rename = "grid")]
@@ -84,6 +112,12 @@ pub enum ElectricalConnectionConnectionPointType {
 	Sd,
 	#[serde(rename = "other")]
 	Other,
+}
+
+impl fmt::Display for ElectricalConnectionConnectionPointType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

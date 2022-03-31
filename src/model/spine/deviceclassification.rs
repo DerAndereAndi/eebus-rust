@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 
@@ -17,6 +21,12 @@ pub enum PowerSourceEnumType {
 	Battery,
 	#[serde(rename = "dc")]
 	Dverrun,
+}
+
+impl fmt::Display for PowerSourceEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]

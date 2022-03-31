@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 
 pub type VendorStateCodeType = String;
@@ -26,6 +30,12 @@ pub enum DeviceDiagnosisOperatingStateEnumType {
 	Finished,
 }
 
+impl fmt::Display for DeviceDiagnosisOperatingStateEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type PowerSupplyConditionType = PowerSupplyConditionEnumType;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
@@ -40,6 +50,12 @@ pub enum PowerSupplyConditionEnumType {
 	Unknown,
 	#[serde(rename = "error")]
 	Error,
+}
+
+impl fmt::Display for PowerSupplyConditionEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

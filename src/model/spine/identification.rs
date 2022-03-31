@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 
 pub type IdentificationIdType = u8;
@@ -12,6 +16,12 @@ pub enum IdentificationTypeEnumType {
 	Eui64,
 	#[serde(rename = "userRfidTag")]
 	UserRfidTag,
+}
+
+impl fmt::Display for IdentificationTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type IdentificationValueType = String;

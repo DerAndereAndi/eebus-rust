@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 
@@ -19,6 +23,12 @@ pub enum DeviceConfigurationKeyNameEnumType {
 	CommunicationsStandard,
 }
 
+impl fmt::Display for DeviceConfigurationKeyNameEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum DeviceConfigurationKeyValueTypeType {
 	#[serde(rename = "boolean")]
@@ -35,6 +45,12 @@ pub enum DeviceConfigurationKeyValueTypeType {
 	Time,
 	#[serde(rename = "scaledNumber")]
 	ScaledNumber,
+}
+
+impl fmt::Display for DeviceConfigurationKeyValueTypeType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

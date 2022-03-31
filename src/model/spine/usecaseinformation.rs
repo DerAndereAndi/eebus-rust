@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 
@@ -7,6 +11,12 @@ pub type UseCaseActorType = UseCaseActorEnumType;
 pub enum UseCaseActorEnumType {
 	#[serde(rename = "EV")]
 	Ev,
+}
+
+impl fmt::Display for UseCaseActorEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type UseCaseNameType = UseCaseNameEnumType;
@@ -29,6 +39,12 @@ pub enum UseCaseNameEnumType {
 	EvChargingSummary,
 	#[serde(rename = "evStateOfCharge")]
 	EvStateOfCharge,
+}
+
+impl fmt::Display for UseCaseNameEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type UseCaseScenarioSupportType = u8;

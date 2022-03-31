@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 use super::{commondatatypes, measurement};
 
@@ -17,6 +21,12 @@ pub enum TimeSeriesTypeEnumType {
 	SingleDemand,
 	#[serde(rename = "constraints")]
 	Constraints,
+}
+
+impl fmt::Display for TimeSeriesTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
