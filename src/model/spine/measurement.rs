@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 use super::threshold;
@@ -94,6 +98,12 @@ pub enum MeasurementTypeEnumType {
 	VolumetricFlow,
 }
 
+impl fmt::Display for MeasurementTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type MeasurementValueTypeType = MeasurementValueTypeEnumType;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
@@ -110,6 +120,12 @@ pub enum MeasurementValueTypeEnumType {
 	StandardDeviation,
 }
 
+impl fmt::Display for MeasurementValueTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type MeasurementValueSourceType = MeasurementValueSourceEnumType;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
@@ -120,6 +136,12 @@ pub enum MeasurementValueSourceEnumType {
 	CalculatedValue,
 	#[serde(rename = "empiricalValue")]
 	EmpiricalValue,
+}
+
+impl fmt::Display for MeasurementValueSourceEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type MeasurementValueTendencyType = MeasurementValueTendencyEnumType;
@@ -134,6 +156,12 @@ pub enum MeasurementValueTendencyEnumType {
 	Falling,
 }
 
+impl fmt::Display for MeasurementValueTendencyEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type MeasurementValueStateType = MeasurementValueStateEnumType;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
@@ -144,6 +172,12 @@ pub enum MeasurementValueStateEnumType {
 	OutOfRange,
 	#[serde(rename = "error")]
 	Error,
+}
+
+impl fmt::Display for MeasurementValueStateEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

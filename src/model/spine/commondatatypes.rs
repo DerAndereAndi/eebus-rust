@@ -1,4 +1,8 @@
-use std::fmt::Display;
+#![allow(dead_code)]
+
+use std::fmt;
+
+use super::super::utils;
 use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -41,6 +45,12 @@ pub enum RecurringIntervalEnumType {
 		EverySecond,
 }
 
+impl fmt::Display for RecurringIntervalEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum MonthType {
@@ -58,6 +68,12 @@ pub enum MonthType {
 		December,
 }
 
+impl fmt::Display for MonthType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type DayOfMonthType = u8;
 
 pub type CalendarWeekType = u8;
@@ -72,6 +88,12 @@ pub enum DayOfWeekType {
     Friday,
     Saturday,
 		Sunday,
+}
+
+impl fmt::Display for DayOfWeekType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -99,6 +121,12 @@ pub enum OccurrenceEnumType {
 	Fourth,
 	#[serde(rename = "last")]
 	Last,
+}
+
+impl fmt::Display for OccurrenceEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -203,6 +231,12 @@ pub enum CommodityTypeEnumType {
 	Air,
 }
 
+impl fmt::Display for CommodityTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type EnergyDirectionType = EnergyDirectionEnumType;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
@@ -213,8 +247,13 @@ pub enum EnergyDirectionEnumType {
 	Produce,
 }
 
-pub type EnergyModeType = EnergyModeEnumType;
+impl fmt::Display for EnergyDirectionEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
 
+pub type EnergyModeType = EnergyModeEnumType;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum EnergyModeEnumType {
@@ -226,6 +265,12 @@ pub enum EnergyModeEnumType {
 	Idle,
 	#[serde(rename = "auto")]
 	Auto,
+}
+
+impl fmt::Display for EnergyModeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type UnitOfMeasurementType = UnitOfMeasurementEnumType;
@@ -420,366 +465,201 @@ pub enum UnitOfMeasurementEnumType {
 	KgWh,
 }
 
+impl fmt::Display for UnitOfMeasurementEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type CurrencyType = CurrencyEnumType;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
+#[serde(rename_all = "UPPERCASE")]
 pub enum CurrencyEnumType {
-	#[serde(rename = "AED")]
-	Aed,
-	#[serde(rename = "AFN")]
-	Afn,
-	#[serde(rename = "ALL")]
-	All,
-	#[serde(rename = "AMD")]
-	Amd,
-	#[serde(rename = "ANG")]
-	Ang,
-	#[serde(rename = "AOA")]
-	Aoa,
-	#[serde(rename = "ARS")]
-	Ars,
-	#[serde(rename = "AUD")]
-	Aud,
-	#[serde(rename = "AWG")]
-	Awg,
-	#[serde(rename = "AZN")]
-	Azn,
-	#[serde(rename = "BAM")]
-	Bam,
-	#[serde(rename = "BBD")]
-	Bbd,
-	#[serde(rename = "BDT")]
-	Bdt,
-	#[serde(rename = "BGN")]
-	Bgn,
-	#[serde(rename = "BHD")]
-	Bhd,
-	#[serde(rename = "BIF")]
-	Bif,
-	#[serde(rename = "BMD")]
-	Bmd,
-	#[serde(rename = "BND")]
-	Bnd,
-	#[serde(rename = "BOB")]
-	Bob,
-	#[serde(rename = "BOV")]
-	Bov,
-	#[serde(rename = "BRL")]
-	Brl,
-	#[serde(rename = "BSD")]
-	Bsd,
-	#[serde(rename = "BTN")]
-	Btn,
-	#[serde(rename = "BWP")]
-	Bwp,
-	#[serde(rename = "BYR")]
-	Byr,
-	#[serde(rename = "BZD")]
-	Bzd,
-	#[serde(rename = "CAD")]
-	Cad,
-	#[serde(rename = "CDF")]
-	Cdf,
-	#[serde(rename = "CHE")]
-	Che,
-	#[serde(rename = "CHF")]
-	Chf,
-	#[serde(rename = "CHW")]
-	Chw,
-	#[serde(rename = "CLF")]
-	Clf,
-	#[serde(rename = "CLP")]
-	Clp,
-	#[serde(rename = "CNY")]
-	Cny,
-	#[serde(rename = "COP")]
-	Cop,
-	#[serde(rename = "COU")]
-	Cou,
-	#[serde(rename = "CRC")]
-	Crc,
-	#[serde(rename = "CUC")]
-	Cuc,
-	#[serde(rename = "CUP")]
-	Cup,
-	#[serde(rename = "CVE")]
-	Cve,
-	#[serde(rename = "CZK")]
-	Czk,
-	#[serde(rename = "DJF")]
-	Djf,
-	#[serde(rename = "DKK")]
-	Dkk,
-	#[serde(rename = "DOP")]
-	Dop,
-	#[serde(rename = "DZD")]
-	Dzd,
-	#[serde(rename = "EGP")]
-	Egp,
-	#[serde(rename = "ERN")]
-	Ern,
-	#[serde(rename = "ETB")]
-	Etb,
-	#[serde(rename = "EUR")]
-	Eur,
-	#[serde(rename = "FJD")]
-	Fjd,
-	#[serde(rename = "FKP")]
-	Fkp,
-	#[serde(rename = "GBP")]
-	Gbp,
-	#[serde(rename = "GEL")]
-	Gel,
-	#[serde(rename = "GHS")]
-	Ghs,
-	#[serde(rename = "GIP")]
-	Gip,
-	#[serde(rename = "GMD")]
-	Gmd,
-	#[serde(rename = "GNF")]
-	Gnf,
-	#[serde(rename = "GTQ")]
-	Gtq,
-	#[serde(rename = "GYD")]
-	Gyd,
-	#[serde(rename = "HKD")]
-	Hkd,
-	#[serde(rename = "HNL")]
-	Hnl,
-	#[serde(rename = "HRK")]
-	Hrk,
-	#[serde(rename = "HTG")]
-	Htg,
-	#[serde(rename = "HUF")]
-	Huf,
-	#[serde(rename = "IDR")]
-	Idr,
-	#[serde(rename = "ILS")]
-	Ils,
-	#[serde(rename = "INR")]
-	Inr,
-	#[serde(rename = "IQD")]
-	Iqd,
-	#[serde(rename = "IRR")]
-	Irr,
-	#[serde(rename = "ISK")]
-	Isk,
-	#[serde(rename = "JMD")]
-	Jmd,
-	#[serde(rename = "JOD")]
-	Jod,
-	#[serde(rename = "JPY")]
-	Jpy,
-	#[serde(rename = "KES")]
-	Kes,
-	#[serde(rename = "KGS")]
-	Kgs,
-	#[serde(rename = "KHR")]
-	Khr,
-	#[serde(rename = "KMF")]
-	Kmf,
-	#[serde(rename = "KPW")]
-	Kpw,
-	#[serde(rename = "KRW")]
-	Krw,
-	#[serde(rename = "KWD")]
-	Kwd,
-	#[serde(rename = "KYD")]
-	Kyd,
-	#[serde(rename = "KZT")]
-	Kzt,
-	#[serde(rename = "LAK")]
-	Lak,
-	#[serde(rename = "LBP")]
-	Lbp,
-	#[serde(rename = "LKR")]
-	Lkr,
-	#[serde(rename = "LRD")]
-	Lrd,
-	#[serde(rename = "LSL")]
-	Lsl,
-	#[serde(rename = "LYD")]
-	Lyd,
-	#[serde(rename = "MAD")]
-	Mad,
-	#[serde(rename = "MDL")]
-	Mdl,
-	#[serde(rename = "MGA")]
-	Mga,
-	#[serde(rename = "MKD")]
-	Mkd,
-	#[serde(rename = "MMK")]
-	Mmk,
-	#[serde(rename = "MNT")]
-	Mnt,
-	#[serde(rename = "MOP")]
-	Mop,
-	#[serde(rename = "MRO")]
-	Mro,
-	#[serde(rename = "MUR")]
-	Mur,
-	#[serde(rename = "MVR")]
-	Mvr,
-	#[serde(rename = "MWK")]
-	Mwk,
-	#[serde(rename = "MXN")]
-	Mxn,
-	#[serde(rename = "MXV")]
-	Mxv,
-	#[serde(rename = "MYR")]
-	Myr,
-	#[serde(rename = "MZN")]
-	Mzn,
-	#[serde(rename = "NAD")]
-	Nad,
-	#[serde(rename = "NGN")]
-	Ngn,
-	#[serde(rename = "NIO")]
-	Nio,
-	#[serde(rename = "NOK")]
-	Nok,
-	#[serde(rename = "NPR")]
-	Npr,
-	#[serde(rename = "NZD")]
-	Nzd,
-	#[serde(rename = "OMR")]
-	Omr,
-	#[serde(rename = "PAB")]
-	Pab,
-	#[serde(rename = "PEN")]
-	Pen,
-	#[serde(rename = "PGK")]
-	Pgk,
-	#[serde(rename = "PHP")]
-	Php,
-	#[serde(rename = "PKR")]
-	Pkr,
-	#[serde(rename = "PLN")]
-	Pln,
-	#[serde(rename = "PYG")]
-	Pyg,
-	#[serde(rename = "QAR")]
-	Qar,
-	#[serde(rename = "RON")]
-	Ron,
-	#[serde(rename = "RSD")]
-	Rsd,
-	#[serde(rename = "RUB")]
-	Rub,
-	#[serde(rename = "RWF")]
-	Rwf,
-	#[serde(rename = "SAR")]
-	Sar,
-	#[serde(rename = "SBD")]
-	Sbd,
-	#[serde(rename = "SCR")]
-	Scr,
-	#[serde(rename = "SDG")]
-	Sdg,
-	#[serde(rename = "SEK")]
-	Sek,
-	#[serde(rename = "SGD")]
-	Sgd,
-	#[serde(rename = "SHP")]
-	Shp,
-	#[serde(rename = "SLL")]
-	Sll,
-	#[serde(rename = "SOS")]
-	Sos,
-	#[serde(rename = "SRD")]
-	Srd,
-	#[serde(rename = "SSP")]
-	Ssp,
-	#[serde(rename = "STD")]
-	Std,
-	#[serde(rename = "SVC")]
-	Svc,
-	#[serde(rename = "SYP")]
-	Syp,
-	#[serde(rename = "SZL")]
-	Szl,
-	#[serde(rename = "THB")]
-	Thb,
-	#[serde(rename = "TJS")]
-	Tjs,
-	#[serde(rename = "TMT")]
-	Tmt,
-	#[serde(rename = "TND")]
-	Tnd,
-	#[serde(rename = "TOP")]
-	Top,
-	#[serde(rename = "TRY")]
-	Try,
-	#[serde(rename = "TTD")]
-	Ttd,
-	#[serde(rename = "TWD")]
-	Twd,
-	#[serde(rename = "TZS")]
-	Tzs,
-	#[serde(rename = "UAH")]
-	Uah,
-	#[serde(rename = "UGX")]
-	Ugx,
-	#[serde(rename = "USD")]
-	Usd,
-	#[serde(rename = "USN")]
-	Usn,
-	#[serde(rename = "UYI")]
-	Uyi,
-	#[serde(rename = "UYU")]
-	Uyu,
-	#[serde(rename = "UZS")]
-	Uzs,
-	#[serde(rename = "VEF")]
-	Vef,
-	#[serde(rename = "VND")]
-	Vnd,
-	#[serde(rename = "VUV")]
-	Vuv,
-	#[serde(rename = "WST")]
-	Wst,
-	#[serde(rename = "XAF")]
-	Xaf,
-	#[serde(rename = "XAG")]
-	Xag,
-	#[serde(rename = "XAU")]
-	Xau,
-	#[serde(rename = "XBA")]
-	Xba,
-	#[serde(rename = "XBB")]
-	Xbb,
-	#[serde(rename = "XBC")]
-	Xbc,
-	#[serde(rename = "XBD")]
-	Xbd,
-	#[serde(rename = "XCD")]
-	Xcd,
-	#[serde(rename = "XDR")]
-	Xdr,
-	#[serde(rename = "XOF")]
-	Xof,
-	#[serde(rename = "XPD")]
-	Xpd,
-	#[serde(rename = "XPF")]
-	Xpf,
-	#[serde(rename = "XPT")]
-	Xpt,
-	#[serde(rename = "XSU")]
-	Xsu,
-	#[serde(rename = "XTS")]
-	Xts,
-	#[serde(rename = "XUA")]
-	Xua,
-	#[serde(rename = "XXX")]
-	Xxx,
-	#[serde(rename = "YER")]
-	Yer,
-	#[serde(rename = "ZAR")]
-	Zar,
-	#[serde(rename = "ZMW")]
-	Zmw,
-	#[serde(rename = "ZWL")]
-	Zwl,
+	AED,
+	AFN,
+	ALL,
+	AMD,
+	ANG,
+	AOA,
+	ARS,
+	AUD,
+	AWG,
+	AZN,
+	BAM,
+	BBD,
+	BDT,
+	BGN,
+	BHD,
+	BIF,
+	BMD,
+	BND,
+	BOB,
+	BOV,
+	BRL,
+	BSD,
+	BTN,
+	BWP,
+	BYR,
+	BZD,
+	CAD,
+	CDF,
+	CHE,
+	CHF,
+	CHW,
+	CLF,
+	CLP,
+	CNY,
+	COP,
+	COU,
+	CRC,
+	CUC,
+	CUP,
+	CVE,
+	CZK,
+	DJF,
+	DKK,
+	DOP,
+	DZD,
+	EGP,
+	ERN,
+	ETB,
+	EUR,
+	FJD,
+	FKP,
+	GBP,
+	GEL,
+	GHS,
+	GIP,
+	GMD,
+	GNF,
+	GTQ,
+	GYD,
+	HKD,
+	HNL,
+	HRK,
+	HTG,
+	HUF,
+	IDR,
+	ILS,
+	INR,
+	IQD,
+	IRR,
+	ISK,
+	JMD,
+	JOD,
+	JPY,
+	KES,
+	KGS,
+	KHR,
+	KMF,
+	KPW,
+	KRW,
+	KWD,
+	KYD,
+	KZT,
+	LAK,
+	LBP,
+	LKR,
+	LRD,
+	LSL,
+	LYD,
+	MAD,
+	MDL,
+	MGA,
+	MKD,
+	MMK,
+	MNT,
+	MOP,
+	MRO,
+	MUR,
+	MVR,
+	MWK,
+	MXN,
+	MXV,
+	MYR,
+	MZN,
+	NAD,
+	NGN,
+	NIO,
+	NOK,
+	NPR,
+	NZD,
+	OMR,
+	PAB,
+	PEN,
+	PGK,
+	PHP,
+	PKR,
+	PLN,
+	PYG,
+	QAR,
+	RON,
+	RSD,
+	RUB,
+	RWF,
+	SAR,
+	SBD,
+	SCR,
+	SDG,
+	SEK,
+	SGD,
+	SHP,
+	SLL,
+	SOS,
+	SRD,
+	SSP,
+	STD,
+	SVC,
+	SYP,
+	SZL,
+	THB,
+	TJS,
+	TMT,
+	TND,
+	TOP,
+	TRY,
+	TTD,
+	TWD,
+	TZS,
+	UAH,
+	UGX,
+	USD,
+	USN,
+	UYI,
+	UYU,
+	UZS,
+	VEF,
+	VND,
+	VUV,
+	WST,
+	XAF,
+	XAG,
+	XAU,
+	XBA,
+	XBB,
+	XBC,
+	XBD,
+	XCD,
+	XDR,
+	XOF,
+	XPD,
+	XPF,
+	XPT,
+	XSU,
+	XTS,
+	XUA,
+	XXX,
+	YER,
+	ZAR,
+	ZMW,
+	ZWL,
+}
+
+impl fmt::Display for CurrencyEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type AddressDeviceType = String;
@@ -906,12 +786,24 @@ pub enum ScopeTypeEnumType {
 	SimpleIncentiveTable,
 }
 
+impl fmt::Display for ScopeTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum RoleType {
 	Client,
 	Server,
 	Special,
+}
+
+impl fmt::Display for RoleType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type FeatureGroupType = String;
@@ -948,6 +840,12 @@ pub enum DeviceTypeEnumType {
 	Inverter,
 	#[serde(rename = "ChargingStation")]
 	ChargingStation,
+}
+
+impl fmt::Display for DeviceTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type EntityTypeType = EntityTypeEnumType;
@@ -1036,6 +934,12 @@ pub enum EntityTypeEnumType {
 	CEM,
 }
 
+impl fmt::Display for EntityTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type FeatureTypeType = FeatureTypeEnumType;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
@@ -1104,6 +1008,12 @@ pub enum FeatureTypeEnumType {
 	Identification,
 }
 
+impl fmt::Display for FeatureTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type FeatureSpecificUsageType = FeatureSpecificUsageEnumType;
 
 pub type FeatureSpecificUsageEnumType = String;
@@ -1116,12 +1026,24 @@ pub enum FeatureDirectControlSpecificUsageEnumType {
 	RealTime,
 }
 
+impl fmt::Display for FeatureDirectControlSpecificUsageEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum FeatureHvacSpecificUsageEnumType {
 	#[serde(rename = "OperationMode")]
 	OperationMode,
 	#[serde(rename = "Overrun")]
 	Overrun,
+}
+
+impl fmt::Display for FeatureHvacSpecificUsageEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
@@ -1140,7 +1062,13 @@ pub enum FeatureMeasurementSpecificUsageEnumType {
 	Temperature,
 }
 
-// pub type FeatureSetpointSpecificUsageEnumType = FeatureMeasurementSpecificUsageEnumType;
+impl fmt::Display for FeatureMeasurementSpecificUsageEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
+pub type FeatureSetpointSpecificUsageEnumType = FeatureMeasurementSpecificUsageEnumType;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum FeatureSmartEnergyManagementPsSpecificUsageEnumType {
@@ -1152,6 +1080,12 @@ pub enum FeatureSmartEnergyManagementPsSpecificUsageEnumType {
 	FlexibleOptionalForecast,
 	#[serde(rename = "OptionalSequenceBasedImmediateControl")]
 	OptionalSequenceBasedImmediateControl,
+}
+
+impl fmt::Display for FeatureSmartEnergyManagementPsSpecificUsageEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type FunctionType = FunctionEnumType;
@@ -1432,6 +1366,12 @@ pub enum FunctionEnumType {
 	BillListData,
 	#[serde(rename = "identificationListData")]
 	IdentificationListData,
+}
+
+impl fmt::Display for FunctionEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

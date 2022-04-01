@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
@@ -9,6 +13,12 @@ pub enum ConnectionHelloPhaseType {
   Ready,
 	#[serde(rename = "aborted")]
   Aborted,
+}
+
+impl fmt::Display for ConnectionHelloPhaseType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -35,6 +45,12 @@ pub enum ProtocolHandshakeTypeType {
   AnnounceMax,
 	#[serde(rename = "select")]
   Select,
+}
+
+impl fmt::Display for ProtocolHandshakeTypeType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -72,12 +88,24 @@ pub enum PinStateType {
   None,
 }
 
+impl fmt::Display for PinStateType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum PinInputPermissionType {
 	#[serde(rename = "busy")]
   Busy,
 	#[serde(rename = "ok")]
   Ok,
+}
+
+impl fmt::Display for PinInputPermissionType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -138,12 +166,24 @@ pub enum ConnectionClosePhaseType {
   Confirm,
 }
 
+impl fmt::Display for ConnectionClosePhaseType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum ConnectionCloseReasonType {
   #[serde(rename = "unspecific")]
   Unspecific,
   #[serde(rename = "removedConnection")]
   RemovedConnection,
+}
+
+impl fmt::Display for ConnectionCloseReasonType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

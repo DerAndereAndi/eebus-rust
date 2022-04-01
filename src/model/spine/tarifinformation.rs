@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 use super::measurement;
@@ -23,6 +27,12 @@ pub enum TierBoundaryTypeEnumType {
 	CountBoundary,
 }
 
+impl fmt::Display for TierBoundaryTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type CommodityIdType = u8;
 
 pub type TierIdType = u8;
@@ -37,6 +47,12 @@ pub enum TierTypeEnumType {
 	FixedCost,
 	#[serde(rename = "dynamicCost")]
 	DynamicCost,
+}
+
+impl fmt::Display for TierTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type IncentiveIdType = u8;
@@ -57,6 +73,12 @@ pub enum IncentiveTypeEnumType {
 	Co2Emission,
 }
 
+impl fmt::Display for IncentiveTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type IncentivePriorityType = u8;
 
 pub type IncentiveValueTypeType = IncentiveValueTypeEnumType;
@@ -71,6 +93,12 @@ pub enum IncentiveValueTypeEnumType {
 	MinValue,
 	#[serde(rename = "maxValue")]
 	MaxValue,
+}
+
+impl fmt::Display for IncentiveValueTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

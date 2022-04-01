@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 
@@ -27,6 +31,12 @@ pub enum ThresholdTypeEnumType {
 	SagThreshold,
 	#[serde(rename = "swellThreshold")]
 	SwellThreshold,
+}
+
+impl fmt::Display for ThresholdTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

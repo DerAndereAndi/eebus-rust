@@ -1,4 +1,5 @@
 mod model;
+mod device;
 
 use serde_json::{Value, json};
 use model::spine;

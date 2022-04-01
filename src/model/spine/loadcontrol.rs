@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 use super::measurement;
@@ -22,6 +26,12 @@ pub enum LoadControlEventActionEnumType {
 	Normal,
 }
 
+impl fmt::Display for LoadControlEventActionEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type LoadControlEventStateType = LoadControlEventStateEnumType;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
@@ -40,6 +50,12 @@ pub enum LoadControlEventStateEnumType {
 	EventError,
 }
 
+impl fmt::Display for LoadControlEventStateEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type LoadControlLimitIdType = u8;
 
 pub type LoadControlLimitTypeType = LoadControlLimitTypeEnumType;
@@ -52,6 +68,12 @@ pub enum LoadControlLimitTypeEnumType {
 	MaxValueLimit,
 }
 
+impl fmt::Display for LoadControlLimitTypeEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 pub type LoadControlCategoryType = LoadControlCategoryEnumType;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
@@ -62,6 +84,12 @@ pub enum LoadControlCategoryEnumType {
 	Recommendation,
 	#[serde(rename = "optimization")]
 	Optimization,
+}
+
+impl fmt::Display for LoadControlCategoryEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

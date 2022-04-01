@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 
@@ -29,6 +33,12 @@ pub enum NetworkManagementFeatureSetType {
 	Simple,
 }
 
+impl fmt::Display for NetworkManagementFeatureSetType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum NetworkManagementProcessStateStateType {
 	#[serde(rename = "succeeded")]
@@ -39,6 +49,12 @@ pub enum NetworkManagementProcessStateStateType {
 	Aborted,
 }
 
+impl fmt::Display for NetworkManagementProcessStateStateType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum NetworkManagementStateChangeType {
 	#[serde(rename = "added")]
@@ -47,6 +63,12 @@ pub enum NetworkManagementStateChangeType {
 	Removed,
 	#[serde(rename = "modified")]
 	Modified,
+}
+
+impl fmt::Display for NetworkManagementStateChangeType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

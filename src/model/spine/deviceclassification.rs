@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 
@@ -19,7 +23,13 @@ pub enum PowerSourceEnumType {
 	Dverrun,
 }
 
-#[derive(Serialize, Deserialize, Default, Debug)]
+impl fmt::Display for PowerSourceEnumType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
+}
+
+#[derive(Serialize, Deserialize, Default, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct DeviceClassificationManufacturerDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]

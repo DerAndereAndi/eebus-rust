@@ -1,3 +1,7 @@
+use std::fmt;
+
+use super::super::utils;
+
 use serde::{Serialize, Deserialize};
 use super::{commondatatypes, electricalconnection, measurement, deviceclassification, deviceconfiguration, devicediagnosis, identification, incentivetable, loadcontrol, timeseries, nodemanagement, result};
 
@@ -12,6 +16,12 @@ pub enum CmdClassifierType {
     Write,
     Call,
     Result,
+}
+
+impl fmt::Display for CmdClassifierType {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		utils::provide_enum_display(self, f)
+	}
 }
 
 pub type FilterIdType = u8;
