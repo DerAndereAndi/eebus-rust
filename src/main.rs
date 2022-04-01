@@ -2,7 +2,7 @@ mod model;
 mod device;
 
 use serde_json::{Value, json};
-use model::spine;
+use model::spine::{self, commondatatypes::{DeviceTypeEnumType}};
 
 use std::any::Any;
 use std::sync::{Arc, Mutex};
@@ -90,16 +90,14 @@ fn test_de_serializing() {
 }
 
 #[derive(Default, Debug)]
-pub struct Context {
+struct Context {
     service_name: String,
 }
 
-fn main() {
-    // test_de_serializing();
-
+fn setup_mdns() {
     let mut browser = MdnsBrowser::new(ServiceType::new("ship", "tcp").unwrap());
 
-    browser.set_service_discovered_callback(Box::new(on_service_discovered));
+    browser.set_service_discovered_callback(Box::new(mdns_on_service_discovered));
 
     let mut service = MdnsService::new(ServiceType::new("ship", "tcp").unwrap(), 4712);
     let mut txt_record = TxtRecord::new();
@@ -111,9 +109,9 @@ fn main() {
     txt_record.insert("ski", "0").unwrap();
     txt_record.insert("brand", "WIP").unwrap();
     txt_record.insert("model", "WIP").unwrap();
-    txt_record.insert("type", &spine::commondatatypes::DeviceTypeEnumType::EnergyManagementSystem.to_string()).unwrap();
+    txt_record.insert("type", &DeviceTypeEnumType::EnergyManagementSystem.to_string()).unwrap();
 
-    service.set_registered_callback(Box::new(on_service_registered));
+    service.set_registered_callback(Box::new(mdns_on_service_registered));
     service.set_context(Box::new(context));
     service.set_txt_record(txt_record);
 
@@ -121,13 +119,13 @@ fn main() {
     let event_browse_loop = browser.browse_services().unwrap();
 
     loop {
-        // calling `poll()` will keep this browser alive
+        // calling `poll()` will keep this alive
         event_browse_loop.poll(Duration::from_secs(0)).unwrap();
         event_service_loop.poll(Duration::from_secs(0)).unwrap();
     }
 }
 
-fn on_service_discovered(
+fn mdns_on_service_discovered(
     result: zeroconf::Result<ServiceDiscovery>,
     _context: Option<Arc<dyn Any>>,
 ) {
@@ -136,7 +134,7 @@ fn on_service_discovered(
     // ...
 }
 
-fn on_service_registered(
+fn mdns_on_service_registered(
     result: zeroconf::Result<ServiceRegistration>,
     context: Option<Arc<dyn Any>>,
 ) {
@@ -157,3 +155,9 @@ fn on_service_registered(
 
     // ...
 }
+fn main() {
+    // test_de_serializing();
+
+    setup_mdns();
+}
+
