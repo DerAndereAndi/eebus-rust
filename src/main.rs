@@ -110,6 +110,7 @@ fn setup_mdns() {
     txt_record.insert("brand", "WIP").unwrap();
     txt_record.insert("model", "WIP").unwrap();
     txt_record.insert("type", &DeviceTypeEnumType::EnergyManagementSystem.to_string()).unwrap();
+    txt_record.insert("register", "true").unwrap();
 
     service.set_registered_callback(Box::new(mdns_on_service_registered));
     service.set_context(Box::new(context));
