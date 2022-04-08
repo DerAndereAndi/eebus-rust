@@ -1,12 +1,30 @@
+#![allow(dead_code)]
+
 mod model;
 mod device;
 
 use serde_json::{Value, json};
 use model::spine::{self, commondatatypes::{DeviceTypeEnumType}};
+use model::ship::{self};
 
-use std::any::Any;
-use std::sync::{Arc, Mutex};
-use std::time::Duration;
+use std::{
+    any::Any,
+    sync::{Arc, Mutex},
+    time::{Duration, SystemTime},
+    net::{TcpListener, TcpStream},
+    // thread::spawn,
+};
+use core::cmp;
+use rcgen::{
+    self,
+    Certificate,
+    CertificateParams,
+    DistinguishedName,
+};
+use rustls::{self};
+use rustls_pemfile::{self};
+use tungstenite::{self, accept, handshake::HandshakeRole, Error, HandshakeError, Message, Result, WebSocket};
+use httparse::{self};
 use zeroconf::prelude::*;
 use zeroconf::{MdnsBrowser, MdnsService, ServiceDiscovery, ServiceRegistration, ServiceType, TxtRecord};
 
@@ -69,6 +87,32 @@ fn create_eebus_json_string(model: spine::datagram::SpineType) -> String {
     let result = result[1..length].to_string();
 
     result
+}
+
+
+fn send_json<T>(ws: &mut WebSocket<tungstenite::stream::MaybeTlsStream<TcpStream>>, msg_type: ship::model::MessageType, model: T) -> Result<()>
+where 
+    T: serde::Serialize
+{
+    let json: String = serde_json::to_string(&model).unwrap();
+
+    let v: Value = serde_json::from_str(&json).unwrap();
+
+    let model = process_eebus_json_hierarchie_level(&v);
+    let result = serde_json::to_string(&model).unwrap();
+
+    // we are lazy: fix the first item being put into an array
+    let length = result.len()-1;
+    let result = result[1..length].to_string();
+
+    println!("send: {}", result);
+
+    let mut result = result.as_bytes().to_vec();
+
+    let mut msg = vec![msg_type as u8];
+    msg.append(&mut result);
+
+    ws.write_message(Message::Binary(msg))
 }
 
 fn test_de_serializing() {
@@ -156,9 +200,416 @@ fn mdns_on_service_registered(
 
     // ...
 }
+
+fn create_certificate() {
+    let subject_alt_names = vec!["hello.world.example".to_string(),"localhost".to_string()];
+
+    let mut dn = DistinguishedName::new();
+    dn.push(rcgen::DnType::OrganizationName, "WIP");
+    dn.push(rcgen::DnType::CountryName, "DE");
+    dn.push(rcgen::DnType::CommonName, rcgen::DnValue::PrintableString("WIP".to_string()));
+    
+    let cert_params = CertificateParams::new(subject_alt_names);
+    // cert_params.key_usages = vec![
+    //         rcgen::KeyUsagePurpose::DigitalSignature,
+	// 		rcgen::KeyUsagePurpose::KeyEncipherment,
+    //         rcgen::KeyUsagePurpose::KeyCertSign,
+	// 		rcgen::KeyUsagePurpose::ContentCommitment,
+	// 	];
+    // cert_params.distinguished_name = dn;
+    // cert_params.serial_number = Option::Some(1);
+    // cert_params.alg = &rcgen::PKCS_ECDSA_P256_SHA256;
+    // cert_params.is_ca = rcgen::IsCa::Ca(rcgen::BasicConstraints::Constrained(0));
+
+    let cert = Certificate::from_params(cert_params).unwrap();
+    
+    // let cert = generate_simple_self_signed(subject_alt_names).unwrap();
+    // The certificate is now valid for localhost and the domain "hello.world.example"
+    println!("{}", cert.serialize_pem().unwrap());
+    println!("{}", cert.serialize_private_key_pem());
+}
+
+fn must_not_block<Role: HandshakeRole>(err: HandshakeError<Role>) -> Error {
+    match err {
+        HandshakeError::Interrupted(_) => panic!("Bug: blocking socket would block"),
+        HandshakeError::Failure(f) => f,
+    }
+}
+
+fn handle_client(stream: TcpStream) -> Result<()> {
+    let mut socket = accept(stream).map_err(must_not_block)?;
+    println!("Running test");
+    loop {
+        match socket.read_message()? {
+            msg @ Message::Text(_) | msg @ Message::Binary(_) => {
+                socket.write_message(msg)?;
+            }
+            Message::Ping(_) | Message::Pong(_) | Message::Close(_) | Message::Frame(_) => {}
+        }
+    }
+}
+
+struct NoCertificateVerification {}
+impl rustls::client::ServerCertVerifier for NoCertificateVerification {
+    fn verify_server_cert(
+        &self,
+        _end_entity: &rustls::Certificate,
+        _intermediates: &[rustls::Certificate],
+        _server_name: &rustls::ServerName,
+        _scts: &mut dyn Iterator<Item = &[u8]>,
+        _ocsp_response: &[u8],
+        _now: SystemTime,
+    ) -> Result<rustls::client::ServerCertVerified, rustls::Error> {
+        Ok(rustls::client::ServerCertVerified::assertion())
+    }
+}
+
+static KEY: &[u8] = include_bytes!("../keys/evcc.key");    
+static CERT: &[u8] = include_bytes!("../keys/evcc.crt");
+
+fn load_certs() -> Vec<rustls::Certificate> {
+    // let certfile = fs::File::open(filename).expect("cannot open certificate file");
+    // let mut reader = BufReader::new(certfile);
+    let mut reader = CERT.clone();
+    rustls_pemfile::certs(&mut reader)
+        .unwrap()
+        .iter()
+        .map(|v| rustls::Certificate(v.clone()))
+        .collect()
+}
+
+fn load_private_key() -> rustls::PrivateKey {
+    // let keyfile = fs::File::open(filename).expect("cannot open private key file");
+    // let mut reader = BufReader::new(keyfile);
+    let mut reader = KEY.clone();
+
+    loop {
+        match rustls_pemfile::read_one(&mut reader).expect("cannot parse private key .pem file") {
+            Some(rustls_pemfile::Item::RSAKey(key)) => return rustls::PrivateKey(key),
+            Some(rustls_pemfile::Item::PKCS8Key(key)) => return rustls::PrivateKey(key),
+            Some(rustls_pemfile::Item::ECKey(key)) => return rustls::PrivateKey(key),
+            None => break,
+            _ => {}
+        }
+    }
+
+    panic!("no keys found (encrypted keys not supported)");
+}
+
+fn setup_websocket() {
+    // print!("{}", String::from_utf8_lossy(KEY));
+
+    let certs = load_certs();
+    let key = load_private_key();
+    let root_certs = rustls::RootCertStore::empty();
+    // let cipher_suites = &[rustls::SupportedCipherSuite::Tls12];
+    let cipher_suites = rustls::ALL_CIPHER_SUITES.to_vec();
+
+    let mut config: rustls::ClientConfig = rustls::ClientConfig::builder()
+        .with_cipher_suites(&cipher_suites)
+        // .with_safe_default_cipher_suites()
+        .with_safe_default_kx_groups()
+        .with_protocol_versions(&[&rustls::version::TLS12])
+        // .with_safe_default_protocol_versions()
+        .unwrap()
+        .with_root_certificates(root_certs)
+        .with_single_cert(certs, key)
+        .unwrap();
+
+    config.dangerous()
+        .set_certificate_verifier(Arc::new(NoCertificateVerification {}));
+
+    let connector = tungstenite::Connector::Rustls(Arc::new(config));
+    let stream = TcpStream::connect("192.168.1.142:4711").unwrap();
+    let websocket_key = tungstenite::handshake::client::generate_key();
+    let mut headers = [
+        httparse::Header {
+            name: "Host",
+            value: "localhost".as_bytes(),
+        },
+        httparse::Header {
+            name: "Connection",
+            value: "Upgrade".as_bytes(),
+        },
+        httparse::Header {
+            name: "Upgrade",
+            value: "websocket".as_bytes(),
+        },
+        httparse::Header {
+            name: "Sec-WebSocket-Version",
+            value: "13".as_bytes(),
+        },
+        httparse::Header {
+            name: "Sec-WebSocket-Key",
+            value: websocket_key.as_bytes(),
+        },
+        httparse::Header {
+            name: "Sec-WebSocket-Protocol",
+            value: "ship".as_bytes(),
+        },
+    ];
+
+    let mut request: httparse::Request = httparse::Request::new(&mut headers);
+    request.method = Some("GET");
+    request.version = Some(11);
+    request.path = Some("wss://localhost/ship/");
+    
+    let (mut ws, response) = tungstenite::client_tls_with_config(request, stream, None, Some(connector)).unwrap();
+
+    println!("{:?}", response);
+
+    // CMI_STATE_CLIENT_SEND
+    let ship_init = vec!(ship::model::MessageType::Init as u8, 0);
+    let init_message = Message::Binary(ship_init);
+    let init_data = init_message.clone().into_data();
+
+    ws.write_message(init_message).unwrap();
+    
+    // CMI_STATE_CLIENT_WAIT
+    loop {
+        let msg = ws.read_message().unwrap();
+
+        if !msg.is_empty() {
+            // CMI_STATE_CLIENT_EVALUATE
+            if msg.is_binary() {
+                let response = msg.into_data();
+                if response.cmp(&init_data) == cmp::Ordering::Equal {
+                    println!("Got init message");
+                    break;
+                }
+            } else {
+                println!("Invalid response");
+                break;   
+            }
+        }
+    }
+
+    // SME_HELLO_STATE_READY_INIT
+    let mut hello_message = ship::model::ConnectionHello::default();
+    hello_message.connection_hello.phase = Some(ship::model::ConnectionHelloPhaseType::Ready);
+    hello_message.connection_hello.waiting = Some(60000);
+
+    send_json(&mut ws, ship::model::MessageType::Control, &hello_message).unwrap();
+
+    // SME_HELLO_STATE_READY_LISTEN
+    loop {
+        let msg = ws.read_message().unwrap();
+
+        if !msg.is_empty() {
+            if msg.is_binary() {
+                let message = msg.into_text().unwrap();
+                let message = &message.as_str()[1..];
+                let json = transform_received_json(&message);
+                println!("recv: {}", json);
+
+                let message = serde_json::from_str::<ship::model::ConnectionHello>(&json).unwrap();
+                match message.connection_hello.phase {
+                    Some(ship::model::ConnectionHelloPhaseType::Ready) => {
+                        println!("Got ready message");
+                        break;
+                    },
+                    Some(ship::model::ConnectionHelloPhaseType::Aborted) => {
+                        println!("Got aborted message");
+                        break;
+                    },
+                    _ => {
+                        println!("Invalid response");
+                        break;
+                    }
+                }
+            } else {
+                println!("Invalid response");
+                break;   
+            }
+        }
+    }
+
+    // HELLO_OK
+
+    // Protocol Handshake
+    let mut protocol_handshake = ship::model::MessageProtocolHandshake{
+        message_protocol_handshake: ship::model::MessageProtocolHandshakeType{
+            handshake_type: Some(ship::model::ProtocolHandshakeTypeType::AnnounceMax),
+            version: ship::model::Version{major: 1, minor: 0},
+            formats: ship::model::MessageProtocolFormatsType{format: vec!(ship::model::MessageProtocolFormatType::JsonUTF8)}
+        }
+    };
+
+    send_json(&mut ws, ship::model::MessageType::Control, &protocol_handshake).unwrap();
+    loop {
+        let msg = ws.read_message().unwrap();
+
+        if !msg.is_empty() {
+            if msg.is_binary() {
+                let message = msg.into_text().unwrap();
+                let message = &message.as_str()[1..];
+                let json = transform_received_json(&message);
+                println!("recv: {}", json);
+
+                let message = serde_json::from_str::<ship::model::MessageProtocolHandshake>(&json).unwrap();
+                if message.message_protocol_handshake.handshake_type != Some(ship::model::ProtocolHandshakeTypeType::Select) {
+                    // || !message.message_protocol_handshake.formats.format.contains(&ship::model::MessageProtocolFormatType::JsonUTF8) {
+                    println!("Invalid protocol handshake response");
+                    break;
+                }
+
+                protocol_handshake.message_protocol_handshake.handshake_type = Some(ship::model::ProtocolHandshakeTypeType::Select);
+                send_json(&mut ws, ship::model::MessageType::Control, &protocol_handshake).unwrap();
+
+                println!("Got protocol handshake");
+                break;
+            } else {
+                println!("Invalid response");
+                break;   
+            }
+        }
+    }
+
+    // PIN State
+    let mut pin_state = ship::model::ConnectionPinState::default();
+    pin_state.connection_pin_state.pin_state = Some(ship::model::PinStateType::None);
+    send_json(&mut ws, ship::model::MessageType::Control, &pin_state).unwrap();
+    loop {
+        let msg = ws.read_message().unwrap();
+
+        if !msg.is_empty() {
+            if msg.is_binary() {
+                let message = msg.into_text().unwrap();
+                let message = &message.as_str()[1..];
+                let json = transform_received_json(&message);
+                println!("recv: {}", json);
+
+                let message = serde_json::from_str::<ship::model::ConnectionPinState>(&json).unwrap();
+                match message.connection_pin_state.pin_state {
+                    Some(ship::model::PinStateType::None) => {
+                        println!("Got pin state none");
+                        break;
+                    },
+                    Some(ship::model::PinStateType::Required) => {
+                        println!("Got pin state required");
+                        break;
+                    },
+                    Some(ship::model::PinStateType::Optional) => {
+                        println!("Got pin state optional");
+                        break;
+                    },
+                    Some(ship::model::PinStateType::PinOk) => {
+                        println!("Got pin state pin ok");
+                        break;
+                    },
+                    _ => {
+                        println!("Invalid response");
+                        break;
+                    }
+                }
+            } else {
+                println!("Invalid response");
+                break;   
+            }
+        }
+    }
+
+    // Access Methods
+    let access_methods_request = ship::model::AccessMethodsRequest::default();
+    send_json(&mut ws, ship::model::MessageType::Control, &access_methods_request).unwrap();
+    loop {
+        let msg = ws.read_message().unwrap();
+
+        if !msg.is_empty() {
+            if msg.is_binary() {
+                let message = msg.into_text().unwrap();
+                let message = &message.as_str()[1..];
+                let json = transform_received_json(&message);
+                println!("recv: {}", json);
+
+                if json.contains("\"accessMethods\":") {
+                    break;
+                } else if json.contains("\"accessMethodsRequest\":") {
+                    let mut access_methods = ship::model::AccessMethods::default();
+                    access_methods.access_methods.id = "test".to_string();
+                    send_json(&mut ws, ship::model::MessageType::Control, &access_methods).unwrap();
+                }
+
+            } else {
+                println!("Invalid response");
+                break;   
+            }
+        }
+    }
+
+    loop {
+        let msg = ws.read_message().unwrap();
+
+        if !msg.is_empty() {
+            if msg.is_binary() {
+                let message = msg.into_text().unwrap();
+                let message = &message.as_str()[1..];
+                let json = transform_received_json(&message);
+                println!("recv: {}", json);
+            } else {
+                println!("Invalid response");
+                break;   
+            }
+        }
+    }
+
+    ws.close(None).unwrap();
+
+    // loop {
+    //     println!("test");
+    // }
+
+    // let connector: Arc<rustls::ClientConfig> = Arc::new(config);
+
+    // let identity = native_tls::Identity::from_pkcs8(CERT, KEY).unwrap();
+
+    // let connector = TlsConnector::builder()
+    //     .danger_accept_invalid_certs(true)
+    //     .identity(identity)
+    //     .build()
+    //     .unwrap();
+
+    // let (mut socket, response) = tungstenite::connect(
+    //     Url::parse("wss://192.168.1.59:4712/").unwrap()
+    // ).expect("Can't connect");
+
+    // loop {
+    //     let msg = socket.read_message().expect("Error reading message");
+    //     println!("Received: {}", msg);
+    // }
+
+    // let mut tls_config: rustls::ServerConfig = rustls::ServerConfig::new(rustls::NoClientAuth::new());    
+    // tls_config.set_single_cert(    
+    //     rustls::internal::pemfile::certs(&mut &*CERT).unwrap(),    
+    //     rustls::internal::pemfile::pkcs8_private_keys(&mut &*KEY).unwrap()    
+    //         .pop().unwrap()    
+    // ).unwrap();    
+    // let tls_config = Arc::new(tls_config);
+
+    // let server = TcpListener::bind("192.168.1.59:4712").unwrap();
+
+    // for stream in server.incoming() {
+    //     spawn(move || match stream {
+    //         Ok(stream) => {
+    //             if let Err(err) = handle_client(stream) {
+    //                 match err {
+    //                     Error::ConnectionClosed | Error::Protocol(_) | Error::Utf8 => (),
+    //                     e => println!("test: {}", e),
+    //                 }
+    //             }
+    //         }
+    //         Err(e) => println!("Error accepting stream: {}", e),
+    //     });
+    // }
+}
+
 fn main() {
     // test_de_serializing();
 
-    setup_mdns();
+    // setup_mdns();
+
+    // create_certificate();
+
+    setup_websocket();
 }
 
