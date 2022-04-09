@@ -21,8 +21,7 @@ use rcgen::{
     CertificateParams,
     DistinguishedName,
 };
-use rustls::{self};
-use rustls_pemfile::{self};
+use native_tls::{self};
 use tungstenite::{self, accept, handshake::HandshakeRole, Error, HandshakeError, Message, Result, WebSocket};
 use httparse::{self};
 use zeroconf::prelude::*;
@@ -249,78 +248,22 @@ fn handle_client(stream: TcpStream) -> Result<()> {
     }
 }
 
-struct NoCertificateVerification {}
-impl rustls::client::ServerCertVerifier for NoCertificateVerification {
-    fn verify_server_cert(
-        &self,
-        _end_entity: &rustls::Certificate,
-        _intermediates: &[rustls::Certificate],
-        _server_name: &rustls::ServerName,
-        _scts: &mut dyn Iterator<Item = &[u8]>,
-        _ocsp_response: &[u8],
-        _now: SystemTime,
-    ) -> Result<rustls::client::ServerCertVerified, rustls::Error> {
-        Ok(rustls::client::ServerCertVerified::assertion())
-    }
-}
-
-static KEY: &[u8] = include_bytes!("../keys/evcc.key");    
-static CERT: &[u8] = include_bytes!("../keys/evcc.crt");
-
-fn load_certs() -> Vec<rustls::Certificate> {
-    // let certfile = fs::File::open(filename).expect("cannot open certificate file");
-    // let mut reader = BufReader::new(certfile);
-    let mut reader = CERT.clone();
-    rustls_pemfile::certs(&mut reader)
-        .unwrap()
-        .iter()
-        .map(|v| rustls::Certificate(v.clone()))
-        .collect()
-}
-
-fn load_private_key() -> rustls::PrivateKey {
-    // let keyfile = fs::File::open(filename).expect("cannot open private key file");
-    // let mut reader = BufReader::new(keyfile);
-    let mut reader = KEY.clone();
-
-    loop {
-        match rustls_pemfile::read_one(&mut reader).expect("cannot parse private key .pem file") {
-            Some(rustls_pemfile::Item::RSAKey(key)) => return rustls::PrivateKey(key),
-            Some(rustls_pemfile::Item::PKCS8Key(key)) => return rustls::PrivateKey(key),
-            Some(rustls_pemfile::Item::ECKey(key)) => return rustls::PrivateKey(key),
-            None => break,
-            _ => {}
-        }
-    }
-
-    panic!("no keys found (encrypted keys not supported)");
-}
+static KEY: &[u8] = include_bytes!("../keys/prod.key");    
+static CERT: &[u8] = include_bytes!("../keys/prod.crt");
 
 fn setup_websocket() {
     // print!("{}", String::from_utf8_lossy(KEY));
 
-    let certs = load_certs();
-    let key = load_private_key();
-    let root_certs = rustls::RootCertStore::empty();
-    // let cipher_suites = &[rustls::SupportedCipherSuite::Tls12];
-    let cipher_suites = rustls::ALL_CIPHER_SUITES.to_vec();
-
-    let mut config: rustls::ClientConfig = rustls::ClientConfig::builder()
-        .with_cipher_suites(&cipher_suites)
-        // .with_safe_default_cipher_suites()
-        .with_safe_default_kx_groups()
-        .with_protocol_versions(&[&rustls::version::TLS12])
-        // .with_safe_default_protocol_versions()
-        .unwrap()
-        .with_root_certificates(root_certs)
-        .with_single_cert(certs, key)
+    let identity = native_tls::Identity::from_pkcs8(CERT, KEY).unwrap();
+    let connector = native_tls::TlsConnector::builder()
+        .identity(identity)
+        .danger_accept_invalid_certs(true)
+        .build()
         .unwrap();
+    let connector: tungstenite::Connector = tungstenite::Connector::NativeTls(connector);
 
-    config.dangerous()
-        .set_certificate_verifier(Arc::new(NoCertificateVerification {}));
+    let stream = TcpStream::connect("localhost:4712").unwrap();
 
-    let connector = tungstenite::Connector::Rustls(Arc::new(config));
-    let stream = TcpStream::connect("192.168.1.142:4711").unwrap();
     let websocket_key = tungstenite::handshake::client::generate_key();
     let mut headers = [
         httparse::Header {
@@ -370,6 +313,7 @@ fn setup_websocket() {
         let msg = ws.read_message().unwrap();
 
         if !msg.is_empty() {
+            println!("{:?}", msg);
             // CMI_STATE_CLIENT_EVALUATE
             if msg.is_binary() {
                 let response = msg.into_data();
