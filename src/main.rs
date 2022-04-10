@@ -8,27 +8,29 @@ use model::spine::{self, commondatatypes::{DeviceTypeEnumType}};
 use model::ship::{self};
 
 use std::{
+    error::Error,
     any::Any,
     sync::{Arc, Mutex},
     time::{Duration, SystemTime},
-    net::{TcpListener, TcpStream},
-    // thread::spawn,
+    net::{TcpStream},
 };
 use core::cmp;
 use rcgen::{
     self,
     Certificate,
     CertificateParams,
-    DistinguishedName,
+    DistinguishedName, RcgenError,
 };
 use native_tls::{self};
-use tungstenite::{self, accept, handshake::HandshakeRole, Error, HandshakeError, Message, Result, WebSocket};
+use tungstenite::{self, Message, WebSocket, stream::MaybeTlsStream};
 use httparse::{self};
 use zeroconf::prelude::*;
 use zeroconf::{MdnsBrowser, MdnsService, ServiceDiscovery, ServiceRegistration, ServiceType, TxtRecord};
 
 // process incoming json strings and transform it to match the model structure
 fn transform_received_json(data: &str) -> String {
+    println!("recv: {}", data);
+
     let mut result: String = str::replace(data, "[{", "{");
     result = str::replace(&result, "},{", ",");
     result = str::replace(&result, "}]", "}");
@@ -38,71 +40,99 @@ fn transform_received_json(data: &str) -> String {
 }
 
 // convert objects in json to be arrays with each field being an array alement as eebus expects it
-fn process_eebus_json_hierarchie_level(data: &Value) -> Value {
+fn process_eebus_json_hierarchie_level(data: &Value) -> Result<Value, String> {
     if data.is_object() {
         match data.as_object() {
             Some(object) => {
                 let mut array: Vec<Value> = Vec::new();
                 for (key, value) in object.iter() {
-                    let new_value = process_eebus_json_hierarchie_level(value);
+                    let new_value = match process_eebus_json_hierarchie_level(value) {
+                        Ok(value) => value,
+                        Err(err) => return Err(err),
+                    };
 
                     let new_object = json!({
                         key: new_value
                     });
-                    let new_object = serde_json::to_value(new_object).unwrap();
+                    let new_object = match serde_json::to_value(new_object) {
+                        Ok(value) => value,
+                        Err(err) => return Err(err.to_string()),
+                    };
                     array.push(new_object);
                 }
-                let result = serde_json::to_value(array).unwrap();
-                return result;
+                let result = match serde_json::to_value(array) {
+                    Ok(value) => value,
+                    Err(err) => return Err(err.to_string()),
+                };
+                return Ok(result);
             },
             None => {
-                return data.to_owned();       
+                return Ok(data.to_owned());       
             },
         }
     } else if data.is_array() {
         let mut array: Vec<Value> = Vec::new();
-        for value in data.as_array().unwrap().iter() {
-            let new_value = process_eebus_json_hierarchie_level(value);
+        let data_array = match data.as_array() {
+            Some(value) => value,
+            None => return Err("data is not an array".to_string()),
+        };
+        for value in data_array.iter() {
+            let new_value = match process_eebus_json_hierarchie_level(value) {
+                Ok(value) => value,
+                Err(err) => return Err(err),
+            };
             array.push(new_value);
         }
-        let result = serde_json::to_value(&array).unwrap();
-        return result;
+        let result = match serde_json::to_value(&array) {
+            Ok(value) => value,
+            Err(err) => return Err(err.to_string()),
+        };
+        return Ok(result);
     } else {
-        return data.clone();
+        return Ok(data.clone());
     }
 }
 
 // serialize the model to an eebus expected json format
-fn create_eebus_json_string(model: spine::datagram::SpineType) -> String {
-    let json: String = serde_json::to_string(&model).unwrap();
-
-    let v: Value = serde_json::from_str(&json).unwrap();
-
-    let model = process_eebus_json_hierarchie_level(&v);
-    let result = serde_json::to_string(&model).unwrap();
-
-    // we are lazy: fix the first item being put into an array
-    let length = result.len()-1;
-    let result = result[1..length].to_string();
-
-    result
-}
-
-
-fn send_json<T>(ws: &mut WebSocket<tungstenite::stream::MaybeTlsStream<TcpStream>>, msg_type: ship::model::MessageType, model: T) -> Result<()>
+fn create_eebus_json_string<T>(model: T) -> Result<String, String>
 where 
     T: serde::Serialize
 {
-    let json: String = serde_json::to_string(&model).unwrap();
+    let json: String = match serde_json::to_string(&model) {
+        Ok(value) => value,
+        Err(err) => return Err(err.to_string()),
+    };
 
-    let v: Value = serde_json::from_str(&json).unwrap();
+    let v: Value = match serde_json::from_str(&json) {
+        Ok(value) => value,
+        Err(err) => return Err(err.to_string()),
+    };
 
-    let model = process_eebus_json_hierarchie_level(&v);
-    let result = serde_json::to_string(&model).unwrap();
+    let model = match process_eebus_json_hierarchie_level(&v) {
+        Ok(value) => value,
+        Err(err) => return Err(err),
+    };
+    let result = match serde_json::to_string(&model) {
+        Ok(value) => value,
+        Err(err) => return Err(err.to_string()),
+    };
 
     // we are lazy: fix the first item being put into an array
     let length = result.len()-1;
     let result = result[1..length].to_string();
+
+    Ok(result)
+}
+
+
+fn send_json<T>(ws: &mut WebSocket<tungstenite::stream::MaybeTlsStream<TcpStream>>, msg_type: ship::model::MessageType, model: T) -> Result<(), String>
+where 
+    T: serde::Serialize
+{
+    let result = match create_eebus_json_string(&model) {
+        Ok(value) => value,
+        Err(err) => return Err(err),
+    };
 
     println!("send: {}", result);
 
@@ -111,7 +141,10 @@ where
     let mut msg = vec![msg_type as u8];
     msg.append(&mut result);
 
-    ws.write_message(Message::Binary(msg))
+    match ws.write_message(Message::Binary(msg)) {
+        Ok(_) => Ok(()),
+        Err(err) => Err(err.to_string()),
+    }
 }
 
 fn test_de_serializing() {
@@ -125,9 +158,21 @@ fn test_de_serializing() {
 
     let read = transform_received_json(json);
 
-    let model: spine::datagram::SpineType = serde_json::from_str(&read).unwrap();
+    let model: spine::datagram::SpineType = match serde_json::from_str(&read) {
+        Ok(model) => model,
+        Err(error) => {
+            println!("Error in serialization: {}", error);
+            spine::datagram::SpineType::default()
+        }
+    };
     
-    let result: String = create_eebus_json_string(model);
+    let result: String = match create_eebus_json_string(model) {
+        Ok(result) => result,
+        Err(error) => {
+            println!("Error in deserialization: {}", error);
+            String::from("")
+        },
+    };
 
     println!("result identical to original json? {:?}", result.eq(json));
 }
@@ -200,69 +245,79 @@ fn mdns_on_service_registered(
     // ...
 }
 
-fn create_certificate() {
-    let subject_alt_names = vec!["hello.world.example".to_string(),"localhost".to_string()];
+fn create_certificate() -> Result<Certificate, RcgenError> {
+    let subject_alt_names = vec!["localhost".to_string()];
 
     let mut dn = DistinguishedName::new();
     dn.push(rcgen::DnType::OrganizationName, "WIP");
     dn.push(rcgen::DnType::CountryName, "DE");
     dn.push(rcgen::DnType::CommonName, rcgen::DnValue::PrintableString("WIP".to_string()));
     
-    let cert_params = CertificateParams::new(subject_alt_names);
+    let mut cert_params = CertificateParams::new(subject_alt_names);
     // cert_params.key_usages = vec![
     //         rcgen::KeyUsagePurpose::DigitalSignature,
 	// 		rcgen::KeyUsagePurpose::KeyEncipherment,
     //         rcgen::KeyUsagePurpose::KeyCertSign,
 	// 		rcgen::KeyUsagePurpose::ContentCommitment,
 	// 	];
-    // cert_params.distinguished_name = dn;
-    // cert_params.serial_number = Option::Some(1);
-    // cert_params.alg = &rcgen::PKCS_ECDSA_P256_SHA256;
-    // cert_params.is_ca = rcgen::IsCa::Ca(rcgen::BasicConstraints::Constrained(0));
+    cert_params.distinguished_name = dn;
+    cert_params.serial_number = Option::Some(1);
+    cert_params.alg = &rcgen::PKCS_ECDSA_P256_SHA256;
+    cert_params.is_ca = rcgen::IsCa::Ca(rcgen::BasicConstraints::Constrained(0));
 
-    let cert = Certificate::from_params(cert_params).unwrap();
-    
-    // let cert = generate_simple_self_signed(subject_alt_names).unwrap();
-    // The certificate is now valid for localhost and the domain "hello.world.example"
-    println!("{}", cert.serialize_pem().unwrap());
-    println!("{}", cert.serialize_private_key_pem());
+    Certificate::from_params(cert_params)
 }
 
-fn must_not_block<Role: HandshakeRole>(err: HandshakeError<Role>) -> Error {
-    match err {
-        HandshakeError::Interrupted(_) => panic!("Bug: blocking socket would block"),
-        HandshakeError::Failure(f) => f,
-    }
-}
-
-fn handle_client(stream: TcpStream) -> Result<()> {
-    let mut socket = accept(stream).map_err(must_not_block)?;
-    println!("Running test");
+fn read_websocket_message(ws: &mut WebSocket<MaybeTlsStream<TcpStream>>) -> Result<Message, String> {
     loop {
-        match socket.read_message()? {
-            msg @ Message::Text(_) | msg @ Message::Binary(_) => {
-                socket.write_message(msg)?;
-            }
-            Message::Ping(_) | Message::Pong(_) | Message::Close(_) | Message::Frame(_) => {}
+        let msg = match ws.read_message() {
+            Ok(msg) => msg,
+            Err(error) => return Err(error.to_string()),
+        };
+
+        if msg.is_empty() {
+            continue;
         }
+
+        if msg.is_binary() {
+            return Ok(msg)
+        }
+
+        return Err("Invalid response".to_string());
     }
 }
 
-static KEY: &[u8] = include_bytes!("../keys/prod.key");    
-static CERT: &[u8] = include_bytes!("../keys/prod.crt");
+static KEY: &[u8] = include_bytes!("../keys/evcc.key");    
+static CERT: &[u8] = include_bytes!("../keys/evcc.crt");
 
-fn setup_websocket() {
-    // print!("{}", String::from_utf8_lossy(KEY));
+fn setup_websocket(_cert: Certificate) -> Result<WebSocket<MaybeTlsStream<TcpStream>>, String> {
+    // let pem = match cert.serialize_pem() {
+    //     Ok(pem) => pem,
+    //     Err(err) => return Err(format!("Error in serializing the cert pem: {}", err)),
+    // };
+    // let key = cert.serialize_private_key_pem();
+    // let identity = match native_tls::Identity::from_pkcs8(&pem.as_bytes(), &key.as_bytes()) {
+    //     Ok(identity) => identity,
+    //     Err(err) => return Err(format!("Error in creating identity: {}", err)),
+    // };
 
-    let identity = native_tls::Identity::from_pkcs8(CERT, KEY).unwrap();
-    let connector = native_tls::TlsConnector::builder()
+    let identity = match native_tls::Identity::from_pkcs8(CERT, KEY) {
+        Ok(identity) => identity,
+        Err(err) => return Err(format!("Error in creating identity: {}", err)),
+    };
+    let connector = match native_tls::TlsConnector::builder()
         .identity(identity)
         .danger_accept_invalid_certs(true)
-        .build()
-        .unwrap();
+        .build() {
+            Ok(connector) => connector,
+            Err(err) => return Err(format!("Error in creating connector: {}", err)),
+        };
     let connector: tungstenite::Connector = tungstenite::Connector::NativeTls(connector);
 
-    let stream = TcpStream::connect("localhost:4712").unwrap();
+    let stream = match TcpStream::connect("localhost:4712") {
+        Ok(stream) => stream,
+        Err(err) => return Err(format!("Error in connecting to the server: {}", err)),
+    };
 
     let websocket_key = tungstenite::handshake::client::generate_key();
     let mut headers = [
@@ -297,35 +352,49 @@ fn setup_websocket() {
     request.version = Some(11);
     request.path = Some("wss://localhost/ship/");
     
-    let (mut ws, response) = tungstenite::client_tls_with_config(request, stream, None, Some(connector)).unwrap();
+    let result = tungstenite::client_tls_with_config(request, stream, None, Some(connector));
+    match result {
+        Ok((ws, _)) => Ok(ws),
+        Err(e) => Err(format!("{:?}", e)),
+    }
+}
 
-    println!("{:?}", response);
+fn json_from_message(msg: Message) -> Result<String, String> {
+    let message = match msg.into_text() {
+        Err(e) => return Err(e.to_string()),
+        Ok(message) => message,
+    };
+    let message = &message.as_str()[1..];
+    let json = transform_received_json(&message);
+    Ok(json)
+}
 
+fn ship_handshake(ws: &mut WebSocket<MaybeTlsStream<TcpStream>>) -> Result<(), String> {
     // CMI_STATE_CLIENT_SEND
     let ship_init = vec!(ship::model::MessageType::Init as u8, 0);
     let init_message = Message::Binary(ship_init);
     let init_data = init_message.clone().into_data();
 
-    ws.write_message(init_message).unwrap();
+    match ws.write_message(init_message) {
+        Err(e) => {
+            return Err(e.to_string());
+        }
+        _ => {}
+    }
     
     // CMI_STATE_CLIENT_WAIT
-    loop {
-        let msg = ws.read_message().unwrap();
+    let result = read_websocket_message(ws);
+    let msg = match result {
+        Err(e) => return Err(e),
+        Ok(result) => result,
+    };
 
-        if !msg.is_empty() {
-            println!("{:?}", msg);
-            // CMI_STATE_CLIENT_EVALUATE
-            if msg.is_binary() {
-                let response = msg.into_data();
-                if response.cmp(&init_data) == cmp::Ordering::Equal {
-                    println!("Got init message");
-                    break;
-                }
-            } else {
-                println!("Invalid response");
-                break;   
-            }
-        }
+    // CMI_STATE_CLIENT_EVALUATE
+    let response = msg.into_data();
+    if response.cmp(&init_data) == cmp::Ordering::Equal {
+        println!("Got init message");
+    } else {
+        return Err("Invalid init message".to_string());
     }
 
     // SME_HELLO_STATE_READY_INIT
@@ -333,37 +402,34 @@ fn setup_websocket() {
     hello_message.connection_hello.phase = Some(ship::model::ConnectionHelloPhaseType::Ready);
     hello_message.connection_hello.waiting = Some(60000);
 
-    send_json(&mut ws, ship::model::MessageType::Control, &hello_message).unwrap();
+    match send_json(ws, ship::model::MessageType::Control, &hello_message) {
+        Err(e) => return Err(e.to_string()),
+        Ok(_) => {}
+    }
 
     // SME_HELLO_STATE_READY_LISTEN
-    loop {
-        let msg = ws.read_message().unwrap();
+    let msg = match read_websocket_message(ws) {
+        Err(e) => return Err(e),
+        Ok(message) => message,
+    };
+    let json = match json_from_message(msg) {
+        Err(e) => return Err(e),
+        Ok(json) => json,
+    };
 
-        if !msg.is_empty() {
-            if msg.is_binary() {
-                let message = msg.into_text().unwrap();
-                let message = &message.as_str()[1..];
-                let json = transform_received_json(&message);
-                println!("recv: {}", json);
-
-                let message = serde_json::from_str::<ship::model::ConnectionHello>(&json).unwrap();
-                match message.connection_hello.phase {
-                    Some(ship::model::ConnectionHelloPhaseType::Ready) => {
-                        println!("Got ready message");
-                        break;
-                    },
-                    Some(ship::model::ConnectionHelloPhaseType::Aborted) => {
-                        println!("Got aborted message");
-                        break;
-                    },
-                    _ => {
-                        println!("Invalid response");
-                        break;
-                    }
+    match serde_json::from_str::<ship::model::ConnectionHello>(&json) {
+        Err(e) => return Err(e.to_string()),
+        Ok(message) => {
+            match message.connection_hello.phase {
+                Some(ship::model::ConnectionHelloPhaseType::Ready) => {
+                    println!("Got ready message");
+                },
+                Some(ship::model::ConnectionHelloPhaseType::Aborted) => {
+                    return Err("Got aborted message".to_string());
+                },
+                _ => {
+                    return Err("Invalid response".to_string());
                 }
-            } else {
-                println!("Invalid response");
-                break;   
             }
         }
     }
@@ -379,172 +445,127 @@ fn setup_websocket() {
         }
     };
 
-    send_json(&mut ws, ship::model::MessageType::Control, &protocol_handshake).unwrap();
-    loop {
-        let msg = ws.read_message().unwrap();
+    match send_json(ws, ship::model::MessageType::Control, &protocol_handshake) {
+        Err(e) => return Err(e.to_string()),
+        Ok(_) => {}
+    }
 
-        if !msg.is_empty() {
-            if msg.is_binary() {
-                let message = msg.into_text().unwrap();
-                let message = &message.as_str()[1..];
-                let json = transform_received_json(&message);
-                println!("recv: {}", json);
+    let msg = match read_websocket_message(ws) {
+        Err(e) => return Err(e),
+        Ok(message) => message,
+    };
+    let json = match json_from_message(msg) {
+        Err(e) => return Err(e),
+        Ok(json) => json,
+    };
 
-                let message = serde_json::from_str::<ship::model::MessageProtocolHandshake>(&json).unwrap();
-                if message.message_protocol_handshake.handshake_type != Some(ship::model::ProtocolHandshakeTypeType::Select) {
-                    // || !message.message_protocol_handshake.formats.format.contains(&ship::model::MessageProtocolFormatType::JsonUTF8) {
-                    println!("Invalid protocol handshake response");
-                    break;
-                }
-
-                protocol_handshake.message_protocol_handshake.handshake_type = Some(ship::model::ProtocolHandshakeTypeType::Select);
-                send_json(&mut ws, ship::model::MessageType::Control, &protocol_handshake).unwrap();
-
-                println!("Got protocol handshake");
-                break;
-            } else {
-                println!("Invalid response");
-                break;   
+    match serde_json::from_str::<ship::model::MessageProtocolHandshake>(&json) {
+        Err(e) => return Err(e.to_string()),
+        Ok(message) => {
+            if message.message_protocol_handshake.handshake_type != Some(ship::model::ProtocolHandshakeTypeType::Select) {
+                // || !message.message_protocol_handshake.formats.format.contains(&ship::model::MessageProtocolFormatType::JsonUTF8) {
+                return Err("Invalid protocol handshake response".to_string());
             }
         }
     }
 
+    protocol_handshake.message_protocol_handshake.handshake_type = Some(ship::model::ProtocolHandshakeTypeType::Select);
+    match send_json(ws, ship::model::MessageType::Control, &protocol_handshake) {
+        Err(e) => return Err(e.to_string()),
+        Ok(_) => {}
+    }
+
+    println!("Got protocol handshake");
+
     // PIN State
     let mut pin_state = ship::model::ConnectionPinState::default();
     pin_state.connection_pin_state.pin_state = Some(ship::model::PinStateType::None);
-    send_json(&mut ws, ship::model::MessageType::Control, &pin_state).unwrap();
-    loop {
-        let msg = ws.read_message().unwrap();
+    match send_json(ws, ship::model::MessageType::Control, &pin_state) {
+        Err(e) => return Err(e.to_string()),
+        Ok(_) => {}
+    }
 
-        if !msg.is_empty() {
-            if msg.is_binary() {
-                let message = msg.into_text().unwrap();
-                let message = &message.as_str()[1..];
-                let json = transform_received_json(&message);
-                println!("recv: {}", json);
+    let msg = match read_websocket_message(ws) {
+        Err(e) => return Err(e),
+        Ok(message) => message,
+    };
+    let json = match json_from_message(msg) {
+        Err(e) => return Err(e),
+        Ok(json) => json,
+    };
 
-                let message = serde_json::from_str::<ship::model::ConnectionPinState>(&json).unwrap();
-                match message.connection_pin_state.pin_state {
-                    Some(ship::model::PinStateType::None) => {
-                        println!("Got pin state none");
-                        break;
-                    },
-                    Some(ship::model::PinStateType::Required) => {
-                        println!("Got pin state required");
-                        break;
-                    },
-                    Some(ship::model::PinStateType::Optional) => {
-                        println!("Got pin state optional");
-                        break;
-                    },
-                    Some(ship::model::PinStateType::PinOk) => {
-                        println!("Got pin state pin ok");
-                        break;
-                    },
-                    _ => {
-                        println!("Invalid response");
-                        break;
-                    }
-                }
-            } else {
-                println!("Invalid response");
-                break;   
-            }
+    let message = match serde_json::from_str::<ship::model::ConnectionPinState>(&json) {
+        Err(e) => return Err(e.to_string()),
+        Ok(message) => message,
+    };
+    match message.connection_pin_state.pin_state {
+        Some(ship::model::PinStateType::None) => {
+            println!("Got pin state none");
+        },
+        Some(ship::model::PinStateType::Required) => {
+            panic!("Got pin state required");
+        },
+        Some(ship::model::PinStateType::Optional) => {
+            panic!("Got pin state optional");
+        },
+        Some(ship::model::PinStateType::PinOk) => {
+            panic!("Got pin state pin ok");
+        },
+        _ => {
+            panic!("Invalid response");
         }
     }
 
     // Access Methods
     let access_methods_request = ship::model::AccessMethodsRequest::default();
-    send_json(&mut ws, ship::model::MessageType::Control, &access_methods_request).unwrap();
-    loop {
-        let msg = ws.read_message().unwrap();
-
-        if !msg.is_empty() {
-            if msg.is_binary() {
-                let message = msg.into_text().unwrap();
-                let message = &message.as_str()[1..];
-                let json = transform_received_json(&message);
-                println!("recv: {}", json);
-
-                if json.contains("\"accessMethods\":") {
-                    break;
-                } else if json.contains("\"accessMethodsRequest\":") {
-                    let mut access_methods = ship::model::AccessMethods::default();
-                    access_methods.access_methods.id = "test".to_string();
-                    send_json(&mut ws, ship::model::MessageType::Control, &access_methods).unwrap();
-                }
-
-            } else {
-                println!("Invalid response");
-                break;   
-            }
-        }
+    match send_json(ws, ship::model::MessageType::Control, &access_methods_request) {
+        Err(e) => return Err(e.to_string()),
+        Ok(_) => {}
     }
 
     loop {
-        let msg = ws.read_message().unwrap();
+        let msg = match read_websocket_message(ws) {
+            Err(e) => return Err(e),
+            Ok(message) => message,
+        };
+        let json = match json_from_message(msg) {
+            Err(e) => return Err(e),
+            Ok(json) => json,
+        };
 
-        if !msg.is_empty() {
-            if msg.is_binary() {
-                let message = msg.into_text().unwrap();
-                let message = &message.as_str()[1..];
-                let json = transform_received_json(&message);
-                println!("recv: {}", json);
-            } else {
-                println!("Invalid response");
-                break;   
-            }
+        if json.contains("\"accessMethodsRequest\":") {
+            println!("Got access methods request");
+            let mut access_methods = ship::model::AccessMethods::default();
+            access_methods.access_methods.id = "test".to_string();
+            match send_json(ws, ship::model::MessageType::Control, &access_methods) {
+                Err(e) => return Err(e.to_string()),
+                Ok(_) => {}
+            };
+        } else if json.contains("\"accessMethods\":") {
+            println!("Got access methods");
+            break;
+        } else {
+            panic!("Invalid response");
         }
     }
 
-    ws.close(None).unwrap();
+    // Spine
+    let msg = match read_websocket_message(ws) {
+        Err(e) => return Err(e),
+        Ok(message) => message,
+    };
+    let _json = match json_from_message(msg) {
+        Err(e) => return Err(e),
+        Ok(json) => json,
+    };
+    println!("Got SHIP message with SPINE payload");
 
-    // loop {
-    //     println!("test");
-    // }
+    match ws.close(None) {
+        Err(e) => return Err(e.to_string()),
+        Ok(_) => {}
+    }
 
-    // let connector: Arc<rustls::ClientConfig> = Arc::new(config);
-
-    // let identity = native_tls::Identity::from_pkcs8(CERT, KEY).unwrap();
-
-    // let connector = TlsConnector::builder()
-    //     .danger_accept_invalid_certs(true)
-    //     .identity(identity)
-    //     .build()
-    //     .unwrap();
-
-    // let (mut socket, response) = tungstenite::connect(
-    //     Url::parse("wss://192.168.1.59:4712/").unwrap()
-    // ).expect("Can't connect");
-
-    // loop {
-    //     let msg = socket.read_message().expect("Error reading message");
-    //     println!("Received: {}", msg);
-    // }
-
-    // let mut tls_config: rustls::ServerConfig = rustls::ServerConfig::new(rustls::NoClientAuth::new());    
-    // tls_config.set_single_cert(    
-    //     rustls::internal::pemfile::certs(&mut &*CERT).unwrap(),    
-    //     rustls::internal::pemfile::pkcs8_private_keys(&mut &*KEY).unwrap()    
-    //         .pop().unwrap()    
-    // ).unwrap();    
-    // let tls_config = Arc::new(tls_config);
-
-    // let server = TcpListener::bind("192.168.1.59:4712").unwrap();
-
-    // for stream in server.incoming() {
-    //     spawn(move || match stream {
-    //         Ok(stream) => {
-    //             if let Err(err) = handle_client(stream) {
-    //                 match err {
-    //                     Error::ConnectionClosed | Error::Protocol(_) | Error::Utf8 => (),
-    //                     e => println!("test: {}", e),
-    //                 }
-    //             }
-    //         }
-    //         Err(e) => println!("Error accepting stream: {}", e),
-    //     });
-    // }
+    Ok(())
 }
 
 fn main() {
@@ -552,8 +573,22 @@ fn main() {
 
     // setup_mdns();
 
-    // create_certificate();
+    let cert = match create_certificate() {
+        Ok(cert) => cert,
+        Err(e) => {
+            println!("Failed to create certificate: {}", e);
+            return;
+        }
+    };
 
-    setup_websocket();
+    let mut ws = match setup_websocket(cert) {
+        Err(e) => panic!("{}", e),
+        Ok(ws) => ws,
+    };
+
+    match ship_handshake(&mut ws) {
+        Err(e) => panic!("{}", e),
+        Ok(_) => {}
+    }
 }
 
