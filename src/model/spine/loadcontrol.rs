@@ -56,7 +56,7 @@ impl fmt::Display for LoadControlEventStateEnumType {
 	}
 }
 
-pub type LoadControlLimitIdType = u8;
+pub type LoadControlLimitIdType = u32;
 
 pub type LoadControlLimitTypeType = LoadControlLimitTypeEnumType;
 

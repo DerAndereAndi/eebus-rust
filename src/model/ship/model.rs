@@ -79,8 +79,8 @@ pub struct MessageProtocolHandshake {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 pub struct Version {
-  pub major: u8,
-  pub minor: u8,
+  pub major: u32,
+  pub minor: u32,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -154,7 +154,7 @@ pub struct ConnectionPinInputType {
   pub pin: PinValueType,
 }
 
-pub type ConnectionPinErrorErrorType = u8;
+pub type ConnectionPinErrorErrorType = u32;
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 pub struct ConnectionPinErrorType {
@@ -222,7 +222,7 @@ pub struct ConnectionCloseType {
   #[serde(skip_serializing_if = "Option::is_none")]
   pub phase: Option<ConnectionClosePhaseType>, // defined as option so we don't have to provide a default value
   #[serde(skip_serializing_if = "Option::is_none")]
-  pub max_time: Option<u8>,
+  pub max_time: Option<u32>,
   #[serde(skip_serializing_if = "Option::is_none")]
   pub reason: Option<ConnectionCloseReasonType>,
 }

@@ -6,9 +6,9 @@ use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 use super::measurement;
 
-pub type ElectricalConnectionIdType = u8;
+pub type ElectricalConnectionIdType = u32;
 
-pub type ElectricalConnectionParameterIdType = u8;
+pub type ElectricalConnectionParameterIdType = u32;
 
 pub type ElectricalConnectionMeasurandVariantType = ElectricalConnectionMeasurandVariantEnumType;
 
@@ -235,7 +235,7 @@ pub struct ElectricalConnectionDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub power_supply_type: Option<ElectricalConnectionVoltageTypeType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub ac_connected_phases: Option<u8>,
+	pub ac_connected_phases: Option<u32>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub positive_energy_direction: Option<commondatatypes::EnergyDirectionType>,
 	#[serde(skip_serializing_if = "Option::is_none")]

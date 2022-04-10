@@ -6,7 +6,7 @@ use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 use super::threshold;
 
-pub type MeasurementIdType = u8;
+pub type MeasurementIdType = u32;
 
 pub type MeasurementTypeType = MeasurementTypeEnumType;
 

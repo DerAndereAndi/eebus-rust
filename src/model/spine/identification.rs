@@ -4,7 +4,7 @@ use super::super::utils;
 
 use serde::{Serialize, Deserialize};
 
-pub type IdentificationIdType = u8;
+pub type IdentificationIdType = u32;
 
 pub type IdentificationTypeType = IdentificationTypeEnumType;
 

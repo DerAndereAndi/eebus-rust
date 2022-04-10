@@ -5,7 +5,7 @@ use super::super::utils;
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 
-pub type ThresholdIdType = u8;
+pub type ThresholdIdType = u32;
 
 pub type ThresholdTypeType = ThresholdTypeEnumType;
 

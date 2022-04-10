@@ -24,7 +24,7 @@ impl fmt::Display for CmdClassifierType {
 	}
 }
 
-pub type FilterIdType = u8;
+pub type FilterIdType = u32;
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]

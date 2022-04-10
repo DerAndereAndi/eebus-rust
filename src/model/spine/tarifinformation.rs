@@ -7,11 +7,11 @@ use super::commondatatypes;
 use super::measurement;
 use super::timetable;
 
-pub type TariffIdType = u8;
+pub type TariffIdType = u32;
 
 pub type TariffCountType = TariffIdType;
 
-pub type TierBoundaryIdType = u8;
+pub type TierBoundaryIdType = u32;
 
 pub type TierBoundaryCountType = TierBoundaryIdType;
 
@@ -33,9 +33,9 @@ impl fmt::Display for TierBoundaryTypeEnumType {
 	}
 }
 
-pub type CommodityIdType = u8;
+pub type CommodityIdType = u32;
 
-pub type TierIdType = u8;
+pub type TierIdType = u32;
 
 pub type TierCountType = TierIdType;
 
@@ -55,7 +55,7 @@ impl fmt::Display for TierTypeEnumType {
 	}
 }
 
-pub type IncentiveIdType = u8;
+pub type IncentiveIdType = u32;
 
 pub type IncentiveCountType = IncentiveIdType;
 
@@ -79,7 +79,7 @@ impl fmt::Display for IncentiveTypeEnumType {
 	}
 }
 
-pub type IncentivePriorityType = u8;
+pub type IncentivePriorityType = u32;
 
 pub type IncentiveValueTypeType = IncentiveValueTypeEnumType;
 

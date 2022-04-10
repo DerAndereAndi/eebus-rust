@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 
-pub type ErrorNumberType = u8;
+pub type ErrorNumberType = u32;
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]

@@ -5,9 +5,9 @@ use super::super::utils;
 use serde::{Serialize, Deserialize};
 use super::{commondatatypes, measurement};
 
-pub type TimeSeriesIdType = u8;
+pub type TimeSeriesIdType = u32;
 
-pub type TimeSeriesSlotIdType = u8;
+pub type TimeSeriesSlotIdType = u32;
 
 pub type TimeSeriesSlotCountType = TimeSeriesSlotIdType;
 

@@ -5,7 +5,7 @@ use super::super::utils;
 use serde::{Serialize, Deserialize};
 use super::commondatatypes;
 
-pub type DeviceConfigurationKeyIdType = u8;
+pub type DeviceConfigurationKeyIdType = u32;
 
 pub type DeviceConfigurationKeyValueStringType = String;
 

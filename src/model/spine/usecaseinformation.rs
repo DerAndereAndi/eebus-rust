@@ -47,7 +47,7 @@ impl fmt::Display for UseCaseNameEnumType {
 	}
 }
 
-pub type UseCaseScenarioSupportType = u8;
+pub type UseCaseScenarioSupportType = u32;
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]

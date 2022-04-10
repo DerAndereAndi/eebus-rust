@@ -74,9 +74,9 @@ impl fmt::Display for MonthType {
 	}
 }
 
-pub type DayOfMonthType = u8;
+pub type DayOfMonthType = u32;
 
-pub type CalendarWeekType = u8;
+pub type CalendarWeekType = u32;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
@@ -156,11 +156,11 @@ pub struct RecurrenceInformationType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub recurring_interval:      Option<RecurringIntervalType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub recurring_interval_step: Option<u8>,
+	pub recurring_interval_step: Option<u32>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub first_execution:         Option<String>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub execution_count:         Option<u8>,
+	pub execution_count:         Option<u32>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub last_execution:          Option<String>,
 }
@@ -664,9 +664,9 @@ impl fmt::Display for CurrencyEnumType {
 
 pub type AddressDeviceType = String;
 
-pub type AddressEntityType = u8;
+pub type AddressEntityType = u32;
 
-pub type AddressFeatureType = u8;
+pub type AddressFeatureType = u32;
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 pub struct DeviceAddressType {
