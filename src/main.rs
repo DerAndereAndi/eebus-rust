@@ -1,30 +1,31 @@
 #![allow(dead_code)]
+#![allow(unused_imports)]
 
 mod model;
 mod device;
 
 use serde_json::{Value, json};
-use model::spine::{self, commondatatypes::{DeviceTypeEnumType}};
+use model::spine::commondatatypes::{DeviceTypeEnumType};
 use model::ship::{self};
 
 use std::{
-    error::Error,
     any::Any,
     sync::{Arc, Mutex},
-    time::{Duration, SystemTime},
+    time::{Duration},
     net::{TcpStream},
 };
 use core::cmp;
+use chrono::{Utc, Datelike};
 use rcgen::{
     self,
     Certificate,
     CertificateParams,
-    DistinguishedName, RcgenError,
+    DistinguishedName,
 };
 use native_tls::{self};
 use tungstenite::{self, Message, WebSocket, stream::MaybeTlsStream};
 use httparse::{self};
-use zeroconf::prelude::*;
+use zeroconf::{prelude::*, macos::event_loop::BonjourEventLoop};
 use zeroconf::{MdnsBrowser, MdnsService, ServiceDiscovery, ServiceRegistration, ServiceType, TxtRecord};
 
 // process incoming json strings and transform it to match the model structure
@@ -124,7 +125,7 @@ where
     Ok(result)
 }
 
-
+// send a json string via ship
 fn send_json<T>(ws: &mut WebSocket<tungstenite::stream::MaybeTlsStream<TcpStream>>, msg_type: ship::model::MessageType, model: T) -> Result<(), String>
 where 
     T: serde::Serialize
@@ -152,47 +153,60 @@ struct Context {
     service_name: String,
 }
 
-fn setup_mdns() {
-    let mut browser = MdnsBrowser::new(ServiceType::new("ship", "tcp").unwrap());
+struct MdnsLoops<'a> {
+    service: BonjourEventLoop<'a>,
+    browse: BonjourEventLoop<'a>,
+}
+unsafe impl Send for MdnsLoops<'_> {}
 
-    browser.set_service_discovered_callback(Box::new(mdns_on_service_discovered));
+// register an EEBUS service on mDNS (unused)
+fn setup_mdns_service() -> Result<(), String> {
+    let service_type = match ServiceType::new("ship", "tcp") {
+        Ok(value) => value,
+        Err(err) => return Err(err.to_string()),
+    };
 
-    let mut service = MdnsService::new(ServiceType::new("ship", "tcp").unwrap(), 4712);
+    let mut service = MdnsService::new(service_type, 4712);
     let mut txt_record = TxtRecord::new();
     let context: Arc<Mutex<Context>> = Arc::default();
 
-    txt_record.insert("txtvers", "1").unwrap();
-    txt_record.insert("path", "/ship/").unwrap();
-    txt_record.insert("id", "0").unwrap();
-    txt_record.insert("ski", "0").unwrap();
-    txt_record.insert("brand", "WIP").unwrap();
-    txt_record.insert("model", "WIP").unwrap();
-    txt_record.insert("type", &DeviceTypeEnumType::EnergyManagementSystem.to_string()).unwrap();
-    txt_record.insert("register", "true").unwrap();
+    let cem_type = DeviceTypeEnumType::EnergyManagementSystem.to_string();
+
+    let kv: Vec<(&str, &str)> = vec![
+        ("txtvers", "1"),
+        ("path", "/ship/"),
+        ("id", "0"),
+        ("ski", "0"),
+        ("brand", "WIP"),
+        ("model", "WIP"),
+        ("type", cem_type.as_str()),
+        ("register", "true"),
+    ];
+    for (key, value) in kv  {
+        match txt_record.insert(key, value) {
+            Ok(_) => (),
+            Err(err) => return Err(err.to_string()),
+        }
+    }
 
     service.set_registered_callback(Box::new(mdns_on_service_registered));
     service.set_context(Box::new(context));
     service.set_txt_record(txt_record);
 
-    let event_service_loop = service.register().unwrap();
-    let event_browse_loop = browser.browse_services().unwrap();
+    let event_service_loop = match service.register() {
+        Ok(value) => value,
+        Err(err) => return Err(err.to_string()),
+    };
 
-    loop {
-        // calling `poll()` will keep this alive
-        event_browse_loop.poll(Duration::from_secs(0)).unwrap();
-        event_service_loop.poll(Duration::from_secs(0)).unwrap();
+    match event_service_loop.poll(Duration::from_secs(0)) {
+        Ok(_) => (),
+        Err(err) => return Err(err.to_string()),
     }
+
+    Ok(())
 }
 
-fn mdns_on_service_discovered(
-    result: zeroconf::Result<ServiceDiscovery>,
-    _context: Option<Arc<dyn Any>>,
-) {
-    println!("Service discovered: {:?}", result.unwrap());
-
-    // ...
-}
-
+// callback for mDNS when the EEBUS service is registered
 fn mdns_on_service_registered(
     result: zeroconf::Result<ServiceRegistration>,
     context: Option<Arc<dyn Any>>,
@@ -215,66 +229,150 @@ fn mdns_on_service_registered(
     // ...
 }
 
-fn create_certificate() -> Result<Certificate, RcgenError> {
-    let subject_alt_names = vec!["localhost".to_string()];
+// browse for EEBUS services on mDNS
+fn browse_mdns() {
+    let service_type = match ServiceType::new("ship", "tcp") {
+        Ok(value) => value,
+        Err(err) => {
+            println!("{}", err);
+            return;
+        },
+    };
 
-    let mut dn = DistinguishedName::new();
-    dn.push(rcgen::DnType::OrganizationName, "WIP");
-    dn.push(rcgen::DnType::CountryName, "DE");
-    dn.push(rcgen::DnType::CommonName, rcgen::DnValue::PrintableString("WIP".to_string()));
-    
-    let mut cert_params = CertificateParams::new(subject_alt_names);
-    // cert_params.key_usages = vec![
-    //         rcgen::KeyUsagePurpose::DigitalSignature,
-	// 		rcgen::KeyUsagePurpose::KeyEncipherment,
-    //         rcgen::KeyUsagePurpose::KeyCertSign,
-	// 		rcgen::KeyUsagePurpose::ContentCommitment,
-	// 	];
-    cert_params.distinguished_name = dn;
-    cert_params.serial_number = Option::Some(1);
-    cert_params.alg = &rcgen::PKCS_ECDSA_P256_SHA256;
-    cert_params.is_ca = rcgen::IsCa::Ca(rcgen::BasicConstraints::Constrained(0));
+    let mut browser = MdnsBrowser::new(service_type);
 
-    Certificate::from_params(cert_params)
-}
+    browser.set_service_discovered_callback(Box::new(mdns_on_service_discovered));
 
-fn read_websocket_message(ws: &mut WebSocket<MaybeTlsStream<TcpStream>>) -> Result<Message, String> {
+    let event_browse_loop = match browser.browse_services() {
+        Ok(value) => value,
+        Err(err) => {
+            println!("{}", err);
+            return;
+        },
+    };
+
+    println!("Browsing for services...");
     loop {
-        let msg = match ws.read_message() {
-            Ok(msg) => msg,
-            Err(error) => return Err(error.to_string()),
-        };
-
-        if msg.is_empty() {
-            continue;
+        match event_browse_loop.poll(Duration::from_secs(0)) {
+            Ok(_) => (),
+            Err(err) => {
+                panic!("{}", err);
+            },
         }
-
-        if msg.is_binary() {
-            return Ok(msg)
-        }
-
-        return Err("Invalid response".to_string());
     }
 }
 
-static KEY: &[u8] = include_bytes!("../keys/evcc.key");    
-static CERT: &[u8] = include_bytes!("../keys/evcc.crt");
+// callback for mDNS when an EEBUS service is discovered
+fn mdns_on_service_discovered(
+    result: zeroconf::Result<ServiceDiscovery>,
+    _context: Option<Arc<dyn Any>>,
+) {
+    let service = match result {
+        Ok(service) => service,
+        Err(err) => {
+            println!("Error discovering service: {:?}", err);
+            return;
+        },
+    };
 
-fn setup_websocket(_cert: Certificate) -> Result<WebSocket<MaybeTlsStream<TcpStream>>, String> {
-    // let pem = match cert.serialize_pem() {
-    //     Ok(pem) => pem,
-    //     Err(err) => return Err(format!("Error in serializing the cert pem: {}", err)),
-    // };
-    // let key = cert.serialize_private_key_pem();
-    // let identity = match native_tls::Identity::from_pkcs8(&pem.as_bytes(), &key.as_bytes()) {
-    //     Ok(identity) => identity,
-    //     Err(err) => return Err(format!("Error in creating identity: {}", err)),
-    // };
+    println!("\n\nService discovered:\n  {:?}", service);
 
-    let identity = match native_tls::Identity::from_pkcs8(CERT, KEY) {
+    println!("\nConnecting to {}:{}", service.address(), service.port());
+    connect_to_eebus_service(service.address().to_string(), service.port().to_string());
+    println!("\n\n");
+}
+
+// connect to an EEBUS service
+fn connect_to_eebus_service(address: String, port: String) {
+    let identity = match get_identity() {
+        Ok(cert) => cert,
+        Err(e) => {
+            println!("Failed to create identity: {}", e);
+            return;
+        }
+    };
+
+    let mut ws = match setup_websocket(identity, address, port) {
+        Err(e) => {
+            println!("Failed to setup websocket: {}", e);
+            return;
+        },
+        Ok(ws) => ws,
+    };
+
+    match ship_handshake(&mut ws) {
+        Err(e) => {
+            println!("Failed to handshake: {}", e);
+            return;
+        },
+        Ok(_) => {}
+    }
+}
+
+// get a certificate to be used as identity
+fn get_identity() -> Result<native_tls::Identity, String> {
+/*
+    // TODO: create a certificate instead of using a generated one from a file
+    let mut dn = DistinguishedName::new();
+    dn.push(rcgen::DnType::OrganizationName, "Demo");
+    dn.push(rcgen::DnType::CountryName, "DE");
+    dn.push(rcgen::DnType::CommonName, "Demo");
+    
+    let mut cert_params = CertificateParams::default();
+    cert_params.distinguished_name = dn;
+    cert_params.serial_number = Option::Some(1);
+    // ECDSA is required
+    cert_params.alg = &rcgen::PKCS_ECDSA_P256_SHA256;
+    cert_params.is_ca = rcgen::IsCa::Ca(rcgen::BasicConstraints::Unconstrained);
+    // The SKI is stored in the subject_key_identifier as Sha1 checksum of the private key
+    // cert_params.key_identifier_method = ecgen::KeyIdMethod::Sha1;
+    cert_params.key_usages = vec![
+            rcgen::KeyUsagePurpose::DigitalSignature,
+			rcgen::KeyUsagePurpose::KeyEncipherment,
+            rcgen::KeyUsagePurpose::KeyCertSign,
+			rcgen::KeyUsagePurpose::ContentCommitment,
+		];
+    cert_params.extended_key_usages = vec![
+            rcgen::ExtendedKeyUsagePurpose::ServerAuth,
+    ];
+    let now = Utc::now();
+    cert_params.not_before = rcgen::date_time_ymd(now.year(), now.month() as u8, now.day() as u8);
+    cert_params.not_after = rcgen::date_time_ymd(now.year()+50, now.month() as u8, now.day() as u8);
+
+    let certificate = match Certificate::from_params(cert_params) {
+        Ok(certificate) => certificate,
+        Err(e) => return Err(e.to_string()),
+    };
+
+    let cert = match certificate.serialize_pem() {
+        Ok(cert) => cert,
+        Err(err) => return Err(format!("Error in serializing the cert pem: {}", err)),
+    };
+    let key = certificate.serialize_private_key_pem();
+    
+    //  the private key can not be used right: https://github.com/est31/rcgen/issues/82
+    match native_tls::Identity::from_pkcs8(cert.as_bytes(), key.as_bytes()) {
+        Ok(identity) => return Ok(identity),
+        Err(err) => {
+            println!("Error in creating identity: {}", err);
+            println!("Cert:\n{}", cert);
+            println!("Key:\n{}", key);
+        },
+    };
+*/
+    let cert = include_bytes!("../keys/demo.crt");
+    let key = include_bytes!("../keys/demo.key");
+
+    let identity = match native_tls::Identity::from_pkcs8(cert, key) {
         Ok(identity) => identity,
         Err(err) => return Err(format!("Error in creating identity: {}", err)),
     };
+    
+    Ok(identity)
+}
+
+// setup a secure websocket connection
+fn setup_websocket(identity: native_tls::Identity, address: String, port: String) -> Result<WebSocket<MaybeTlsStream<TcpStream>>, String> {
     let connector = match native_tls::TlsConnector::builder()
         .identity(identity)
         .danger_accept_invalid_certs(true)
@@ -284,7 +382,7 @@ fn setup_websocket(_cert: Certificate) -> Result<WebSocket<MaybeTlsStream<TcpStr
         };
     let connector: tungstenite::Connector = tungstenite::Connector::NativeTls(connector);
 
-    let stream = match TcpStream::connect("localhost:4712") {
+    let stream = match TcpStream::connect(format!("{}:{}", address, port)) {
         Ok(stream) => stream,
         Err(err) => return Err(format!("Error in connecting to the server: {}", err)),
     };
@@ -322,13 +420,35 @@ fn setup_websocket(_cert: Certificate) -> Result<WebSocket<MaybeTlsStream<TcpStr
     request.version = Some(11);
     request.path = Some("wss://localhost/ship/");
     
+    // TODO: the SKI of the peer certificate would need to be checked if the device is paired
     let result = tungstenite::client_tls_with_config(request, stream, None, Some(connector));
     match result {
-        Ok((ws, _)) => Ok(ws),
+        Ok((ws, _)) => {Ok(ws)},
         Err(e) => Err(format!("{:?}", e)),
     }
 }
 
+// read a websocket connection
+fn read_websocket_message(ws: &mut WebSocket<MaybeTlsStream<TcpStream>>) -> Result<Message, String> {
+    loop {
+        let msg = match ws.read_message() {
+            Ok(msg) => msg,
+            Err(error) => return Err(error.to_string()),
+        };
+
+        if msg.is_empty() {
+            continue;
+        }
+
+        if msg.is_binary() {
+            return Ok(msg)
+        }
+
+        return Err(format!("Read ws: invalid response: {}", msg));
+    }
+}
+
+// get a serializable json string from a websocket message
 fn json_from_message(msg: Message) -> Result<String, String> {
     let message = match msg.into_text() {
         Err(e) => return Err(e.to_string()),
@@ -339,6 +459,7 @@ fn json_from_message(msg: Message) -> Result<String, String> {
     Ok(json)
 }
 
+// ship handshake process
 fn ship_handshake(ws: &mut WebSocket<MaybeTlsStream<TcpStream>>) -> Result<(), String> {
     // CMI_STATE_CLIENT_SEND
     let ship_init = vec!(ship::model::MessageType::Init as u8, 0);
@@ -398,7 +519,7 @@ fn ship_handshake(ws: &mut WebSocket<MaybeTlsStream<TcpStream>>) -> Result<(), S
                     return Err("Got aborted message".to_string());
                 },
                 _ => {
-                    return Err("Invalid response".to_string());
+                    return Err("Hello state: Invalid response".to_string());
                 }
             }
         }
@@ -470,19 +591,19 @@ fn ship_handshake(ws: &mut WebSocket<MaybeTlsStream<TcpStream>>) -> Result<(), S
     };
     match message.connection_pin_state.pin_state {
         Some(ship::model::PinStateType::None) => {
-            println!("Got pin state none");
+            println!("Got pin state: none");
         },
         Some(ship::model::PinStateType::Required) => {
-            panic!("Got pin state required");
+            return Err("Got pin state: required (unsupported)".to_string());
         },
         Some(ship::model::PinStateType::Optional) => {
-            panic!("Got pin state optional");
+            return Err("Got pin state: optional (unsupported)".to_string());
         },
         Some(ship::model::PinStateType::PinOk) => {
-            panic!("Got pin state pin ok");
+            return Err("Got pin state: ok (unsupported)".to_string());
         },
         _ => {
-            panic!("Invalid response");
+            return Err("Got pin state: Invalid response".to_string());
         }
     }
 
@@ -515,7 +636,7 @@ fn ship_handshake(ws: &mut WebSocket<MaybeTlsStream<TcpStream>>) -> Result<(), S
             println!("Got access methods");
             break;
         } else {
-            panic!("Invalid response");
+            return Err("access methods: Invalid response".to_string());
         }
     }
 
@@ -539,24 +660,6 @@ fn ship_handshake(ws: &mut WebSocket<MaybeTlsStream<TcpStream>>) -> Result<(), S
 }
 
 fn main() {
-    // setup_mdns();
-
-    let cert = match create_certificate() {
-        Ok(cert) => cert,
-        Err(e) => {
-            println!("Failed to create certificate: {}", e);
-            return;
-        }
-    };
-
-    let mut ws = match setup_websocket(cert) {
-        Err(e) => panic!("{}", e),
-        Ok(ws) => ws,
-    };
-
-    match ship_handshake(&mut ws) {
-        Err(e) => panic!("{}", e),
-        Ok(_) => {}
-    }
+    browse_mdns();
 }
 
