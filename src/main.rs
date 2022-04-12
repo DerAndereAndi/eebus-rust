@@ -9,6 +9,7 @@ use model::spine::commondatatypes::{DeviceTypeEnumType};
 use model::ship::{self};
 
 use std::{
+    env,
     any::Any,
     sync::{Arc, Mutex},
     time::{Duration},
@@ -659,7 +660,38 @@ fn ship_handshake(ws: &mut WebSocket<MaybeTlsStream<TcpStream>>) -> Result<(), S
     Ok(())
 }
 
-fn main() {
-    browse_mdns();
+fn usage(args: String) {
+    println!("Usage: {} <command>", args);
+    println!("Commands:");
+    println!("  browse");
+    println!("  connect <host> <port>");
 }
 
+fn main() {
+    let args: Vec<String> = env::args().collect();
+    let cmd = args[0].clone();
+    
+    if args.len() < 2 {
+        usage(cmd);
+        return;
+    }
+    let command = &args[1];
+
+    match command.as_ref() {
+        "browse" => {
+            browse_mdns();
+        },
+        "connect" => {
+            if args.len() < 4 {
+                println!("Usage: {} connect <host> <port>", args[0]);
+                return;
+            }
+            let host = args[2].clone();
+            let port = args[3].clone();
+            connect_to_eebus_service(host, port);
+        },
+        _ => {
+            usage(cmd);
+        }
+    }
+}
