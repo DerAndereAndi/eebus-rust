@@ -64,6 +64,19 @@ pub struct UseCaseSupportType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct UseCaseSupportElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub use_case_name: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub use_case_version: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub use_case_available: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub scenario_support: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct UseCaseSupportSelectorsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub use_case_name: Option<UseCaseNameType>,
@@ -82,6 +95,17 @@ pub struct UseCaseInformationDataType {
   pub actor: Option<UseCaseActorType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub use_case_support: Option<Vec<UseCaseSupportType>>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct UseCaseInformationDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub address: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub actor: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub use_case_support: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

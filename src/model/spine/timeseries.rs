@@ -50,6 +50,25 @@ pub struct TimeSeriesSlotType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct TimeSeriesSlotElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_series_slot_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_period: Option<commondatatypes::TimePeriodElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub duration: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub recurrence_information: Option<commondatatypes::AbsoluteOrRecurringTimeElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value: Option<commondatatypes::ScaledNumberElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub min_value: Option<commondatatypes::ScaledNumberElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub max_value: Option<commondatatypes::ScaledNumberElementsType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct TimeSeriesDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub time_series_id: Option<TimeSeriesIdType>,
@@ -57,6 +76,17 @@ pub struct TimeSeriesDataType {
   pub time_period: Option<commondatatypes::TimePeriodType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub time_series_slot: Option<Vec<TimeSeriesSlotType>>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct TimeSeriesDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_series_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_period: Option<commondatatypes::TimePeriodElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_series_slot: Option<Vec<TimeSeriesSlotElementsType>>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -98,6 +128,31 @@ pub struct TimeSeriesDescriptionDataType {
   pub description: Option<commondatatypes::DescriptionType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub scope_type: Option<commondatatypes::ScopeTypeType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct TimeSeriesDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_series_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_series_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_series_writeable: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub update_required: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub measurement_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub currency: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub unit: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub scope_type: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -145,6 +200,33 @@ pub struct TimeSeriesConstraintsDataType {
   pub slot_value_max: Option<commondatatypes::ScaledNumberType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub slot_value_step_size: Option<commondatatypes::ScaledNumberType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct TimeSeriesConstraintsDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_series_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub slot_count_min: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub slot_count_max: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub slot_duration_min: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub slot_duration_max: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub slot_duration_step_size: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub earliest_time_series_start_time: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub latest_time_series_end_time: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub slot_value_min: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub slot_value_max: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub slot_value_step_size: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

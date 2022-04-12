@@ -1,6 +1,5 @@
 use serde::{Serialize, Deserialize};
-use super::commondatatypes;
-use super::commandframe;
+use super::{commondatatypes, commandframe};
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 pub struct SpineType {

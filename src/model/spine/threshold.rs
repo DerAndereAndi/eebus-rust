@@ -50,6 +50,15 @@ pub struct ThresholdDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct ThresholdDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub threshold_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub threshold_value: Option<commondatatypes::ScaledNumberElementsType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct ThresholdListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub threshold_data: Option<Vec<ThresholdDataType>>,

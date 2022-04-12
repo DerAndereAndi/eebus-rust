@@ -203,6 +203,27 @@ pub struct MeasurementDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct MeasurementDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub measurement_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub timestamp: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value: Option<commondatatypes::ScaledNumberType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub evaluation_period: Option<commondatatypes::TimePeriodElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_source: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_tendency: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_state: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct MeasurementListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_data: Option<Vec<MeasurementDataType>>,
@@ -230,6 +251,19 @@ pub struct MeasurementConstraintsDataType {
   pub value_range_max: Option<commondatatypes::ScaledNumberType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_step_size: Option<commondatatypes::ScaledNumberType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct MeasurementConstraintsDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub measurement_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_range_min: Option<commondatatypes::ScaledNumberElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_range_max: Option<commondatatypes::ScaledNumberElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_step_size: Option<commondatatypes::ScaledNumberElementsType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -269,6 +303,27 @@ pub struct MeasurementDescriptionDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct MeasurementDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub measurement_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub measurement_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub commodity_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub unit: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub calibration_value: Option<commondatatypes::ScaledNumberElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub scope_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct MeasurementDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub measurement_description_data: Option<Vec<MeasurementDescriptionDataType>>,
@@ -294,6 +349,15 @@ pub struct MeasurementThresholdRelationDataType {
   pub measurement_id: Option<MeasurementIdType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub threshold_id: Option<Vec<threshold::ThresholdIdType>>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct MeasurementThresholdRelationDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub measurement_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub threshold_id: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

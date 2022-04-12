@@ -149,6 +149,33 @@ pub struct ElectricalConnectionParameterDescriptionDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct ElectricalConnectionParameterDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub electrical_connection_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub parameter_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub measurement_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub voltage_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub ac_measured_phases: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub ac_measured_in_reference_to: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub ac_measurement_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub ac_measurement_variant: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub scope_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct ElectricalConnectionParameterDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub electrical_connection_parameter_description_data: Option<Vec<ElectricalConnectionParameterDescriptionDataType>>
@@ -176,6 +203,17 @@ pub struct ElectricalConnectionPermittedValueSetDataType {
 	pub parameter_id: Option<ElectricalConnectionParameterIdType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub permitted_value_set: Option<Vec<commondatatypes::ScaledNumberSetType>>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct ElectricalConnectionPermittedValueSetDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub electrical_connection_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub parameter_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub permitted_value_set: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -215,6 +253,25 @@ pub struct ElectricalConnectionStateDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct ElectricalConnectionStateDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub electrical_connection_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub timestamp: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub current_energy_mode: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub consumption_time: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub production_time: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub total_consumption_time: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub total_production_time: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct ElectricalConnectionStateListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub electrical_connection_state_data: Option<Vec<ElectricalConnectionStateDataType>>,
@@ -244,6 +301,25 @@ pub struct ElectricalConnectionDescriptionDataType {
 	pub label: Option<commondatatypes::LabelType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub description: Option<commondatatypes::DescriptionType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct ElectricalConnectionDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub electrical_connection_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub power_supply_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub ac_connected_phases: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub positive_energy_direction: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub scope_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

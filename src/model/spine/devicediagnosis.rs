@@ -1,6 +1,7 @@
 use std::fmt;
 
 use super::super::utils;
+use super::{commondatatypes};
 
 use serde::{Serialize, Deserialize};
 
@@ -79,6 +80,25 @@ pub struct DeviceDiagnosisStateDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct DeviceDiagnosisStateDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub timestamp: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub operating_state: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub vendor_state_code: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub last_error_code: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub up_time: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub total_up_time: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub power_supply_condition: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct DeviceDiagnosisHeartbeatDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   timestamp: Option<String>,
@@ -86,6 +106,17 @@ pub struct DeviceDiagnosisHeartbeatDataType {
   heartbeat_counter: Option<u64>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   heartbeat_timeout: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct DeviceDiagnosisHeartbeatDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub timestamp: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub heartbeat_counter: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub heartbeat_timeout: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -99,4 +130,17 @@ pub struct DeviceDiagnosisServiceDataType {
   boot_counter: Option<u64>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   next_service: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct DeviceDiagnosisServiceDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub timestamp: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub installation_time: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub boot_counter: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub next_service: Option<commondatatypes::ElementTagType>,
 }

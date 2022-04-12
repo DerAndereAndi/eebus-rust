@@ -74,6 +74,25 @@ pub struct DeviceConfigurationKeyValueValueType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct DeviceConfigurationKeyValueValueElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub boolean: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+  pub date: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+  pub date_time: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+  pub duration: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+  pub string: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+  pub time: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+  pub scaled_number: Option<commondatatypes::ScaledNumberElementsType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct DeviceConfigurationKeyValueDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub key_id: Option<DeviceConfigurationKeyIdType>,
@@ -81,6 +100,17 @@ pub struct DeviceConfigurationKeyValueDataType {
   pub value: Option<DeviceConfigurationKeyValueValueType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub is_value_changeable: Option<bool>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct DeviceConfigurationKeyValueDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub key_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value: Option<DeviceConfigurationKeyValueValueElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub is_value_changeable: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -116,6 +146,23 @@ pub struct DeviceConfigurationKeyValueDescriptionDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct DeviceConfigurationKeyValueDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub key_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub key_name: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub unit: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct DeviceConfigurationKeyValueDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub device_configuration_key_value_description_data: Option<Vec<DeviceConfigurationKeyValueDescriptionDataType>>,
@@ -141,6 +188,19 @@ pub struct DeviceConfigurationKeyValueConstraintsDataType {
   pub value_range_max: Option<DeviceConfigurationKeyValueValueType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_step_size: Option<DeviceConfigurationKeyValueValueType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct DeviceConfigurationKeyValueConstraintsDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub key_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_range_min: Option<DeviceConfigurationKeyValueValueElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_range_max: Option<DeviceConfigurationKeyValueValueElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_step_size: Option<DeviceConfigurationKeyValueValueElementsType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

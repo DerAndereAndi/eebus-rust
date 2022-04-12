@@ -60,6 +60,35 @@ pub struct DeviceClassificationManufacturerDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct DeviceClassificationManufacturerDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub device_name: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub device_code: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub serial_number: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub software_revision: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub hardware_revision: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub vendor_name: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub vendor_code: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub brand_name: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub power_source: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub manufcaturer_node_identification: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub manufacturer_label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub manufacturer_description: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct DeviceClassificationUserDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub user_node_identification: Option<DeviceClassificationStringType>,
@@ -67,4 +96,15 @@ pub struct DeviceClassificationUserDataType {
   pub user_label: Option<commondatatypes::LabelType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub user_description: Option<commondatatypes::DescriptionType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct DeviceClassificationUserDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub user_node_identification: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub user_label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub user_description: Option<commondatatypes::ElementTagType>,
 }

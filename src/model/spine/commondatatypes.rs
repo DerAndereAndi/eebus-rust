@@ -18,15 +18,22 @@ pub type SpecificationVersionType = String;
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimePeriodType {
-	start_time: Option<String>,
-	end_time:   Option<String>,
+	pub start_time: Option<String>,
+	pub end_time:   Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct TimePeriodElementsType {
+	pub start_time: Option<ElementTagType>,
+	pub end_time:   Option<ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TimestampIntervalType {
-	start_time: Option<String>,
-	end_time:   Option<String>,
+	pub start_time: Option<String>,
+	pub end_time:   Option<String>,
 }
 
 pub type AbsoluteOrRelativeTimeType = String;
@@ -74,9 +81,9 @@ impl fmt::Display for MonthType {
 	}
 }
 
-pub type DayOfMonthType = u32;
+pub type DayOfMonthType = u8;
 
-pub type CalendarWeekType = u32;
+pub type CalendarWeekType = u8;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
@@ -152,6 +159,27 @@ pub struct AbsoluteOrRecurringTimeType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct AbsoluteOrRecurringTimeElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub date_time:              Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub month:                  Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub day_of_month:           Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub calendar_week:          Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub day_of_week_occurrence: Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub days_of_week:           Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time:                   Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub relative:               Option<ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct RecurrenceInformationType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub recurring_interval:      Option<RecurringIntervalType>,
@@ -166,6 +194,21 @@ pub struct RecurrenceInformationType {
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct RecurrenceInformationElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub recurring_interval:      Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub recurring_interval_step: Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub first_execution:         Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub execution_count:         Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub last_execution:          Option<ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
 pub struct ScaledNumberRangeType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub min: Option<ScaledNumberType>,
@@ -174,11 +217,27 @@ pub struct ScaledNumberRangeType {
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
+pub struct ScaledNumberRangeElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub min: Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub max: Option<ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
 pub struct ScaledNumberSetType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub value: Option<Vec<ScaledNumberType>>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub range: Option<Vec<ScaledNumberRangeType>>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+pub struct ScaledNumberSetElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value: Option<Vec<ElementTagType>>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub range: Option<Vec<ScaledNumberRangeElementsType>>,
 }
 
 pub type NumberType = i64;
@@ -343,6 +402,8 @@ pub enum UnitOfMeasurementEnumType {
 	Rads,
 	#[serde(rename = "sr")]
 	Sr,
+	#[serde(rename = "Gy")]
+	Gy,
 	#[serde(rename = "Bq")]
 	Bq,
 	#[serde(rename = "Bq/m^3")]
@@ -675,11 +736,25 @@ pub struct DeviceAddressType {
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
+pub struct DeviceAddressElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub device: Option<ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
 pub struct EntityAddressType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub device: Option<AddressDeviceType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub entity: Option<Vec<AddressEntityType>>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+pub struct EntityAddressElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub device: Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub entity: Option<Vec<ElementTagType>>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -690,6 +765,16 @@ pub struct FeatureAddressType {
 	pub entity:  Option<Vec<AddressEntityType>>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub feature: Option<AddressFeatureType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+pub struct FeatureAddressElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub device:  Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub entity:  Option<Vec<ElementTagType>>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub feature: Option<ElementTagType>,
 }
 
 pub type ScopeTypeType = ScopeTypeEnumType;
@@ -884,6 +969,8 @@ pub enum EntityTypeEnumType {
 	HeatingZone,
 	#[serde(rename = "HeatPumpAppliance")]
 	HeatPumpAppliance,
+	#[serde(rename = "HeatSinkCircuit")]
+	HeatSinkCircuit,
 	#[serde(rename = "HeatSourceCircuit")]
 	HeatSourceCircuit,
 	#[serde(rename = "HeatSourceUnit")]
@@ -906,6 +993,8 @@ pub enum EntityTypeEnumType {
 	SmartEnergyAppliance,
 	#[serde(rename = "SolarDHWStorage")]
 	SolarDHWStorage,
+	#[serde(rename = "SolarThermalCircuit")]
+	SolarThermalCircuit,
 	#[serde(rename = "SubMeterElectricity")]
 	SubMeterElectricity,
 	#[serde(rename = "TemperatureSensor")]
@@ -1402,9 +1491,27 @@ pub struct PossibleOperationsType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct PossibleOperationsElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub read:      Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub write: Option<ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct FunctionPropertyType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub function:      Option<FunctionType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub possible_operations: Option<PossibleOperationsType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct FunctionPropertyElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub function:      Option<ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub possible_operations: Option<PossibleOperationsElementsType>,
 }

@@ -95,7 +95,15 @@ impl fmt::Display for LoadControlCategoryEnumType {
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadControlNodeDataType {
+	#[serde(skip_serializing_if = "Option::is_none")]
   pub is_node_remote_controllable: Option<bool>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadControlNodeDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+  pub is_node_remote_controllable: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -111,6 +119,21 @@ pub struct LoadControlEventDataType {
   pub event_action_produce: Option<LoadControlEventActionType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub time_period: Option<commondatatypes::TimePeriodType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadControlEventDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub timestamp: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub event_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub event_action_consume: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub event_action_produce: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_period: Option<commondatatypes::TimePeriodElementsType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -148,6 +171,23 @@ pub struct LoadControlStateDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct LoadControlStateDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub timestamp: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub event_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub event_state_consume: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub applied_event_action_consume: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub event_state_produce: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub applied_event_action_produce: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct LoadControlStateListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub load_control_state_data: Option<Vec<LoadControlStateDataType>>,
@@ -179,6 +219,21 @@ pub struct LoadControlLimitDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct LoadControlLimitDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub limit_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub is_limit_changeable: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub is_limit_active: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_period: Option<commondatatypes::TimePeriodElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value: Option<commondatatypes::ScaledNumberElementsType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct LoadControlLimitListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub load_control_limit_data: Option<Vec<LoadControlLimitDataType>>,
@@ -202,6 +257,19 @@ pub struct LoadControlLimitConstraintsDataType {
   pub value_range_max: Option<commondatatypes::ScaledNumberType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub value_step_size: Option<commondatatypes::ScaledNumberType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadControlLimitConstraintsDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub limit_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_range_min: Option<commondatatypes::ScaledNumberElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_range_max: Option<commondatatypes::ScaledNumberElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_step_size: Option<commondatatypes::ScaledNumberElementsType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -239,6 +307,29 @@ pub struct LoadControlLimitDescriptionDataType {
   pub label: Option<commondatatypes::LabelType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub description: Option<commondatatypes::DescriptionType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadControlLimitDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub limit_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub limit_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub limit_category: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub limit_direction: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub measurement_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub unit: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub scope_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

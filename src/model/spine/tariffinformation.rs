@@ -3,9 +3,7 @@ use std::fmt;
 use super::super::utils;
 
 use serde::{Serialize, Deserialize};
-use super::commondatatypes;
-use super::measurement;
-use super::timetable;
+use super::{commondatatypes, measurement, timetable};
 
 pub type TariffIdType = u32;
 
@@ -124,11 +122,41 @@ pub struct TariffOverallConstraintsDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct TariffOverallConstraintsDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub max_tariff_count: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub max_boundary_count: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub max_tier_count: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub max_incentive_count: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub max_boundaries_per_tariff: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub max_tiers_per_tariff: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub max_boundaries_per_tier: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub max_incentives_per_tier: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct TariffDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tariff_id: Option<TariffIdType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub active_tier_id: Option<Vec<TierIdType>>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct TariffDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub tariff_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub active_tier_id: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -158,6 +186,15 @@ pub struct TariffTierRelationDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct TariffTierRelationDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub tariff_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub tier_id: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct TariffTierRelationListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tariff_tier_relation_data: Option<Vec<TariffTierRelationDataType>>,
@@ -179,6 +216,15 @@ pub struct TariffBoundaryRelationDataType {
   pub tariff_id: Option<TariffIdType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub boundary_id: Option<Vec<TierBoundaryIdType>>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct TariffBoundaryRelationDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub tariff_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub boundary_id: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -222,6 +268,29 @@ pub struct TariffDescriptionDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct TariffDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub tariff_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub commodity_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub measurement_id: Option<measurement::MeasurementIdType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub tariff_writeable: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub update_required: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub scope_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub slot_id_support: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct TariffDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tariff_description_data: Option<Vec<TariffDescriptionDataType>>,
@@ -253,6 +322,21 @@ pub struct TierBoundaryDataType {
   pub lower_boundary_value: Option<commondatatypes::ScaledNumberType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub upper_boundary_value: Option<commondatatypes::ScaledNumberType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct TierBoundaryDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub boundary_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_period: Option<commondatatypes::TimePeriodElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_table_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub lower_boundary_value: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub upper_boundary_value: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -292,6 +376,27 @@ pub struct TierBoundaryDescriptionDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct TierBoundaryDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub boundary_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub boundary_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub valid_for_tier_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub switch_to_tier_when_lower: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub switch_to_tier_when_higher: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub boundary_unit: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct TierBoundaryDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tier_boundary_description_data: Option<Vec<TierBoundaryDescriptionDataType>>,
@@ -319,6 +424,21 @@ pub struct CommodityDataType {
   pub label: Option<commondatatypes::LabelType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub description: Option<commondatatypes::DescriptionType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct CommodityDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub commodity_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub commodity_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub positive_energy_direction: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -352,6 +472,19 @@ pub struct TierDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct TierDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub tier_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_period: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_table_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub active_incentive_id: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct TierListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub tier_data: Option<Vec<TierDataType>>,
@@ -373,6 +506,15 @@ pub struct TierIncentiveRelationDataType {
   pub tier_id: Option<TierIdType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub incentive_id: Option<Vec<IncentiveIdType>>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct TierIncentiveRelationDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub tier_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub incentive_id: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -402,6 +544,19 @@ pub struct TierDescriptionDataType {
   pub label: Option<commondatatypes::LabelType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub description: Option<commondatatypes::DescriptionType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct TierDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub tier_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub tier_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -439,6 +594,23 @@ pub struct IncentiveDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct IncentiveDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub incentive_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub timestamp: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_period: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub time_table_id: Option<commondatatypes::TimePeriodElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub value: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct IncentiveListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub incentive_data: Option<Vec<IncentiveDataType>>,
@@ -472,6 +644,25 @@ pub struct IncentiveDescriptionDataType {
   pub label: Option<commondatatypes::LabelType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub description: Option<commondatatypes::DescriptionType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct IncentiveDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub incentive_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub incentive_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub incentive_priority: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub currency: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub unit: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

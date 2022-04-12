@@ -1,6 +1,7 @@
 use std::fmt;
 
 use super::super::utils;
+use super::{commondatatypes};
 
 use serde::{Serialize, Deserialize};
 
@@ -37,6 +38,19 @@ pub struct IdentificationDataType {
   pub identification_value: Option<IdentificationValueType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub authorized: Option<bool>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct IdentificationDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub identification_id: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub identification_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub identification_value: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub authorized: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

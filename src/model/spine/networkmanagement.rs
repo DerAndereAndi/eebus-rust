@@ -88,11 +88,35 @@ pub struct NetworkManagementAddNodeCallType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct NetworkManagementAddNodeCallElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub node_address: Option<commondatatypes::FeatureAddressElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub native_setup: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub timeout: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct NetworkManagementRemoveNodeCallType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub node_address: Option<commondatatypes::FeatureAddressType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub timeout: Option<NetworkManagementProcessTimeoutType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct NetworkManagementRemoveNodeCallElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub node_address: Option<commondatatypes::FeatureAddressElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub timeout: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -112,11 +136,35 @@ pub struct NetworkManagementModifyNodeCallType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct NetworkManagementModifyNodeCallElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub node_address: Option<commondatatypes::FeatureAddressElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub native_setup: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub timeout: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct NetworkManagementScanNetworkCallType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub scan_setup: Option<NetworkManagementScanSetupType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub timeout: Option<NetworkManagementProcessTimeoutType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct NetworkManagementScanNetworkCallElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub scan_setup: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub timeout: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -128,8 +176,16 @@ pub struct NetworkManagementDiscoverCallType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct NetworkManagementAbortCallType {
+pub struct NetworkManagementDiscoverCallElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub discover_address: Option<commondatatypes::FeatureAddressElementsType>,
 }
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+pub struct NetworkManagementAbortCallType {}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+pub struct NetworkManagementAbortCallElementsType {}
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -142,9 +198,25 @@ pub struct NetworkManagementProcessStateDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct NetworkManagementProcessStateDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub state: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct NetworkManagementJoiningModeDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub setup: Option<NetworkManagementSetupType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct NetworkManagementJoiningModeDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub setup: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -158,6 +230,19 @@ pub struct NetworkManagementReportCandidateDataType {
   pub label: Option<commondatatypes::LabelType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub description: Option<commondatatypes::DescriptionType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct NetworkManagementReportCandidateDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub candidate_setup: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub setup_usable_for_add: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -185,6 +270,33 @@ pub struct NetworkManagementDeviceDescriptionDataType {
   pub label: Option<commondatatypes::LabelType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub description: Option<commondatatypes::DescriptionType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct NetworkManagementDeviceDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub device_address: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub device_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub network_management_responsible_address: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub native_setup: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub technology_address: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub communications_technology_information: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub network_feature_set: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub last_state_change: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub minimum_trust_level: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -218,6 +330,23 @@ pub struct NetworkManagementEntityDescriptionDataType {
   pub label: Option<commondatatypes::LabelType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub description: Option<commondatatypes::DescriptionType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct NetworkManagementEntityDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub entity_address: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub entity_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub last_state_change: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub minimum_trust_level: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -261,6 +390,33 @@ pub struct NetworkManagementFeatureDescriptionDataType {
   pub description: Option<commondatatypes::DescriptionType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub max_response_delay: Option<commondatatypes::MaxResponseDelayType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct NetworkManagementFeatureDescriptionDataElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub feature_address: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub feature_type: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub specific_usage: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub feature_group: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub role: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub supported_function: Option<commondatatypes::FunctionPropertyElementsType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub last_state_change: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub minimum_trust_level: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub label: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub description: Option<commondatatypes::ElementTagType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub max_response_delay: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
