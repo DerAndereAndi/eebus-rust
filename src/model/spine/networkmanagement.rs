@@ -396,7 +396,7 @@ pub struct NetworkManagementFeatureDescriptionDataType {
 #[serde(rename_all = "camelCase")]
 pub struct NetworkManagementFeatureDescriptionDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub feature_address: Option<commondatatypes::ElementTagType>,
+	pub feature_address: Option<commondatatypes::FeatureAddressElementsType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub feature_type: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]

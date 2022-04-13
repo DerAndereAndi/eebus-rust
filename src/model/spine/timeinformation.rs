@@ -68,9 +68,7 @@ pub struct TimePrecisionDataElementsType {
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
-#[serde(rename_all = "camelCase")]
 pub struct TimeDistributorEnquiryCallType {}
 
 #[derive(Serialize, Deserialize, Default, Debug)]
-#[serde(rename_all = "camelCase")]
 pub struct TimeDistributorEnquiryCallElementsType {}

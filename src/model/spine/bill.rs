@@ -224,7 +224,7 @@ pub struct BillConstraintsDataElementsType {
 #[serde(rename_all = "camelCase")]
 pub struct BillConstraintsListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub bill_constraints_data: Option<Vec<BillConstraintsDataType>>,
+  pub bill_constraints_data_elements: Option<Vec<BillConstraintsDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

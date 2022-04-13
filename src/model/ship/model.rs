@@ -92,7 +92,7 @@ pub struct MessageProtocolHandshakeType {
   pub formats: MessageProtocolFormatsType,
 }
 
-pub type MessageProtocolHandshakeErrorErrorType = String;
+pub type MessageProtocolHandshakeErrorErrorType = u8;
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -134,17 +134,17 @@ impl fmt::Display for PinInputPermissionType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct ConnectionPinState {
-  pub connection_pin_state: ConnectionPinStateType,
-}
-
-#[derive(Serialize, Deserialize, Default, Debug)]
-#[serde(rename_all = "camelCase")]
 pub struct ConnectionPinStateType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub pin_state: Option<PinStateType>, // defined as option so we don't have to provide a default value
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub input_permission: Option<PinInputPermissionType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct ConnectionPinState {
+  pub connection_pin_state: ConnectionPinStateType,
 }
 
 pub type PinValueType = String;

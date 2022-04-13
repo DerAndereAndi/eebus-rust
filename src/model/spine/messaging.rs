@@ -37,7 +37,7 @@ pub struct MessagingDataType {
   pub messaging_number: Option<MessagingNumberType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   #[serde(rename = "type")]
-  pub messageing_type: Option<MessagingTypeType>, // xsd defines "type", but that is a reserved keyword
+  pub messaging_type: Option<MessagingTypeType>, // xsd defines "type", but that is a reserved keyword
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub text: Option<MessagingDataTextType>,
 }

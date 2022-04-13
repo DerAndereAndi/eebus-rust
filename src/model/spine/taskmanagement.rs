@@ -39,11 +39,9 @@ impl fmt::Display for TaskManagementJobSourceEnumType {
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
-#[serde(rename_all = "camelCase")]
 pub struct TaskManagementDirectControlRelatedType {}
 
 #[derive(Serialize, Deserialize, Default, Debug)]
-#[serde(rename_all = "camelCase")]
 pub struct TaskManagementDirectControlRelatedElementsType {}
 
 #[derive(Serialize, Deserialize, Default, Debug)]

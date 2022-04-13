@@ -10,9 +10,23 @@ pub struct NodeManagementSpecificationVersionListType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct NodeManagementSpecificationVersionListElementsType {
+	#[serde(skip_serializing_if = "Option::is_none")]
+  pub specification_version: Option<version::SpecificationVersionDataElementsType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct NodeManagementDetailedDiscoveryDeviceInformationType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub description: Option<networkmanagement::NetworkManagementDeviceDescriptionDataType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct NodeManagementDetailedDiscoveryDeviceInformationElementsType {
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub description: Option<networkmanagement::NetworkManagementDeviceDescriptionDataElementsType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -24,9 +38,23 @@ pub struct NodeManagementDetailedDiscoveryEntityInformationType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct NodeManagementDetailedDiscoveryEntityInformationElementsType {
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub description: Option<networkmanagement::NetworkManagementEntityDescriptionDataElementsType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct NodeManagementDetailedDiscoveryFeatureInformationType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub description: Option<networkmanagement::NetworkManagementFeatureDescriptionDataType>,
+}
+
+#[derive(Serialize, Deserialize, Default, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct NodeManagementDetailedDiscoveryFeatureInformationElementsType {
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub description: Option<networkmanagement::NetworkManagementFeatureDescriptionDataElementsType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -44,43 +72,15 @@ pub struct NodeManagementDetailedDiscoveryDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct NodeManagementSpecificationVersionListElementsType {
-	#[serde(skip_serializing_if = "Option::is_none")]
-  pub specification_version: Option<version::SpecificationVersionDataElementsType>,
-}
-
-#[derive(Serialize, Deserialize, Default, Debug)]
-#[serde(rename_all = "camelCase")]
-pub struct NodeManagementDetailedDiscoveryDeviceInformationElementsType {
-  #[serde(skip_serializing_if = "Option::is_none")]
-  pub description: Option<networkmanagement::NetworkManagementDeviceDescriptionDataElementsType>,
-}
-
-#[derive(Serialize, Deserialize, Default, Debug)]
-#[serde(rename_all = "camelCase")]
-pub struct NodeManagementDetailedDiscoveryEntityInformationElementsType {
-  #[serde(skip_serializing_if = "Option::is_none")]
-  pub description: Option<networkmanagement::NetworkManagementEntityDescriptionDataElementsType>,
-}
-
-#[derive(Serialize, Deserialize, Default, Debug)]
-#[serde(rename_all = "camelCase")]
-pub struct NodeManagementDetailedDiscoveryFeatureInformationElementsType {
-  #[serde(skip_serializing_if = "Option::is_none")]
-  pub description: Option<networkmanagement::NetworkManagementFeatureDescriptionDataElementsType>,
-}
-
-#[derive(Serialize, Deserialize, Default, Debug)]
-#[serde(rename_all = "camelCase")]
 pub struct NodeManagementDetailedDiscoveryDataElementsType {
   #[serde(skip_serializing_if = "Option::is_none")]
   pub specification_version_list: Option<NodeManagementSpecificationVersionListElementsType>,
   #[serde(skip_serializing_if = "Option::is_none")]
   pub device_information: Option<NodeManagementDetailedDiscoveryDeviceInformationElementsType>,
   #[serde(skip_serializing_if = "Option::is_none")]
-  pub entity_information: Option<Vec<NodeManagementDetailedDiscoveryEntityInformationElementsType>>,
+  pub entity_information: Option<NodeManagementDetailedDiscoveryEntityInformationElementsType>,
   #[serde(skip_serializing_if = "Option::is_none")]
-  pub feature_information: Option<Vec<NodeManagementDetailedDiscoveryFeatureInformationElementsType>>,
+  pub feature_information: Option<NodeManagementDetailedDiscoveryFeatureInformationElementsType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -105,7 +105,7 @@ pub struct NodeManagementBindingDataType {
 #[serde(rename_all = "camelCase")]
 pub struct NodeManagementBindingDataElementsType {
   #[serde(skip_serializing_if = "Option::is_none")]
-  pub binding_entry: Option<Vec<bindingmanagement::BindingManagementEntryDataElementsType>>,
+  pub binding_entry: Option<bindingmanagement::BindingManagementEntryDataElementsType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -154,7 +154,7 @@ pub struct NodeManagementSubscriptionDataType {
 #[serde(rename_all = "camelCase")]
 pub struct NodeManagementSubscriptionDataElementsType {
   #[serde(skip_serializing_if = "Option::is_none")]
-  pub subscription_entry: Option<Vec<subscriptionmanagement::SubscriptionManagementEntryDataElementsType>>,
+  pub subscription_entry: Option<subscriptionmanagement::SubscriptionManagementEntryDataElementsType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

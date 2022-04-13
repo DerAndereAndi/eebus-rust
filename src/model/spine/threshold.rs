@@ -88,7 +88,7 @@ pub struct ThresholdConstraintsDataType {
 #[serde(rename_all = "camelCase")]
 pub struct ThresholdConstraintsDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub threshold_id: Option<ThresholdIdType>,
+  pub threshold_id: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub threshold_range_min: Option<commondatatypes::ScaledNumberElementsType>,
 	#[serde(skip_serializing_if = "Option::is_none")]

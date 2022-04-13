@@ -2,17 +2,14 @@ use serde::{Serialize, Deserialize};
 use super::{commondatatypes, commandframe};
 
 #[derive(Serialize, Deserialize, Default, Debug)]
-pub struct SpineType {
-	#[serde(skip_serializing_if = "Option::is_none")]
-    pub datagram: Option<DatagramType>,
+pub struct Datagram {
+    pub datagram: DatagramType,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 pub struct DatagramType {
-	#[serde(skip_serializing_if = "Option::is_none")]
-    pub header: Option<HeaderType>,
-	#[serde(skip_serializing_if = "Option::is_none")]
-    pub payload: Option<PayloadType>,
+    pub header: HeaderType,
+    pub payload: PayloadType,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -30,6 +27,10 @@ pub struct HeaderType {
     pub msg_counter_reference: Option<commandframe::MsgCounterType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
     pub cmd_classifier: Option<commandframe::CmdClassifierType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+    pub ack_request: Option<bool>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+    pub timestamp: Option<commondatatypes::AbsoluteOrRelativeTimeType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

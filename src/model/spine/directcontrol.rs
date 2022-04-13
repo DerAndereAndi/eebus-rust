@@ -75,7 +75,7 @@ pub struct DirectControlActivityDataElementsType {
 #[serde(rename_all = "camelCase")]
 pub struct DirectControlActivityListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
-  direct_control_activity_data: Option<Vec<DirectControlActivityDataType>>,
+  direct_control_activity_data_elements: Option<Vec<DirectControlActivityDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

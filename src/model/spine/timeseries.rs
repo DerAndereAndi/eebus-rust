@@ -86,7 +86,7 @@ pub struct TimeSeriesDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub time_period: Option<commondatatypes::TimePeriodElementsType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub time_series_slot: Option<Vec<TimeSeriesSlotElementsType>>,
+	pub time_series_slot: Option<TimeSeriesSlotElementsType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

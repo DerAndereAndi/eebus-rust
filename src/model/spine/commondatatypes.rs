@@ -235,9 +235,9 @@ pub struct ScaledNumberSetType {
 #[derive(Serialize, Deserialize, Default, Debug)]
 pub struct ScaledNumberSetElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub value: Option<Vec<ElementTagType>>,
+	pub value: Option<ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub range: Option<Vec<ScaledNumberRangeElementsType>>,
+	pub range: Option<ScaledNumberRangeElementsType>,
 }
 
 pub type NumberType = i64;
@@ -754,7 +754,7 @@ pub struct EntityAddressElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub device: Option<ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub entity: Option<Vec<ElementTagType>>,
+	pub entity: Option<ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -772,7 +772,7 @@ pub struct FeatureAddressElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub device:  Option<ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub entity:  Option<Vec<ElementTagType>>,
+	pub entity:  Option<ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub feature: Option<ElementTagType>,
 }

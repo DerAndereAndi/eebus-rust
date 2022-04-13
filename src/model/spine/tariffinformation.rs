@@ -334,9 +334,9 @@ pub struct TierBoundaryDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub time_table_id: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub lower_boundary_value: Option<commondatatypes::ElementTagType>,
+	pub lower_boundary_value: Option<commondatatypes::ScaledNumberElementsType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub upper_boundary_value: Option<commondatatypes::ElementTagType>,
+	pub upper_boundary_value: Option<commondatatypes::ScaledNumberElementsType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -602,11 +602,11 @@ pub struct IncentiveDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub timestamp: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub time_period: Option<commondatatypes::ElementTagType>,
+	pub time_period: Option<commondatatypes::TimePeriodElementsType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub time_table_id: Option<commondatatypes::TimePeriodElementsType>,
+	pub time_table_id: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-	pub value: Option<commondatatypes::ElementTagType>,
+	pub value: Option<commondatatypes::ScaledNumberElementsType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

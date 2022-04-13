@@ -4,7 +4,6 @@ use super::commondatatypes;
 pub type SpecificationVersionDataType = commondatatypes::SpecificationVersionType;
 
 #[derive(Serialize, Deserialize, Default, Debug)]
-#[serde(rename_all = "camelCase")]
 pub struct SpecificationVersionDataElementsType {}
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -16,5 +15,4 @@ pub struct SpecificationVersionListDataType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct SpecificationVersionListDataSelectorsType {
-}
+pub struct SpecificationVersionListDataSelectorsType {}

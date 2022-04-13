@@ -123,7 +123,7 @@ pub struct HvacSystemFunctionDataElementsType {
 #[serde(rename_all = "camelCase")]
 pub struct HvacSystemFunctionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub system_function_list_data: Option<Vec<HvacSystemFunctionDataType>>,
+  pub hvac_system_function_list_data: Option<Vec<HvacSystemFunctionDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -148,13 +148,13 @@ pub struct HvacSystemFunctionOperationModeRelationDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub system_function_id: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub operation_mode_id: Option<Vec<commondatatypes::ElementTagType>>,
+  pub operation_mode_id: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct HvacSystemFunctionOperationModeRelationListDataType {
-  pub system_function_operation_mode_relation_list_data: Option<Vec<HvacSystemFunctionOperationModeRelationDataType>>,
+  pub hvac_system_function_operation_mode_relation_list_data: Option<Vec<HvacSystemFunctionOperationModeRelationDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -183,14 +183,14 @@ pub struct HvacSystemFunctionSetpointRelationDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub operation_mode_id: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub setpoint_id: Option<Vec<commondatatypes::ElementTagType>>,
+  pub setpoint_id: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct HvacSystemFunctionSetpointRelationListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub system_function_setpoint_relation_list_data: Option<Vec<HvacSystemFunctionSetpointRelationDataType>>,
+  pub hvac_system_function_setpoint_relation_list_data: Option<Vec<HvacSystemFunctionSetpointRelationDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -217,13 +217,13 @@ pub struct HvacSystemFunctionPowerSequenceRelationDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub system_function_id: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub sequence_id: Option<Vec<commondatatypes::ElementTagType>>,
+  pub sequence_id: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct HvacSystemFunctionPowerSequenceRelationListDataType {
-  pub system_function_power_sequence_relation_list_data: Option<Vec<HvacSystemFunctionPowerSequenceRelationDataType>>,
+  pub hvac_system_function_power_sequence_relation_list_data: Option<Vec<HvacSystemFunctionPowerSequenceRelationDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -243,7 +243,7 @@ pub struct HvacSystemFunctionDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub label: Option<commondatatypes::LabelType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub description: Option<Vec<commondatatypes::DescriptionType>>,
+  pub description: Option<commondatatypes::DescriptionType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -256,13 +256,13 @@ pub struct HvacSystemFunctionDescriptionDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub label: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub description: Option<Vec<commondatatypes::ElementTagType>>,
+  pub description: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct HvacSystemFunctionDescriptionListDataType {
-  pub system_function_description_list_data: Option<Vec<HvacSystemFunctionDescriptionDataType>>,
+  pub hvac_system_function_description_list_data: Option<Vec<HvacSystemFunctionDescriptionDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -282,7 +282,7 @@ pub struct HvacOperationModeDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub label: Option<commondatatypes::LabelType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub description: Option<Vec<commondatatypes::DescriptionType>>,
+  pub description: Option<commondatatypes::DescriptionType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -295,7 +295,7 @@ pub struct HvacOperationModeDescriptionDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub label: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub description: Option<Vec<commondatatypes::ElementTagType>>,
+  pub description: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -342,7 +342,7 @@ pub struct HvacOverrunDataElementsType {
 #[serde(rename_all = "camelCase")]
 pub struct HvacOverrunListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub overrun_list_data: Option<Vec<HvacOverrunDataType>>,
+  pub hvac_overrun_data: Option<Vec<HvacOverrunDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -364,7 +364,7 @@ pub struct HvacOverrunDescriptionDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub label: Option<commondatatypes::LabelType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub description: Option<Vec<commondatatypes::DescriptionType>>,
+  pub description: Option<commondatatypes::DescriptionType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
@@ -375,18 +375,18 @@ pub struct HvacOverrunDescriptionDataElementsType {
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub overrun_type: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub affected_system_function_id: Option<Vec<commondatatypes::ElementTagType>>,
+  pub affected_system_function_id: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
   pub label: Option<commondatatypes::ElementTagType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub description: Option<Vec<commondatatypes::ElementTagType>>,
+  pub description: Option<commondatatypes::ElementTagType>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct HvacOverrunDescriptionListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub overrun_description_list_data: Option<Vec<HvacOverrunDescriptionDataType>>,
+  pub hvac_overrun_description_data: Option<Vec<HvacOverrunDescriptionDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

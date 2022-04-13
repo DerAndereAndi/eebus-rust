@@ -73,7 +73,7 @@ pub struct AlarmDataElementsType {
 #[serde(rename_all = "camelCase")]
 pub struct AlarmListDataType {
 	#[serde(skip_serializing_if = "Option::is_none")]
-  pub alarm_data: Option<Vec<AlarmListDataType>>,
+  pub alarm_list_data: Option<Vec<AlarmListDataType>>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug)]

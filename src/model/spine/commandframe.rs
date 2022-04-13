@@ -277,23 +277,6 @@ pub struct CmdControlType {
 
 #[derive(Serialize, Deserialize, Default, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct Filter {
-	#[serde(skip_serializing_if = "Option::is_none")]
-	filter_id:   Option<FilterIdType>,
-	#[serde(skip_serializing_if = "Option::is_none")]
-	cmd_control: Option<CmdControlType>,
-}
-
-#[derive(Serialize, Deserialize, Default, Debug)]
-pub struct CmdControl {
-	#[serde(skip_serializing_if = "Option::is_none")]
-	delete:  Option<commondatatypes::ElementTagType>,
-	#[serde(skip_serializing_if = "Option::is_none")]
-	partial: Option<commondatatypes::ElementTagType>
-}
-
-#[derive(Serialize, Deserialize, Default, Debug)]
-#[serde(rename_all = "camelCase")]
 pub struct CmdType {
 	// CmdOptionGroup
 	#[serde(skip_serializing_if = "Option::is_none")]
