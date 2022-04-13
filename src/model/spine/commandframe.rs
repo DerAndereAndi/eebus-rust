@@ -110,6 +110,7 @@ pub struct FilterType {
 	pub supply_condition_threshold_relation_list_data_selectors: Option<supplycondition::SupplyConditionThresholdRelationListDataSelectorsType>,
 	pub tariff_boundary_relation_list_data_selectors: Option<tariffinformation::TariffBoundaryRelationListDataSelectorsType>,
 	pub tariff_description_list_data_selectors: Option<tariffinformation::TariffDescriptionListDataSelectorsType>,
+	pub tariff_list_data_selectors: Option<tariffinformation::TariffListDataSelectorsType>,
 	pub tariff_tier_relation_list_data_selectors: Option<tariffinformation::TariffTierRelationListDataSelectorsType>,
 	pub task_management_job_description_list_data_selectors: Option<taskmanagement::TaskManagementJobDescriptionListDataSelectorsType>,
 	pub task_management_job_list_data_selectors: Option<taskmanagement::TaskManagementJobListDataSelectorsType>,
@@ -161,6 +162,7 @@ pub struct FilterType {
 	pub hvac_operation_mode_description_data_elements: Option<hvac::HvacOperationModeDescriptionDataElementsType>,
 	pub hvac_overrun_data_elements: Option<hvac::HvacOverrunDataElementsType>,
 	pub hvac_overrun_description_data_elements: Option<hvac::HvacOverrunDescriptionDataElementsType>,
+	pub hvac_system_function_data_elements: Option<hvac::HvacSystemFunctionDataElementsType>,
 	pub hvac_system_function_description_data_elements: Option<hvac::HvacSystemFunctionDescriptionDataElementsType>,
 	pub hvac_system_function_operation_mode_relation_data_elements: Option<hvac::HvacSystemFunctionOperationModeRelationDataElementsType>,
 	pub hvac_system_function_power_sequence_relation_data_elements: Option<hvac::HvacSystemFunctionPowerSequenceRelationDataElementsType>,
@@ -257,6 +259,7 @@ pub struct FilterType {
 	pub tier_incentive_relation_data_elements: Option<tariffinformation::TierIncentiveRelationDataElementsType>,
 	pub time_distributor_data_elements: Option<timeinformation::TimeDistributorDataElementsType>,
 	pub time_distributor_enquiry_call_elements: Option<timeinformation::TimeDistributorEnquiryCallElementsType>,
+	pub time_information_data_elements: Option<timeinformation::TimeInformationDataElementsType>,
 	pub time_precision_data_elements: Option<timeinformation::TimePrecisionDataElementsType>,
 	pub time_series_constraints_data_elements: Option<timeseries::TimeSeriesConstraintsDataElementsType>,
 	pub time_series_data_elements: Option<timeseries::TimeSeriesDataElementsType>,
@@ -368,17 +371,27 @@ pub struct CmdType {
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub incentive_table_description_data: Option<incentivetable::IncentiveTableDescriptionDataType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
+	pub load_control_event_list_data: Option<loadcontrol::LoadControlEventListDataType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
 	pub load_control_limit_constraints_list_data: Option<loadcontrol::LoadControlLimitConstraintsListDataType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub load_control_limit_description_list_data: Option<loadcontrol::LoadControlLimitDescriptionListDataType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub load_control_limit_list_data: Option<loadcontrol::LoadControlLimitListDataType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
+	pub load_control_node_data: Option<loadcontrol::LoadControlNodeDataType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub load_control_state_list_data: Option<loadcontrol::LoadControlStateListDataType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
 	pub measurement_constraints_list_data: Option<measurement::MeasurementConstraintsListDataType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub measurement_description_list_data: Option<measurement::MeasurementDescriptionListDataType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub measurement_list_data: Option<measurement::MeasurementListDataType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub measurement_threshold_relation_list_data: Option<measurement::MeasurementThresholdRelationListDataType>,
+	#[serde(skip_serializing_if = "Option::is_none")]
+	pub messaging_list_data: Option<messaging::MessagingListDataType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub network_management_abort_call: Option<networkmanagement::NetworkManagementAbortCallType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
@@ -535,8 +548,6 @@ pub struct CmdType {
 	pub time_information_data: Option<timeinformation::TimeInformationDataType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub time_precision_data: Option<timeinformation::TimePrecisionDataType>,
-	#[serde(skip_serializing_if = "Option::is_none")]
-	pub time_series_constraints_data: Option<timeseries::TimeSeriesConstraintsDataType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
 	pub time_series_constraints_list_data: Option<timeseries::TimeSeriesConstraintsListDataType>,
 	#[serde(skip_serializing_if = "Option::is_none")]
