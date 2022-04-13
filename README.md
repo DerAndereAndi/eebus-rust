@@ -7,7 +7,7 @@ Playground project for checking out Rust and a very basic EEBUS implementation
 This repository contains:
 
 - Sample code to try out Rust, no proper design or whatsoever
-- adoptions of the SPINE and SHIP EEBUS model definitions, they are likely issues and some models are not 100% correct
+- adoptions of the SPINE and SHIP EEBUS model definitions, there are likely issues and some models are not 100% correct
 - (De-)serialization for EEBUS specific JSON format requirements
 - Uses provided certificate, as the certificate generation code does not work yet
 - Establishes a secure websocket connection and does a "golden path" SHIP client handshake
